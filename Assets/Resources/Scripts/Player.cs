@@ -11,14 +11,13 @@ public class Player : MonoBehaviour
     public int direc = 0;//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
 
     private float movingCheck = 0;
-    private float movingStep = 0;
+    private float movingStep = 0; 
     private float movingStun = 0;
-    private float movingSpeed = 5f;
+    private float movingSpeed = 5f; //이동속도
+    private int movingWalk = 2;//왼발, 오른발
 
     private SpriteRenderer spriteRenderer;
-    public Sprite[] sprites;
-
-   
+    public Sprite[] sprites;   
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +28,13 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        MoveCheck();
+
+        SetSprite();
+    }    
+
+    private void MoveCheck()
     {
         movingCheck -= Time.deltaTime;
         movingStep -= Time.deltaTime;
@@ -70,11 +76,11 @@ public class Player : MonoBehaviour
 
                     if (tmpDirec == direc)//1. 같은 방향으로 키를 눌렀을 경우 가볍게 눌러도 나아감
                     {
-                        movingStep = 1f / movingSpeed;
+                        StartMove();
                     }
                     else //2. 방향이 바뀌었을 경우 0.n초 스턴 걸림
                     {
-                        movingStun = 0.15f;
+                        movingStun = 0.12f;
                     }                    
                 }
                 else
@@ -83,44 +89,84 @@ public class Player : MonoBehaviour
 
                     if (Mathf.Abs(hCheck) > 0.7f || Mathf.Abs(vCheck) > 0.7f)//살짝 누른 키는 인식 안되게
                     {
-                        movingStep = 1f / movingSpeed;
+                        StartMove();
                     }
                 }
 
             }
-        }
+        }      
 
-        spriteRenderer.sprite = sprites[direc*3];
-    }
-
-    private int SwitchDirec(float v, float h, float resist, int direc)
-    {
-        if (v > resist) return 2;
-        if (v < -resist) return 0;
-        if (h < -resist) return 1;
-        if (h > resist) return 3;
-
-        return direc;
-    }
-
-    private Vector3 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
-    {
-        switch (direc)
+        int SwitchDirec(float v, float h, float resist, int direc)
         {
-            case 0:
-                return new Vector3(0f, -1f, 0f);
+            if (v > resist) return 2;
+            if (v < -resist) return 0;
+            if (h < -resist) return 1;
+            if (h > resist) return 3;
 
-            case 1:
-                return new Vector3(-1f, 0f, 0f);
-
-            case 2:
-                return new Vector3(0f, 1f, 0f);
-
-            case 3:
-                return new Vector3(1f, 0f, 0f);
-
-            default: return new Vector3(0f, 1f, 0f);
+            return direc;
         }
 
+        Vector3 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
+        {
+            switch (direc)
+            {
+                case 0:
+                    return new Vector3(0f, -1f, 0f);
+
+                case 1:
+                    return new Vector3(-1f, 0f, 0f);
+
+                case 2:
+                    return new Vector3(0f, 1f, 0f);
+
+                case 3:
+                    return new Vector3(1f, 0f, 0f);
+
+                default: return new Vector3(0f, 1f, 0f);
+            }
+        }  
+
+        void StartMove()
+        {
+            movingStep = 1f / movingSpeed;//출발
+
+            if (movingWalk == 1)//왼발 오른발
+            {
+                movingWalk = 2;
+            }
+            else
+            {
+                movingWalk = 1;
+            }
+            
+        }
+    }  
+
+    private void SetSprite()
+    {        
+        if (movingStun <0){
+            if (movingStep <0)//멈춰 있을 경우
+            {
+                spriteRenderer.sprite = sprites[direc*3];
+            }
+            else
+            {
+                int tmpIndex = 0;
+
+                if (movingStep < 0.5f/movingSpeed)
+                {
+                    tmpIndex = movingWalk;
+                }                
+
+                spriteRenderer.sprite = sprites[direc*3 + tmpIndex];
+            }
+        }
+        else//방향 전환 시 움찔
+        {
+            spriteRenderer.sprite = sprites[direc*3 + 1];
+        }
+        
+
+        
     }
 }
