@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private float movingCheck = 0;
     private float movingStep = 0; 
     private float movingStun = 0;
+    private float movingStunImageIndex = 0;
     private float movingSpeed = 5f; //이동속도
     private int movingWalk = 2;//왼발, 오른발
 
@@ -38,7 +39,8 @@ public class Player : MonoBehaviour
     {
         movingCheck -= Time.deltaTime;
         movingStep -= Time.deltaTime;
-        movingStun -= Time.deltaTime;        
+        movingStun -= Time.deltaTime;
+        movingStunImageIndex -= Time.deltaTime;
 
         float hCheck = input.horizontal;
         float vCheck = input.vertical;
@@ -54,16 +56,12 @@ public class Player : MonoBehaviour
         else
         {
             //멈춰 있을 때
+            float tmpX = (float)Math.Round(transform.position.x);
+            float tmpY = (float)Math.Round(transform.position.y);
+            transform.position = new Vector3(tmpX, tmpY, 0); // 좌표 안정
 
-            if (Mathf.Abs(hCheck) < 0.1f && Mathf.Abs(vCheck) < 0.1f)//키 입력이 없을 때
-            {
-                float tmpX = (float)Math.Round(transform.position.x);
-                float tmpY = (float)Math.Round(transform.position.y);
-                transform.position = new Vector3(tmpX, tmpY, 0); // 좌표 안정
-            }
-            else
-            {
-                                
+            if (Mathf.Abs(hCheck) > 0.1f || Mathf.Abs(vCheck) > 0.1f)//키 입력이 있을 때
+            {                               
                 if (movingStun < 0)
                 if (movingCheck < 0)
                 {
@@ -76,11 +74,15 @@ public class Player : MonoBehaviour
 
                     if (tmpDirec == direc)//1. 같은 방향으로 키를 눌렀을 경우 가볍게 눌러도 나아감
                     {
-                        StartMove();
+                        if (Mathf.Abs(hCheck) > 0.3f || Mathf.Abs(vCheck) > 0.3f)//살짝 누른 키는 인식 안되게
+                        {
+                            StartMove();
+                        }
                     }
                     else //2. 방향이 바뀌었을 경우 0.n초 스턴 걸림
                     {
                         movingStun = 0.12f;
+                        movingStunImageIndex = 0.12f;
                     }                    
                 }
                 else
@@ -106,45 +108,66 @@ public class Player : MonoBehaviour
             return direc;
         }
 
-        Vector3 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
+        Vector2 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
         {
             switch (direc)
             {
                 case 0:
-                    return new Vector3(0f, -1f, 0f);
+                    return new Vector2(0f, -1f);
 
                 case 1:
-                    return new Vector3(-1f, 0f, 0f);
+                    return new Vector2(-1f, 0f);
 
                 case 2:
-                    return new Vector3(0f, 1f, 0f);
+                    return new Vector2(0f, 1f);
 
                 case 3:
-                    return new Vector3(1f, 0f, 0f);
+                    return new Vector2(1f, 0f);
 
-                default: return new Vector3(0f, 1f, 0f);
+                default: return new Vector2(0f, 1f);
             }
         }  
 
         void StartMove()
         {
-            movingStep = 1f / movingSpeed;//출발
-
-            if (movingWalk == 1)//왼발 오른발
+            if (!CheckCollision())
             {
-                movingWalk = 2;
+                movingStep = 1f / movingSpeed;//출발
+
+                if (movingWalk == 1)//왼발 오른발
+                {
+                    movingWalk = 2;
+                }
+                else
+                {
+                    movingWalk = 1;
+                }
             }
             else
             {
-                movingWalk = 1;
-            }
+                movingStun = 0.4f;
+                movingStunImageIndex = 0.2f;
+            }          
             
+        }
+
+        bool CheckCollision()
+        {
+            Vector2 direcVector = GetVector2fromDirec(direc);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direcVector, 1f);
+
+            if (hit)
+            {
+                return true;
+            }
+
+            return false;
         }
     }  
 
     private void SetSprite()
     {        
-        if (movingStun <0){
+        if (movingStunImageIndex < 0){
             if (movingStep <0)//멈춰 있을 경우
             {
                 spriteRenderer.sprite = sprites[direc*3];
