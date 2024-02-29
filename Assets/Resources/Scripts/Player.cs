@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
 
             Vector3 movingVector = GetVector2fromDirec(direc);
             transform.position += movingVector * Time.deltaTime * movingSpeed;
-            movingCheck = 0.2f;
+            movingCheck = 0.3f;
         }
         else
         {
