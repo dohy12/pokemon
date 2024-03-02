@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player player;
+
     private GlobalInput input;
     public bool canControl;
 
@@ -19,6 +21,11 @@ public class Player : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     public Sprite[] sprites;   
+
+    void Awake()
+    {
+        player = this;
+    }
 
     // Start is called before the first frame update
     void Start()
