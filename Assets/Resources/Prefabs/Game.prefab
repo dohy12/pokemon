@@ -296,7 +296,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 485851523315417649, guid: dd44cc5d32a148a45afcc8d72a945675, type: 3}
       propertyPath: m_Name
-      value: Grid
+      value: Map
       objectReference: {fileID: 0}
     - target: {fileID: 4853990782610463782, guid: dd44cc5d32a148a45afcc8d72a945675, type: 3}
       propertyPath: m_LocalPosition.x
