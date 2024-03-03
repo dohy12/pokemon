@@ -18,9 +18,12 @@ public class Player : MonoBehaviour
     private float movingStunImageIndex = 0;
     private float movingSpeed = 5f; //이동속도
     private int movingWalk = 2;//왼발, 오른발
+    private bool isMoving = false;
 
     private SpriteRenderer spriteRenderer;
-    public Sprite[] sprites;   
+    public Sprite[] sprites;
+
+    private MapManager mapManager;
 
     void Awake()
     {
@@ -32,6 +35,8 @@ public class Player : MonoBehaviour
     {
         input = GlobalInput.globalInput;
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        mapManager = MapManager.mapManager;
     }
 
     // Update is called once per frame
@@ -62,10 +67,17 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //멈춰 있을 때
-            float tmpX = (float)Math.Round(transform.position.x);
-            float tmpY = (float)Math.Round(transform.position.y);
-            transform.position = new Vector3(tmpX, tmpY, 0); // 좌표 안정
+            if (isMoving)
+            {               
+                //좌표 안정
+                float tmpX = (float)Math.Round(transform.position.x);
+                float tmpY = (float)Math.Round(transform.position.y);
+                transform.position = new Vector3(tmpX, tmpY, 0); 
+                isMoving = false;
+
+                // 다음 타일에 도착했을 때
+                CheckTile();
+            }            
 
             if (Mathf.Abs(hCheck) > 0.1f || Mathf.Abs(vCheck) > 0.1f)//키 입력이 있을 때
             {                               
@@ -139,36 +151,72 @@ public class Player : MonoBehaviour
         {
             if (!CheckCollision())
             {
-                movingStep = 1f / movingSpeed;//출발
-
-                if (movingWalk == 1)//왼발 오른발
-                {
-                    movingWalk = 2;
-                }
-                else
-                {
-                    movingWalk = 1;
-                }
+                MoveOrder(direc);
             }
             else
             {
                 movingStun = 0.4f;
                 movingStunImageIndex = 0.2f;
-            }          
-            
+            } 
         }
+
+        void MoveOrder(int direc)
+        {
+            this.direc = direc;
+            movingStep = 1f / movingSpeed;//출발
+            isMoving = true;
+
+            if (movingWalk == 1)//왼발 오른발
+            {
+                movingWalk = 2;
+            }
+            else
+            {
+                movingWalk = 1;
+            }
+        }
+
 
         bool CheckCollision()
         {
             Vector2 direcVector = GetVector2fromDirec(direc);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direcVector, 1f);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direcVector, 1f);
 
-            if (hit)
+            for (int i = 0; i < hits.Length; i++)
             {
-                return true;
+                if (hits[i].transform.CompareTag("Potal"))
+                {
+                    GoPotal(hits[i].transform.name);                    
+                    return true;
+                }
             }
 
+            for (int i=0; i < hits.Length; i++)
+            {
+                if (hits[i].transform.CompareTag("Block"))
+                {
+                    return true;
+                }                    
+            }            
+
             return false;
+        }
+
+        void CheckTile()
+        {
+
+        }
+
+        void GoPotal(string potalName)
+        {
+            int potalId = Int32.Parse(potalName.Substring(5));
+            PotalInfo potalInfo = mapManager.GetPotalInfo();
+
+            PotalInfo.Potal potal = potalInfo.GetPotal(potalId);
+
+            direc = potal.direc;
+            transform.position = potal.pos;
+            MoveOrder(direc);
         }
     }  
 
