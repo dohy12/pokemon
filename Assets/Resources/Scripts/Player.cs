@@ -3,31 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Unit
 {
     public static Player player;
 
     private GlobalInput input;
     public bool canControl;
 
-    public int direc = 0;//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
-
-    private float moveX = 0;
-    private float moveY = 0;
-    private float moveZ = 0;
-
-    private float movingCheck = 0;
-    private float movingStep = 0; 
-    private float movingStun = 0;
-    private float movingStunImageIndex = 0;
-    private float movingSpeed = 5f; //이동속도
-    private int movingWalk = 2;//왼발, 오른발
-    private bool isMoving = false;
-
+    public float inputStun = 0;
+    public float inputStunImageIndex = 0;
     private float jumpingCheck = 0;
-
-    private SpriteRenderer spriteRenderer;
-    public Sprite[] sprites;
+    private bool isTileCheck = false;
 
     private MapManager mapManager;
 
@@ -49,55 +35,39 @@ public class Player : MonoBehaviour
     void Update()
     {
         MoveUpdate();
+        InputUpdate();
         JumpUpdate();
+        SpriteUpdate();
 
-        SetSprite();
-
-        transform.position = new Vector3(moveX, moveY + moveZ, 0);
+        SetSprite();        
     }    
 
-    private void MoveUpdate()
+
+    private void InputUpdate()
     {
-        movingCheck -= Time.deltaTime;
-        movingStep -= Time.deltaTime;
-        movingStun -= Time.deltaTime;
-        movingStunImageIndex -= Time.deltaTime;
+        
+        inputStun -= Time.deltaTime;
+        inputStunImageIndex -= Time.deltaTime;
 
         float hCheck = input.horizontal;
         float vCheck = input.vertical;
 
-        if (jumpingCheck < 0)
-        if (movingStep > 0)
+        if (jumpingCheck < 0 && movingStep < 0)
         {
-            //움직이고 있을 때
-
-            Vector3 movingVector = GetVector2fromDirec(direc);
-            moveX += movingVector.x * Time.deltaTime * movingSpeed;
-            moveY += movingVector.y * Time.deltaTime * movingSpeed;
-            movingCheck = 0.3f;
-        }
-        else
-        {
-            if (isMoving)
-            {               
-                //좌표 안정
-                float tmpX = (float)Math.Round(moveX);
-                float tmpY = (float)Math.Round(moveY);
-                moveX = tmpX;
-                moveY = tmpY;
-                isMoving = false;
-
+            if (isTileCheck)
+            {
                 // 다음 타일에 도착했을 때
+                isTileCheck = false;
                 CheckTile();
             }            
 
             if (Mathf.Abs(hCheck) > 0.1f || Mathf.Abs(vCheck) > 0.1f)//키 입력이 있을 때
             {                               
-                if (movingStun < 0)
+                if (inputStun < 0)
                 if (movingCheck < 0)
                 {
                     float tmpDirec = direc;
-                    direc = SwitchDirec(vCheck, hCheck, 0, direc); //저항값을 0을 줘서 가볍게 눌러도 방향 바뀌게
+                    direc = GetDirecFromVector(vCheck, hCheck, 0, direc); //저항값을 0을 줘서 가볍게 눌러도 방향 바뀌게
 
                     //멈춰 있을 때 
                     //1. 같은 방향으로 키를 눌렀을 경우 가볍게 눌러도 나아감
@@ -112,13 +82,13 @@ public class Player : MonoBehaviour
                     }
                     else //2. 방향이 바뀌었을 경우 0.n초 스턴 걸림
                     {
-                        movingStun = 0.12f;
-                        movingStunImageIndex = 0.12f;
+                        inputStun = 0.12f;
+                        inputStunImageIndex = 0.12f;
                     }                    
                 }
                 else
                 {
-                    direc = SwitchDirec(vCheck, hCheck, 0.7f, direc); //저항값을 0.7을 줘서 떼고 있는 키는 무시
+                    direc = GetDirecFromVector(vCheck, hCheck, 0.7f, direc); //저항값을 0.7을 줘서 떼고 있는 키는 무시
 
                     if (Mathf.Abs(hCheck) > 0.7f || Mathf.Abs(vCheck) > 0.7f)//살짝 누른 키는 인식 안되게
                     {
@@ -129,7 +99,7 @@ public class Player : MonoBehaviour
             }
         }      
 
-        int SwitchDirec(float v, float h, float resist, int direc)
+        int GetDirecFromVector(float v, float h, float resist, int direc)
         {
             if (v > resist) return 2;
             if (v < -resist) return 0;
@@ -143,15 +113,16 @@ public class Player : MonoBehaviour
         {
             if (!CheckCollision())
             {
+                isTileCheck = true;
                 MoveOrder(direc);
             }
             else
             {
-                movingStun = 0.4f;
-                movingStunImageIndex = 0.2f;
+                inputStun = 0.4f;
+                inputStunImageIndex = 0.2f;
+                Walk();
             } 
         }       
-
 
         bool CheckCollision()
         {
@@ -192,7 +163,8 @@ public class Player : MonoBehaviour
             PotalInfo.Potal potal = potalInfo.GetPotal(potalId);
 
             direc = potal.direc;
-            transform.position = potal.pos;
+            moveX = potal.pos.x;
+            moveY = potal.pos.y;
             MoveOrder(direc);
         }
 
@@ -218,29 +190,10 @@ public class Player : MonoBehaviour
         void Jump()
         {
             jumpingCheck = 0.5f;
+            inputStun = 0.7f;
         }
-    }
-
-    public void DirecOrder(int direc)
-    {
-        this.direc = direc;
-    }
-
-    public void MoveOrder(int direc)
-    {
-        this.direc = direc;
-        movingStep = 1f / movingSpeed;//출발
-        isMoving = true;
-
-        if (movingWalk == 1)//왼발 오른발
-        {
-            movingWalk = 2;
-        }
-        else
-        {
-            movingWalk = 1;
-        }
-    }
+    }   
+    
 
     private void JumpUpdate()
     {
@@ -258,59 +211,32 @@ public class Player : MonoBehaviour
         {
             moveZ = 0f;
         }
-    }
+    }  
 
-    private Vector2 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
+
+    private void SpriteUpdate()
     {
-        switch (direc)
-        {
-            case 0:
-                return new Vector2(0f, -1f);
-
-            case 1:
-                return new Vector2(-1f, 0f);
-
-            case 2:
-                return new Vector2(0f, 1f);
-
-            case 3:
-                return new Vector2(1f, 0f);
-
-            default: return new Vector2(0f, 1f);
-        }
-    }
-
-
-    private void SetSprite()
-    {        
         if (jumpingCheck < 0)
         {
-            if (movingStunImageIndex < 0)
+            if (inputStunImageIndex < 0)
             {
-                if (movingStep < 0)//멈춰 있을 경우
+                if (movingStep < 0 || movingStep > 0.5f / movingSpeed)//멈춰 있을 경우
                 {
-                    spriteRenderer.sprite = sprites[direc * 3];
+                    isSpriteMov = false;
                 }
                 else
                 {
-                    int tmpIndex = 0;
-
-                    if (movingStep < 0.5f / movingSpeed)
-                    {
-                        tmpIndex = movingWalk;
-                    }
-
-                    spriteRenderer.sprite = sprites[direc * 3 + tmpIndex];
+                    isSpriteMov = true;
                 }
             }
             else//방향 전환 시 움찔
             {
-                spriteRenderer.sprite = sprites[direc * 3 + 1];
+                isSpriteMov = true;
             }
         }
         else
         {
-            spriteRenderer.sprite = sprites[direc * 3 + 1];
+            isSpriteMov = true;
         }
          
     }
