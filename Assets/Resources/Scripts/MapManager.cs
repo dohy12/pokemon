@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PotalInfo;
 
 public class MapManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         SetPotalInfo();
-        SetPotalInvisible();
+        SetEventInvisible();
     }
 
 
@@ -26,17 +27,20 @@ public class MapManager : MonoBehaviour
     }
 
 
-    private void SetPotalInvisible()
+    private void SetEventInvisible()
     {
-        Transform potals = transform.GetChild(2); 
+        Transform events = transform.GetChild(2); 
 
-        for (int i=0;i< potals.childCount; i++)
+        for (int i=0; i< events.childCount; i++)
         {
-            Transform child = potals.GetChild(i);
-            SpriteRenderer childSprite = child.GetComponent<SpriteRenderer>();
-            childSprite.enabled = false;
+            Transform parent = events.GetChild(i);
+            for (int j = 0; j < parent.childCount; j++)
+            {
+                Transform child = parent.GetChild(j);
+                SpriteRenderer childSprite = child.GetComponent<SpriteRenderer>();
+                childSprite.enabled = false;
+            }
         }
-        
     }
 
     private void SetPotalInfo()

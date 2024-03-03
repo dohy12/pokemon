@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
 
     public int direc = 0;//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
 
+    private float moveX = 0;
+    private float moveY = 0;
+    private float moveZ = 0;
+
     private float movingCheck = 0;
     private float movingStep = 0; 
     private float movingStun = 0;
@@ -19,6 +23,8 @@ public class Player : MonoBehaviour
     private float movingSpeed = 5f; //이동속도
     private int movingWalk = 2;//왼발, 오른발
     private bool isMoving = false;
+
+    private float jumpingCheck = 0;
 
     private SpriteRenderer spriteRenderer;
     public Sprite[] sprites;
@@ -42,12 +48,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveCheck();
+        MoveUpdate();
+        JumpUpdate();
 
         SetSprite();
+
+        transform.position = new Vector3(moveX, moveY + moveZ, 0);
     }    
 
-    private void MoveCheck()
+    private void MoveUpdate()
     {
         movingCheck -= Time.deltaTime;
         movingStep -= Time.deltaTime;
@@ -57,12 +66,14 @@ public class Player : MonoBehaviour
         float hCheck = input.horizontal;
         float vCheck = input.vertical;
 
+        if (jumpingCheck < 0)
         if (movingStep > 0)
         {
             //움직이고 있을 때
 
             Vector3 movingVector = GetVector2fromDirec(direc);
-            transform.position += movingVector * Time.deltaTime * movingSpeed;
+            moveX += movingVector.x * Time.deltaTime * movingSpeed;
+            moveY += movingVector.y * Time.deltaTime * movingSpeed;
             movingCheck = 0.3f;
         }
         else
@@ -70,9 +81,10 @@ public class Player : MonoBehaviour
             if (isMoving)
             {               
                 //좌표 안정
-                float tmpX = (float)Math.Round(transform.position.x);
-                float tmpY = (float)Math.Round(transform.position.y);
-                transform.position = new Vector3(tmpX, tmpY, 0); 
+                float tmpX = (float)Math.Round(moveX);
+                float tmpY = (float)Math.Round(moveY);
+                moveX = tmpX;
+                moveY = tmpY;
                 isMoving = false;
 
                 // 다음 타일에 도착했을 때
@@ -125,27 +137,7 @@ public class Player : MonoBehaviour
             if (h > resist) return 3;
 
             return direc;
-        }
-
-        Vector2 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
-        {
-            switch (direc)
-            {
-                case 0:
-                    return new Vector2(0f, -1f);
-
-                case 1:
-                    return new Vector2(-1f, 0f);
-
-                case 2:
-                    return new Vector2(0f, 1f);
-
-                case 3:
-                    return new Vector2(1f, 0f);
-
-                default: return new Vector2(0f, 1f);
-            }
-        }  
+        }         
 
         void StartMove()
         {
@@ -158,23 +150,7 @@ public class Player : MonoBehaviour
                 movingStun = 0.4f;
                 movingStunImageIndex = 0.2f;
             } 
-        }
-
-        void MoveOrder(int direc)
-        {
-            this.direc = direc;
-            movingStep = 1f / movingSpeed;//출발
-            isMoving = true;
-
-            if (movingWalk == 1)//왼발 오른발
-            {
-                movingWalk = 2;
-            }
-            else
-            {
-                movingWalk = 1;
-            }
-        }
+        }       
 
 
         bool CheckCollision()
@@ -195,6 +171,7 @@ public class Player : MonoBehaviour
             {
                 if (hits[i].transform.CompareTag("Block"))
                 {
+                    CheckJump(direcVector);
                     return true;
                 }                    
             }            
@@ -218,33 +195,123 @@ public class Player : MonoBehaviour
             transform.position = potal.pos;
             MoveOrder(direc);
         }
-    }  
+
+        void CheckJump(Vector2 direcVector)
+        {
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direcVector, 0.01f);
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform.CompareTag("Jump"))
+                {
+                    RaycastHit2D[] hits2 = Physics2D.RaycastAll(transform.position + (Vector3)direcVector, direcVector, 0.01f);
+                    for (int j = 0; j < hits2.Length; j++)
+                    {
+                        if (hits[j].transform.CompareTag("Jump"))
+                        {
+                            Jump();
+                        }
+                    }
+                }
+            }
+        }
+
+        void Jump()
+        {
+            jumpingCheck = 0.5f;
+        }
+    }
+
+    public void DirecOrder(int direc)
+    {
+        this.direc = direc;
+    }
+
+    public void MoveOrder(int direc)
+    {
+        this.direc = direc;
+        movingStep = 1f / movingSpeed;//출발
+        isMoving = true;
+
+        if (movingWalk == 1)//왼발 오른발
+        {
+            movingWalk = 2;
+        }
+        else
+        {
+            movingWalk = 1;
+        }
+    }
+
+    private void JumpUpdate()
+    {
+        jumpingCheck -= Time.deltaTime;
+
+        if (jumpingCheck > 0)
+        {
+            moveZ = -16 * jumpingCheck * jumpingCheck + 8 * jumpingCheck;
+
+            Vector3 movingVector = GetVector2fromDirec(direc);
+            moveX += movingVector.x * Time.deltaTime * 4;
+            moveY += movingVector.y * Time.deltaTime * 4;
+        }
+        else
+        {
+            moveZ = 0f;
+        }
+    }
+
+    private Vector2 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
+    {
+        switch (direc)
+        {
+            case 0:
+                return new Vector2(0f, -1f);
+
+            case 1:
+                return new Vector2(-1f, 0f);
+
+            case 2:
+                return new Vector2(0f, 1f);
+
+            case 3:
+                return new Vector2(1f, 0f);
+
+            default: return new Vector2(0f, 1f);
+        }
+    }
+
 
     private void SetSprite()
     {        
-        if (movingStunImageIndex < 0){
-            if (movingStep <0)//멈춰 있을 경우
-            {
-                spriteRenderer.sprite = sprites[direc*3];
-            }
-            else
-            {
-                int tmpIndex = 0;
-
-                if (movingStep < 0.5f/movingSpeed)
-                {
-                    tmpIndex = movingWalk;
-                }                
-
-                spriteRenderer.sprite = sprites[direc*3 + tmpIndex];
-            }
-        }
-        else//방향 전환 시 움찔
+        if (jumpingCheck < 0)
         {
-            spriteRenderer.sprite = sprites[direc*3 + 1];
-        }
-        
+            if (movingStunImageIndex < 0)
+            {
+                if (movingStep < 0)//멈춰 있을 경우
+                {
+                    spriteRenderer.sprite = sprites[direc * 3];
+                }
+                else
+                {
+                    int tmpIndex = 0;
 
-        
+                    if (movingStep < 0.5f / movingSpeed)
+                    {
+                        tmpIndex = movingWalk;
+                    }
+
+                    spriteRenderer.sprite = sprites[direc * 3 + tmpIndex];
+                }
+            }
+            else//방향 전환 시 움찔
+            {
+                spriteRenderer.sprite = sprites[direc * 3 + 1];
+            }
+        }
+        else
+        {
+            spriteRenderer.sprite = sprites[direc * 3 + 1];
+        }
+         
     }
 }
