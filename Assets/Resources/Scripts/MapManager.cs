@@ -28,14 +28,13 @@ public class MapManager : MonoBehaviour
 
     private void SetPotalInvisible()
     {
-        for (int i=0;i< transform.childCount; i++)
+        Transform potals = transform.GetChild(2); 
+
+        for (int i=0;i< potals.childCount; i++)
         {
-            Transform child = transform.GetChild(i);
-            if (child.CompareTag("Potal"))
-            {
-                SpriteRenderer childSprite = child.GetComponent<SpriteRenderer>();
-                childSprite.enabled = false;
-            }
+            Transform child = potals.GetChild(i);
+            SpriteRenderer childSprite = child.GetComponent<SpriteRenderer>();
+            childSprite.enabled = false;
         }
         
     }
@@ -47,6 +46,24 @@ public class MapManager : MonoBehaviour
 
         potalInfo.AddPotal(3, new Vector2(-64f, 37f), 0); //방안 들어감
         potalInfo.AddPotal(4, new Vector2(-61f, 25f), 0); //방안 나올때
+
+        potalInfo.AddPotal(5, new Vector2(-48f, 17f), 2); //연구소 들어감
+        potalInfo.AddPotal(6, new Vector2(-4f, 5f), 0); //연구소 나올때
+
+        potalInfo.AddPotal(7, new Vector2(-14f, 17f), 2); //마트1 들어감
+        potalInfo.AddPotal(8, new Vector2(-7f, -5f), 0); //마트1 나올때
+
+        potalInfo.AddPotal(9, new Vector2(-30f, 17f), 2); //포켓몬 센터1 들어감
+        potalInfo.AddPotal(10, new Vector2(0f, -5f), 0); //포켓몬 센터1 나올때
+
+        potalInfo.AddPotal(11, new Vector2(5f, 17f), 2); //체육관 들어감
+        potalInfo.AddPotal(12, new Vector2(-60f, -3f), 0); //체육관 나올때
+
+        potalInfo.AddPotal(13, new Vector2(-14f, 30f), 2); //마트2 들어감
+        potalInfo.AddPotal(14, new Vector2(-60f, 5f), 0); //마트2 나올때
+
+        potalInfo.AddPotal(15, new Vector2(-30f, 30f), 2); //포켓몬 센터2 들어감
+        potalInfo.AddPotal(16, new Vector2(-54f, 5f), 0); //포켓몬 센터2 나올때
     }
 
 }
