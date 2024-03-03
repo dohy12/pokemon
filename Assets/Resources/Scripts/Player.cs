@@ -16,6 +16,11 @@ public class Player : Unit
     private bool isTileCheck = false;
 
     private MapManager mapManager;
+    private GameObject shadow;
+    private SpriteRenderer enterGrassRenderer;
+    public Sprite[] enterGrassSprites;
+    private float enterGrassCheck;
+    private bool isEnterGrass = false;
 
     void Awake()
     {
@@ -25,10 +30,17 @@ public class Player : Unit
     // Start is called before the first frame update
     void Start()
     {
+        UnitStart();
+
         input = GlobalInput.globalInput;
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
         mapManager = MapManager.mapManager;
+
+        shadow = transform.Find("Shadow").gameObject;
+        shadow.SetActive(false);
+
+        enterGrassRenderer = transform.Find("EnterGrass").GetComponent<SpriteRenderer>();
+        enterGrassRenderer.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,13 +51,14 @@ public class Player : Unit
         JumpUpdate();
         SpriteUpdate();
 
-        SetSprite();        
+        SetSprite();
+
+        EnterGrassUpdate();
     }    
 
 
     private void InputUpdate()
-    {
-        
+    {        
         inputStun -= Time.deltaTime;
         inputStunImageIndex -= Time.deltaTime;
 
@@ -127,7 +140,15 @@ public class Player : Unit
         bool CheckCollision()
         {
             Vector2 direcVector = GetVector2fromDirec(direc);
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direcVector, 1f);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + (Vector3)direcVector, direcVector, 0.01f);
+            
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform.CompareTag("Grass"))
+                {
+                    EnterGrass();
+                }
+            }
 
             for (int i = 0; i < hits.Length; i++)
             {
@@ -148,6 +169,13 @@ public class Player : Unit
             }            
 
             return false;
+        }
+
+        void EnterGrass()
+        {
+            enterGrassCheck = 3f;
+            enterGrassRenderer.gameObject.SetActive(true);
+            isEnterGrass = true;
         }
 
         void CheckTile()
@@ -178,25 +206,28 @@ public class Player : Unit
                     RaycastHit2D[] hits2 = Physics2D.RaycastAll(transform.position + (Vector3)direcVector, direcVector, 0.01f);
                     for (int j = 0; j < hits2.Length; j++)
                     {
-                        if (hits[j].transform.CompareTag("Jump"))
+                        if (hits2[j].transform.CompareTag("Jump"))
                         {
                             Jump();
+                            break;
                         }
                     }
                 }
             }
-        }
+        }        
+    }
 
-        void Jump()
-        {
-            jumpingCheck = 0.5f;
-            inputStun = 0.7f;
-        }
-    }   
-    
+    public void Jump()
+    {
+        jumpingCheck = 0.5f;
+        inputStun = 0.7f;
+        shadow.SetActive(true);
+    }
+
 
     private void JumpUpdate()
     {
+        
         jumpingCheck -= Time.deltaTime;
 
         if (jumpingCheck > 0)
@@ -206,10 +237,13 @@ public class Player : Unit
             Vector3 movingVector = GetVector2fromDirec(direc);
             moveX += movingVector.x * Time.deltaTime * 4;
             moveY += movingVector.y * Time.deltaTime * 4;
+
+            shadow.transform.position = new Vector3(moveX, -0.4f + moveY, 0f);
         }
         else
         {
             moveZ = 0f;
+            shadow.SetActive(false);
         }
     }  
 
@@ -239,5 +273,23 @@ public class Player : Unit
             isSpriteMov = true;
         }
          
+    }
+
+    private void EnterGrassUpdate()
+    {
+        enterGrassCheck -= Time.deltaTime * 12;
+        if (enterGrassCheck > 0)
+        {
+            int spriteIndex = Mathf.FloorToInt(3 - enterGrassCheck);
+            enterGrassRenderer.sprite = enterGrassSprites[spriteIndex];
+        }
+        else
+        {
+            if (isEnterGrass)
+            {
+                enterGrassRenderer.gameObject.SetActive(false);
+                isEnterGrass = false;
+            }
+        }
     }
 }

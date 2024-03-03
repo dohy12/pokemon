@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using static PotalInfo;
 
 public class MapManager : MonoBehaviour
@@ -29,17 +30,26 @@ public class MapManager : MonoBehaviour
 
     private void SetEventInvisible()
     {
-        Transform events = transform.GetChild(2); 
+        Transform events = transform.Find("Events"); 
 
         for (int i=0; i< events.childCount; i++)
         {
             Transform parent = events.GetChild(i);
-            for (int j = 0; j < parent.childCount; j++)
+            if (!parent.name.Equals("GrassEvents"))
             {
-                Transform child = parent.GetChild(j);
-                SpriteRenderer childSprite = child.GetComponent<SpriteRenderer>();
-                childSprite.enabled = false;
+                for (int j = 0; j < parent.childCount; j++)
+                {
+                    Transform child = parent.GetChild(j);
+                    SpriteRenderer childSprite = child.GetComponent<SpriteRenderer>();
+                    childSprite.enabled = false;
+                }
             }
+            else
+            {
+                TilemapRenderer tilemapRenderer = parent.GetComponent<TilemapRenderer>();
+                tilemapRenderer.enabled = false;
+            }
+            
         }
     }
 
@@ -51,7 +61,7 @@ public class MapManager : MonoBehaviour
         potalInfo.AddPotal(3, new Vector2(-64f, 37f), 0); //방안 들어감
         potalInfo.AddPotal(4, new Vector2(-61f, 25f), 0); //방안 나올때
 
-        potalInfo.AddPotal(5, new Vector2(-48f, 17f), 2); //연구소 들어감
+        potalInfo.AddPotal(5, new Vector2(-47f, 17f), 2); //연구소 들어감
         potalInfo.AddPotal(6, new Vector2(-4f, 5f), 0); //연구소 나올때
 
         potalInfo.AddPotal(7, new Vector2(-14f, 17f), 2); //마트1 들어감

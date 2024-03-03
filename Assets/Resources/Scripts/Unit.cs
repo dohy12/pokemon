@@ -33,6 +33,14 @@ public class Unit : MonoBehaviour
         
     }
 
+    public void UnitStart()
+    {
+        moveX = transform.position.x;
+        moveY = transform.position.y;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public void DirecOrder(int direc)
     {
         this.direc = direc;
