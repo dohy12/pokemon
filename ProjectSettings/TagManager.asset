@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Block
   - Potal
+  - Jump
   layers:
   - Default
   - TransparentFX
