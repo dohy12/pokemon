@@ -17,6 +17,14 @@ public class Camera : MonoBehaviour
     {
         float x = player.transform.position.x;
         float y = player.transform.position.y;
-        transform.position = new Vector3(x,y,-10f);
+        transform.position = new Vector3(x, y, -10f);
     }
+
+    private void LateUpdate()
+    {
+        float x = player.transform.position.x;
+        float y = player.transform.position.y;
+        transform.position = new Vector3(x, y, -10f);
+    }
+
 }
