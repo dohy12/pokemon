@@ -20,6 +20,7 @@ public class Unit : MonoBehaviour
     public Sprite[] sprites;
 
     public bool isSpriteMov = false;
+    public Dictionary<int, Vector2> direcToVector;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,17 @@ public class Unit : MonoBehaviour
         moveY = transform.position.y;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        SetDirecVector();
+    }
+
+    private void SetDirecVector()
+    {
+        direcToVector = new Dictionary<int, Vector2>();
+        direcToVector.Add(0, new Vector2(0f, -1f));
+        direcToVector.Add(1, new Vector2(-1f, 0f));
+        direcToVector.Add(2, new Vector2(0f, 1f));
+        direcToVector.Add(3, new Vector2(1f, 0f));
     }
 
     public void DirecOrder(int direc)
@@ -80,27 +92,11 @@ public class Unit : MonoBehaviour
 
     public Vector2 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
     {
-        switch (direc)
-        {
-            case 0:
-                return new Vector2(0f, -1f);
-
-            case 1:
-                return new Vector2(-1f, 0f);
-
-            case 2:
-                return new Vector2(0f, 1f);
-
-            case 3:
-                return new Vector2(1f, 0f);
-
-            default: return new Vector2(0f, 1f);
-        }
+        return direcToVector[direc];
     }
 
     public void MoveUpdate()
-    {
-        movingCheck -= Time.deltaTime;
+    {        
         movingStep -= Time.deltaTime;
         if (movingStep > 0)
         {

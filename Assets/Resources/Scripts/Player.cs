@@ -58,7 +58,8 @@ public class Player : Unit
 
 
     private void InputUpdate()
-    {        
+    {
+        movingCheck -= Time.deltaTime;
         inputStun -= Time.deltaTime;
         inputStunImageIndex -= Time.deltaTime;
 
