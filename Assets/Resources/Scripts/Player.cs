@@ -102,9 +102,9 @@ public class Player : Unit
                 }
                 else
                 {
-                    direc = GetDirecFromVector(vCheck, hCheck, 0.7f, direc); //저항값을 0.7을 줘서 떼고 있는 키는 무시
+                    direc = GetDirecFromVector(vCheck, hCheck, 0.3f, direc); //저항값을 0.7을 줘서 떼고 있는 키는 무시
 
-                    if (Mathf.Abs(hCheck) > 0.7f || Mathf.Abs(vCheck) > 0.7f)//살짝 누른 키는 인식 안되게
+                    if (Mathf.Abs(hCheck) > 0.5f || Mathf.Abs(vCheck) > 0.5f)//살짝 누른 키는 인식 안되게
                     {
                         StartMove();
                     }
@@ -115,12 +115,31 @@ public class Player : Unit
 
         int GetDirecFromVector(float v, float h, float resist, int direc)
         {
-            if (v > resist) return 2;
-            if (v < -resist) return 0;
-            if (h < -resist) return 1;
-            if (h > resist) return 3;
+            var vValue = MathF.Abs(v);
+            var hValue = MathF.Abs(h);
+            if (vValue > resist || hValue > resist)
+            {
+                if (vValue > hValue)
+                {
+                    if (v > 0)
+                        return 2;
+                    else
+                        return 0;
+                }
+                else
+                {
+                    if (h > 0)
+                        return 3;
+                    else
+                        return 1;
+                }
+            }
+            else
+            {
+                return direc;
+            }
 
-            return direc;
+            
         }         
 
         void StartMove()
