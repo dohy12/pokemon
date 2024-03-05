@@ -66,6 +66,9 @@ public class Player : Unit
         float hCheck = input.horizontal;
         float vCheck = input.vertical;
 
+        float hCheckRaw = input.horizontalRaw;
+        float vCheckRaw = input.verticalRaw;
+
         if (jumpingCheck < 0 && movingStep < 0)
         {
             if (isTileCheck)
@@ -74,52 +77,45 @@ public class Player : Unit
                 isTileCheck = false;
                 CheckTile();
             }            
-
-            if (Mathf.Abs(hCheck) > 0.1f || Mathf.Abs(vCheck) > 0.1f)//키 입력이 있을 때
-            {                               
-                if (inputStun < 0)
+                           
+            if (inputStun < 0)
+            {
                 if (movingCheck < 0)
                 {
                     float tmpDirec = direc;
-                    direc = GetDirecFromVector(vCheck, hCheck, 0, direc); //저항값을 0을 줘서 가볍게 눌러도 방향 바뀌게
+                    direc = GetDirecFromVector(vCheck, hCheck, direc); //방향 전환
 
-                    //멈춰 있을 때 
-                    //1. 같은 방향으로 키를 눌렀을 경우 가볍게 눌러도 나아감
-                    //2. 방향이 바뀌었을 경우 0.n초 스턴 걸림
-
-                    if (tmpDirec == direc)//1. 같은 방향으로 키를 눌렀을 경우 가볍게 눌러도 나아감
+                    if (tmpDirec != direc)
                     {
-                        if (Mathf.Abs(hCheck) > 0.3f || Mathf.Abs(vCheck) > 0.3f)//살짝 누른 키는 인식 안되게
-                        {
-                            StartMove();
-                        }
-                    }
-                    else //2. 방향이 바뀌었을 경우 0.n초 스턴 걸림
-                    {
-                        inputStun = 0.12f;
                         inputStunImageIndex = 0.12f;
-                    }                    
+                    }
+
+                    if (Mathf.Abs(hCheck) > 0.3f || Mathf.Abs(vCheck) > 0.3f)
+                    {
+                        StartMove();
+                    }                            
                 }
                 else
                 {
-                    direc = GetDirecFromVector(vCheck, hCheck, 0.3f, direc); //저항값을 0.7을 줘서 떼고 있는 키는 무시
-
-                    if (Mathf.Abs(hCheck) > 0.5f || Mathf.Abs(vCheck) > 0.5f)//살짝 누른 키는 인식 안되게
+                    direc = GetDirecFromVector(vCheckRaw, hCheckRaw, direc); //방향 전환
+                    if (hCheckRaw !=0 || vCheckRaw != 0)
                     {
                         StartMove();
                     }
                 }
-
             }
+            
         }      
 
-        int GetDirecFromVector(float v, float h, float resist, int direc)
+        int GetDirecFromVector(float v, float h, int direc)
         {
             var vValue = MathF.Abs(v);
             var hValue = MathF.Abs(h);
-            if (vValue > resist || hValue > resist)
+
+
+            if (vValue > 0 || hValue > 0)
             {
-                if (vValue > hValue)
+                if (vValue >= hValue)
                 {
                     if (v > 0)
                         return 2;
@@ -151,9 +147,9 @@ public class Player : Unit
             }
             else
             {
-                inputStun = 0.4f;
-                inputStunImageIndex = 0.2f;
-                Walk();
+                inputStun = 0.3f;
+                inputStunImageIndex = 0.15f;
+                Walk();//왼발 오른발 교차
             } 
         }       
 

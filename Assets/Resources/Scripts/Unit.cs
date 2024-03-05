@@ -105,7 +105,7 @@ public class Unit : MonoBehaviour
             Vector3 movingVector = GetVector2fromDirec(direc);
             moveX += movingVector.x * Time.deltaTime * movingSpeed;
             moveY += movingVector.y * Time.deltaTime * movingSpeed;
-            movingCheck = 0.3f;
+            movingCheck = 0.2f;
         }
         else
         {
