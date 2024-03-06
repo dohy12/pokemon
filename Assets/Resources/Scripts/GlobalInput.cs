@@ -11,8 +11,7 @@ public class GlobalInput : MonoBehaviour
     public float verticalRaw { get; private set; }
     public float horizontalRaw { get; private set; }
 
-
-    public bool keyUpCheck;
+    public bool aButtonDown { get; private set; }
 
     void Awake()
     {
@@ -33,6 +32,8 @@ public class GlobalInput : MonoBehaviour
 
         verticalRaw = Input.GetAxisRaw("Vertical");
         horizontalRaw = Input.GetAxisRaw("Horizontal");
+
+        aButtonDown = Input.GetButtonDown("AButton");
 
     }
 }
