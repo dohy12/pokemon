@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PotalInfo;
 
 public class Player : Unit
 {
@@ -14,6 +15,8 @@ public class Player : Unit
     public float inputStunImageIndex = 0;
     private float jumpingCheck = 0;
     private bool isTileCheck = false;
+    private bool isGoPotal = false;
+    private Vector3 goPotalVector;
 
     private MapManager mapManager;
     private GameObject shadow;
@@ -21,6 +24,8 @@ public class Player : Unit
     public Sprite[] enterGrassSprites;
     private float enterGrassCheck;
     private bool isEnterGrass = false;
+
+    private UIManager uiManager;
 
     void Awake()
     {
@@ -41,6 +46,8 @@ public class Player : Unit
 
         enterGrassRenderer = transform.Find("EnterGrass").GetComponent<SpriteRenderer>();
         enterGrassRenderer.gameObject.SetActive(false);
+
+        uiManager = UIManager.instance;
     }
 
     // Update is called once per frame
@@ -196,7 +203,14 @@ public class Player : Unit
 
         void CheckTile()
         {
-
+            if (isGoPotal)
+            {
+                direc = (int)goPotalVector.z;
+                moveX = goPotalVector.x;
+                moveY = goPotalVector.y;
+                MoveOrder(direc);
+                isGoPotal = false;
+            }
         }
 
         void GoPotal(string potalName)
@@ -206,10 +220,12 @@ public class Player : Unit
 
             PotalInfo.Potal potal = potalInfo.GetPotal(potalId);
 
-            direc = potal.direc;
-            moveX = potal.pos.x;
-            moveY = potal.pos.y;
+            isTileCheck = true;
+            isGoPotal = true;
+            goPotalVector = new Vector3(potal.pos.x, potal.pos.y, potal.direc);
             MoveOrder(direc);
+
+            uiManager.ActiveBlackOut(movingSpeed);
         }
 
         void CheckJump(Vector2 direcVector)

@@ -9,7 +9,7 @@ using UnityEngine.XR;
 
 public class DialogManager : MonoBehaviour
 {
-    public static DialogManager manger;
+    public static DialogManager instance;
     Dictionary<int, string[]> msgDictionary;
     RectTransform dialogTransform;
     TMP_Text textMesh;
@@ -32,7 +32,7 @@ public class DialogManager : MonoBehaviour
 
     private void Awake()
     {
-        manger = GetComponent<DialogManager>();
+        instance = this;
         dialogTransform = GetComponent<RectTransform>();
         textMesh = transform.GetChild(0).GetComponent<TMP_Text>();
         dialogCursor = transform.Find("Cursor").gameObject;
