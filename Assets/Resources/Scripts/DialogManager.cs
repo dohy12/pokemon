@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
@@ -11,10 +13,18 @@ public class DialogManager : MonoBehaviour
     Dictionary<int, string[]> msgDictionary;
     RectTransform dialogTransform;
     TMP_Text textMesh;
-    int page = 0;
     bool isActive = false;
     float posY = 0;
     float posTime = 0f;
+    
+    int dialogMsgId = 0;
+    int dialogMsgPage = 0;
+    int dialogMsgMaxPage = 0;
+    string dialogMsg = "";
+    float dialogMsgCheck = 0f;
+    int dialogPreMsgCheck = 0;
+    float dialogMsgSpeed = 13f;
+    bool dialogMsgDone = false;
 
     private GlobalInput input;
 
@@ -29,31 +39,87 @@ public class DialogManager : MonoBehaviour
     void Start()
     {        
         init();
-        ShowMsg(0);
+        SetMsgById(0);
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateUi();
+        DialogUpdate();
 
         if (input.aButtonDown)
         {
-            if (!isActive)
+            PushAButton();
+        }
+    }
+
+    private void PushAButton()
+    {
+        if (isActive)
+        {
+            if (dialogMsgDone)
             {
-                Active();
+                if (!GoNextPage())
+                {
+                    UnActive();
+                }
             }
             else
             {
-                UnActive();
+                dialogMsgCheck = dialogMsg.Length;
+                dialogMsgDone = true;
+                ShowMsg(dialogMsg);
+            }
+        }
+        else
+        {
+            Active(0);
+        }
+    }
+
+    private bool GoNextPage()
+    {
+        if (dialogMsgPage < dialogMsgMaxPage)
+        {
+            dialogMsgPage++;
+            SetMsg();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    private void DialogUpdate()
+    {
+        if (isActive)
+        {
+            if (dialogMsg.Length > dialogMsgCheck)
+            {
+                dialogMsgCheck += Time.deltaTime * dialogMsgSpeed;
+                var tmpDialogMsgCheck = Mathf.FloorToInt(dialogMsgCheck);
+                if (tmpDialogMsgCheck> dialogPreMsgCheck)
+                {
+                    dialogPreMsgCheck = tmpDialogMsgCheck;
+                    ShowMsg(dialogMsg.Substring(0, dialogPreMsgCheck));
+                }
+            }
+            else
+            {
+                dialogMsgDone = true;
             }
         }
     }
 
-    private void Active()
+    public void Active(int msgId)
     {
         posTime = 0f;
         isActive = true;
+
+        SetMsgById(msgId);
     }
 
     private void UnActive()
@@ -62,15 +128,26 @@ public class DialogManager : MonoBehaviour
         isActive = false;
     }
 
-    public void ShowMsg(int msgId)
+    private void SetMsgById(int msgId)
     {
-        page = 0;
-        SetMsg(msgId, page);
+        dialogMsgPage = 0;
+        dialogMsgId = msgId;
+        dialogMsgMaxPage = msgDictionary[dialogMsgId].Length - 1;
+        SetMsg();        
     }
 
-    private void SetMsg(int msgId, int page)
+    private void SetMsg()
     {
-        textMesh.text = msgDictionary[msgId][page];
+        ShowMsg("");
+        dialogMsg = msgDictionary[dialogMsgId][dialogMsgPage];
+        dialogMsgCheck = 0f;
+        dialogPreMsgCheck = 0;
+        dialogMsgDone = false;
+    }
+
+    private void ShowMsg(string msg)
+    {
+        textMesh.text = msg;
     }
 
     private void init()
