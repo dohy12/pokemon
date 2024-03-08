@@ -16,15 +16,17 @@ public class DialogManager : MonoBehaviour
     bool isActive = false;
     float posY = 0;
     float posTime = 0f;
-    
-    int dialogMsgId = 0;
-    int dialogMsgPage = 0;
-    int dialogMsgMaxPage = 0;
-    string dialogMsg = "";
-    float dialogMsgCheck = 0f;
-    int dialogPreMsgCheck = 0;
-    float dialogMsgSpeed = 13f;
-    bool dialogMsgDone = false;
+
+    private int dialogMsgId = 0;
+    private int dialogMsgPage = 0;
+    private int dialogMsgMaxPage = 0;
+    private string dialogMsg = "";
+    private float dialogMsgCheck = 0f;
+    private int dialogPreMsgCheck = 0;
+    private float dialogMsgSpeed = 20f;
+    private bool dialogMsgDone = false;
+
+    private GameObject dialogCursor;
 
     private GlobalInput input;
 
@@ -33,6 +35,7 @@ public class DialogManager : MonoBehaviour
         manger = GetComponent<DialogManager>();
         dialogTransform = GetComponent<RectTransform>();
         textMesh = transform.GetChild(0).GetComponent<TMP_Text>();
+        dialogCursor = transform.Find("Cursor").gameObject;
     }
 
     // Start is called before the first frame update
@@ -69,6 +72,7 @@ public class DialogManager : MonoBehaviour
             {
                 dialogMsgCheck = dialogMsg.Length;
                 dialogMsgDone = true;
+                dialogCursor.SetActive(true);
                 ShowMsg(dialogMsg);
             }
         }
@@ -110,6 +114,7 @@ public class DialogManager : MonoBehaviour
             else
             {
                 dialogMsgDone = true;
+                dialogCursor.SetActive(true);
             }
         }
     }
@@ -143,6 +148,7 @@ public class DialogManager : MonoBehaviour
         dialogMsgCheck = 0f;
         dialogPreMsgCheck = 0;
         dialogMsgDone = false;
+        dialogCursor.SetActive(false);
     }
 
     private void ShowMsg(string msg)
