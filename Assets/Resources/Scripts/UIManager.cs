@@ -33,7 +33,6 @@ public class UIManager : MonoBehaviour
 
     public void ActiveBlackOut(float blackOutSpeed)
     {
-        Debug.Log("test");
         blackout.gameObject.SetActive(true);
         this.blackOutSpeed = blackOutSpeed;
         blackOutAlpha = 0;

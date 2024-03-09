@@ -20,7 +20,7 @@ public class Unit : MonoBehaviour
     public Sprite[] sprites;
 
     public bool isSpriteMov = false;
-    public Dictionary<int, Vector2> direcToVector;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -40,18 +40,9 @@ public class Unit : MonoBehaviour
         moveY = transform.position.y;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        SetDirecVector();
     }
 
-    private void SetDirecVector()
-    {
-        direcToVector = new Dictionary<int, Vector2>();
-        direcToVector.Add(0, new Vector2(0f, -1f));
-        direcToVector.Add(1, new Vector2(-1f, 0f));
-        direcToVector.Add(2, new Vector2(0f, 1f));
-        direcToVector.Add(3, new Vector2(1f, 0f));
-    }
+    
 
     public void DirecOrder(int direc)
     {
@@ -92,7 +83,7 @@ public class Unit : MonoBehaviour
 
     public Vector2 GetVector2fromDirec(int direc)//방향 0:아래 1:왼쪽, 2:위, 3:오른쪽
     {
-        return direcToVector[direc];
+        return GameManager.direcToVector[direc];
     }
 
     public void MoveUpdate()
@@ -121,5 +112,33 @@ public class Unit : MonoBehaviour
         }
 
         transform.position = new Vector3(moveX, moveY + moveZ, 0);
+    }
+
+    public void ActiveDialog()
+    {
+        direc = GetDirecToPlayer();
+
+
+
+    }
+
+    public int GetDirecToPlayer()
+    {
+        var pos = transform.position;
+        var playerPos = Player.player.transform.position;
+        var posDirec = playerPos - pos;
+        if (posDirec.y > 0)
+            return 2;
+        if (posDirec.y < 0)
+            return 0;
+
+        if (posDirec.x > 0)
+            return 3;
+        if (posDirec.x < 0)
+            return 1;
+
+
+
+        return 0;
     }
 }

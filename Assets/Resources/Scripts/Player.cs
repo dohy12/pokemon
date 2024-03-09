@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static PotalInfo;
+using static UnityEditor.PlayerSettings;
 
 public class Player : Unit
 {
@@ -61,6 +62,8 @@ public class Player : Unit
         SetSprite();
 
         EnterGrassUpdate();
+
+        PushAButton();
     }    
 
 
@@ -321,6 +324,40 @@ public class Player : Unit
             {
                 enterGrassRenderer.gameObject.SetActive(false);
                 isEnterGrass = false;
+            }
+        }
+    }
+
+    private void PushAButton()
+    {
+        if (movingStep < 0)
+        {
+            if (input.aButtonDown)
+            {
+                Vector2 direcVector = GetVector2fromDirec(direc);
+                CheckUnit(transform.position + (Vector3)direcVector, direcVector);
+            }
+        }
+    }
+
+    private void CheckUnit(Vector3 pos, Vector3 direcVector)
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(pos, direcVector, 0.01f);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.CompareTag("Block"))
+            {
+                var unit = hits[i].transform.GetComponent<Unit>();
+                if (unit != null)
+                {
+                    unit.ActiveDialog();
+                }
+            }
+
+            if (hits[i].transform.CompareTag("Jump"))
+            {
+                CheckUnit(pos + (Vector3)direcVector, direcVector);
             }
         }
     }

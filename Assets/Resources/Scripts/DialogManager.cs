@@ -51,7 +51,7 @@ public class DialogManager : MonoBehaviour
         UpdateUi();
         DialogUpdate();
 
-        if (input.aButtonDown)
+        if (isActive && input.aButtonDown)
         {
             PushAButton();
         }
@@ -75,10 +75,6 @@ public class DialogManager : MonoBehaviour
                 dialogCursor.SetActive(true);
                 ShowMsg(dialogMsg);
             }
-        }
-        else
-        {
-            Active(0);
         }
     }
 
