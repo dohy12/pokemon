@@ -157,7 +157,7 @@ public class Player : Unit
             }
             else
             {
-                inputStun = 0.3f;
+                inputStun = 0.25f;
                 inputStunImageIndex = 0.15f;
                 Walk();//왼발 오른발 교차
             } 
