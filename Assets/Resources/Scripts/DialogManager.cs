@@ -42,7 +42,7 @@ public class DialogManager : MonoBehaviour
     void Start()
     {        
         init();
-        SetMsgById(0);
+        
     }
 
     // Update is called once per frame
@@ -97,6 +97,7 @@ public class DialogManager : MonoBehaviour
     {
         if (isActive)
         {
+            Player.player.inputStun = 0.2f;
             if (dialogMsg.Length > dialogMsgCheck)
             {
                 dialogMsgCheck += Time.deltaTime * dialogMsgSpeed;
@@ -155,7 +156,7 @@ public class DialogManager : MonoBehaviour
     private void init()
     {
         msgDictionary = new Dictionary<int, string[]>();
-        msgDictionary.Add(0, new string[] { "안녕하세요2", "메세지창 테스트", "이곳은 포켓몬 세계\n많은 포켓몬들이 살고 있다." });
+        SetDialog();
 
         input = GlobalInput.globalInput;
     }
@@ -193,5 +194,12 @@ public class DialogManager : MonoBehaviour
     private void SetUIPos()
     {
         dialogTransform.anchoredPosition = new Vector3(0, posY - 180f, 0);
+    }
+
+    private void SetDialog()
+    {
+        msgDictionary.Add(0, new string[] { "안녕하세요2", "메세지창 테스트", "이곳은 포켓몬 세계\n많은 포켓몬들이 살고 있다." });
+        msgDictionary.Add(1, new string[] { "아 도희!\n옆집의 오박사님이 찾아왔었단다", "뭔지 너에게\n부탁할 것이 있다고 하셔서", "연구소는 집 왼쪽에 있으니 어서 찾아가 보렴" });
+        
     }
 }
