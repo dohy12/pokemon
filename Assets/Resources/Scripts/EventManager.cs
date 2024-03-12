@@ -89,6 +89,7 @@ public class EventManager : MonoBehaviour
             case 3:
                 if (eventProgress["mainEvent"] == 2)//포켓몬 안 고르고 나갈려고 할때
                 {
+                    AddEventDirec(2, Unit.Direc.DOWN, 0.1f);
                     AddEventDialog(2003);
                     AddEventMove(0, Unit.Direc.UP, 2);
 
@@ -96,6 +97,17 @@ public class EventManager : MonoBehaviour
                 }
                 break;
 
+            case 4:
+                if (eventProgress["mainEvent"] == 1)//포켓몬 안 고르고 나갈려고 할때
+                {
+                    AddEventDirec(18, Unit.Direc.LEFT, 0.2f);
+                    AddEventDirec(0, Unit.Direc.RIGHT, 0.1f);                    
+                    AddEventDialog(18002);
+                    AddEventMove(0, Unit.Direc.RIGHT, 2);
+
+                    ActiveNextEvent();
+                }
+                break;
 
             default:
                 isEvent = false;
