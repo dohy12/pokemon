@@ -10,7 +10,6 @@ public class Player : Unit
     public static Player player;
 
     private GlobalInput input;
-    public bool canControl;
 
     public float inputStun = 0;
     public float inputStunImageIndex = 0;
@@ -54,24 +53,26 @@ public class Player : Unit
     // Update is called once per frame
     void Update()
     {
+        if (ControllCheck())
+        {            
+            InputUpdate(); 
+            PushAButton();
+        }
+
         MoveUpdate();
-        InputUpdate();
         JumpUpdate();
-        SpriteUpdate();
-
-        SetSprite();
-
         EnterGrassUpdate();
 
-        PushAButton();
-    }    
+        SpriteUpdate();
+        SetSprite();
+    } 
 
 
     private void InputUpdate()
     {
         movingCheck -= Time.deltaTime;
-        inputStun -= Time.deltaTime;
-        inputStunImageIndex -= Time.deltaTime;
+        inputStun -= Time.deltaTime;    
+        
 
         float hCheck = input.horizontal;
         float vCheck = input.vertical;
@@ -213,7 +214,23 @@ public class Player : Unit
                 moveY = goPotalVector.y;
                 MoveOrder(direc);
                 isGoPotal = false;
+                isTileCheck = true;
             }
+
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.right, 0.01f);
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform.CompareTag("Event"))
+                {
+                    ActiveEvent(hits[i].transform.name);
+                }
+            }
+        }
+
+        void ActiveEvent(string eventIDstr )
+        {
+            int eventID = Int32.Parse(eventIDstr.Substring(5));
+            EventManager.instance.StartEvent(eventID);
         }
 
         void GoPotal(string potalName)
@@ -285,6 +302,8 @@ public class Player : Unit
 
     private void SpriteUpdate()
     {
+        inputStunImageIndex -= Time.deltaTime;
+
         if (jumpingCheck < 0)
         {
             if (inputStunImageIndex < 0)
@@ -335,12 +354,19 @@ public class Player : Unit
             if (input.aButtonDown)
             {
                 Vector2 direcVector = GetVector2fromDirec(direc);
-                CheckUnit(transform.position + (Vector3)direcVector, direcVector);
+                Npc npc = CheckUnit(transform.position + (Vector3)direcVector, direcVector);
+                if (npc != null)
+                {
+                    if (!npc.isMoving)
+                    {
+                        npc.ActiveDialog();
+                    }
+                }
             }
         }
     }
 
-    private void CheckUnit(Vector3 pos, Vector3 direcVector)
+    private Npc CheckUnit(Vector3 pos, Vector3 direcVector)
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(pos, direcVector, 0.01f);
 
@@ -348,17 +374,19 @@ public class Player : Unit
         {
             if (hits[i].transform.CompareTag("Block"))
             {
-                var unit = hits[i].transform.GetComponent<Unit>();
+                var unit = hits[i].transform.GetComponent<Npc>();
                 if (unit != null)
                 {
-                    unit.ActiveDialog();
+                    return unit;
                 }
             }
 
             if (hits[i].transform.CompareTag("Jump"))
             {
-                CheckUnit(pos + (Vector3)direcVector, direcVector);
+                return CheckUnit(pos + (Vector3)direcVector, direcVector);
             }
         }
+
+        return null;
     }
 }

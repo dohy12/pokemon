@@ -20,7 +20,11 @@ public class Unit : MonoBehaviour
     public Sprite[] sprites;
 
     public bool isSpriteMov = false;
-    
+    public int npcId;
+
+    public bool isEventMove = false;
+    public bool isEventPose = false;
+    public float eventPose = 0f; 
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +44,8 @@ public class Unit : MonoBehaviour
         moveY = transform.position.y;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
+    }
     
 
     public void DirecOrder(int direc)
@@ -58,7 +62,8 @@ public class Unit : MonoBehaviour
     }
 
     public void SetSprite()
-    {
+    {        
+
         if (isSpriteMov)
         {
             spriteRenderer.sprite = sprites[direc * 3 + movingWalk];
@@ -108,19 +113,34 @@ public class Unit : MonoBehaviour
                 moveX = tmpX;
                 moveY = tmpY;
                 isMoving = false;
+
+                if (isEventMove)
+                {
+                    isEventMove = false;
+                    EventManager.instance.ActiveNextEvent();
+                    
+                }
             }
         }
 
         transform.position = new Vector3(moveX, moveY + moveZ, 0);
+        EventPoseUpdate();
     }
 
-    public void ActiveDialog()
+
+    private void EventPoseUpdate()
     {
-        direc = GetDirecToPlayer();
-
-
-
+        if (isEventPose)
+        {
+            eventPose -= Time.deltaTime;
+            if (eventPose < 0)
+            {
+                isEventPose = false;
+                EventManager.instance.ActiveNextEvent();
+            }
+        }
     }
+    
 
     public int GetDirecToPlayer()
     {
@@ -140,5 +160,30 @@ public class Unit : MonoBehaviour
 
 
         return 0;
+    }
+
+
+    public enum Direc
+    {
+        DOWN = 0,
+        LEFT = 1,
+        UP = 2,
+        RIGHT = 3
+    }
+
+
+    public bool ControllCheck()
+    {       
+        if (UIManager.isUIActive)
+        {
+            return false;
+        }
+
+        if (EventManager.isEvent)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

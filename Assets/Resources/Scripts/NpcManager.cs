@@ -5,7 +5,7 @@ using UnityEngine;
 public class NpcManager : MonoBehaviour
 {
     public static NpcManager npcManager;
-    public Dictionary<int, Npc> npcs;
+    public Dictionary<int, Unit> npcs;
 
     private void Awake()
     {
@@ -15,12 +15,27 @@ public class NpcManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        npcs = new Dictionary<int, Npc>();
+        init();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+
+    void init()
+    {
+        npcs = new Dictionary<int, Unit>();
+
+        npcs.Add(0, Player.player);
+
+        for (var i=0; i< transform.childCount; i++)
+        {
+            var unit = transform.GetChild(i).GetComponent<Unit>();
+            npcs.Add(unit.npcId, unit);
+        }
         
     }
 }

@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     private bool isBlackout;
     private float blackOutAlpha;
     private float blackOutSpeed;
+    public static bool isUIActive = false;
 
     private void Awake()
     {
@@ -68,4 +69,15 @@ public class UIManager : MonoBehaviour
         }
         
     }
+
+    public bool GetUIActive()
+    {
+        return isUIActive;
+    }
+
+    public void SetUIActive(bool _isUIActive)
+    {
+        isUIActive = _isUIActive;
+    }
+
 }

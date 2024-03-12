@@ -5,7 +5,7 @@ using UnityEngine;
 public class Npc : Unit
 {
     public int npcKind;//0)안움직임,  1)방향만 바뀜, 2)배회형, 3)포켓몬
-    public int npcId;
+    
 
     private float alarm = 0;
 
@@ -14,6 +14,10 @@ public class Npc : Unit
 
     private float pokemonSpriteStep = 1f;
 
+    private UIManager uiManager;
+
+    private bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +25,8 @@ public class Npc : Unit
         originX = moveX;
         originY = moveY;
         alarm = Random.Range(3f, 5f);
+
+        uiManager = UIManager.instance;
     }
 
     // Update is called once per frame
@@ -28,11 +34,12 @@ public class Npc : Unit
     {
         if (CheckDistanceFromPlayer())
         {
-            NpcUpdate();
+            if (ControllCheck())
+            {
+                NpcUpdate();                              
+            }
 
-            SetSprite();
             MoveUpdate();
-
             if (npcKind != 3)
             {
                 SpriteUpdate();
@@ -41,6 +48,7 @@ public class Npc : Unit
             {
                 PokemonSpriteUpdate();
             }
+            SetSprite();
         }
             
     }
@@ -144,6 +152,13 @@ public class Npc : Unit
         {
             pokemonSpriteStep = 1f;
         }
+    }
+
+    public void ActiveDialog()
+    {
+        direc = GetDirecToPlayer();
+
+        EventManager.instance.NpcEventStart(npcId);
     }
 
 }
