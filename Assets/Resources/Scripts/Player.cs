@@ -354,19 +354,32 @@ public class Player : Unit
             if (input.aButtonDown)
             {
                 Vector2 direcVector = GetVector2fromDirec(direc);
-                Npc npc = CheckUnit(transform.position + (Vector3)direcVector, direcVector);
-                if (npc != null)
+                var unit = CheckUnit(transform.position + (Vector3)direcVector, direcVector);
+                if (unit != null)
                 {
-                    if (!npc.isMoving)
+                    var npc = unit.GetComponent<Npc>();
+
+                    if (npc != null)
                     {
-                        npc.ActiveDialog();
+                        if (!npc.isMoving)
+                        {
+                            npc.ActiveDialog();
+                        }
                     }
+
+                    var dialogObj = unit.GetComponent<DialogObject>();
+                    if (dialogObj != null)
+                    {
+                        dialogObj.ActiveDialog();
+                    }
+
                 }
+                
             }
         }
     }
 
-    private Npc CheckUnit(Vector3 pos, Vector3 direcVector)
+    private GameObject CheckUnit(Vector3 pos, Vector3 direcVector)
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(pos, direcVector, 0.01f);
 
@@ -377,11 +390,16 @@ public class Player : Unit
                 var unit = hits[i].transform.GetComponent<Npc>();
                 if (unit != null)
                 {
-                    return unit;
+                    return unit.gameObject;
                 }
             }
 
-            if (hits[i].transform.CompareTag("Jump"))
+            if (hits[i].transform.CompareTag("DialogObject"))
+            {
+                return hits[i].transform.gameObject;
+            }
+
+            if (hits[i].transform.CompareTag("DialogJump"))
             {
                 return CheckUnit(pos + (Vector3)direcVector, direcVector);
             }

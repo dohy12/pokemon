@@ -9,6 +9,8 @@ TagManager:
   - Jump
   - Grass
   - Event
+  - DialogObject
+  - DialogJump
   layers:
   - Default
   - TransparentFX

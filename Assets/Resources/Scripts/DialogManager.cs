@@ -236,6 +236,10 @@ public class DialogManager : MonoBehaviour
         //NPC19_뚱보
         msgDictionary.Add(19001, new string[] { "어이! 도희", "오박사님이 새로운 포켓몬을 발견하셨대" });
 
-        
+
+        //오브젝트들
+        msgDictionary.Add(99001, new string[] { "피카츄인형이다" });
+        msgDictionary.Add(99002, new string[] { "푸린인형이다" });
+        msgDictionary.Add(99003, new string[] { "피카츄인형이다" });
     }
 }
