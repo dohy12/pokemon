@@ -23,7 +23,7 @@ public class DialogManager : MonoBehaviour
     private string dialogMsg = "";
     private float dialogMsgCheck = 0f;
     private int dialogPreMsgCheck = 0;
-    private float dialogMsgSpeed = 20f;
+    private float dialogMsgSpeed = 25f;
     private bool dialogMsgDone = false;
     private float dialogStun = 0f;
 
@@ -75,10 +75,12 @@ public class DialogManager : MonoBehaviour
                 }
                 else
                 {
+                    /* 빠른 스킵
                     dialogMsgCheck = dialogMsg.Length;
                     dialogMsgDone = true;
                     dialogCursor.SetActive(true);
                     ShowMsg(dialogMsg);
+                    */
                 }
             }
                 
@@ -227,7 +229,7 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(2004, new string[] { "너의 첫 포켓몬이니 신중하게 고르렴", "천천히 골라도 괜찮단다." });
 
         //NPC3_크리스
-        msgDictionary.Add(3001, new string[] { "안녕 난 오박사님의 조수 크리스야 잘 부탁해"});
+        msgDictionary.Add(3001, new string[] { "안녕 난 오박사님의 조수 크리스야","앞으로 잘 부탁해!"});
 
         //NPC18_마을여자
         msgDictionary.Add(18001, new string[] { "도희야 좋은 아침", "포켓몬 없이 풀숲에 들어가는 것은 위험하단다."});
@@ -238,8 +240,30 @@ public class DialogManager : MonoBehaviour
 
 
         //오브젝트들
-        msgDictionary.Add(99001, new string[] { "피카츄인형이다" });
-        msgDictionary.Add(99002, new string[] { "푸린인형이다" });
-        msgDictionary.Add(99003, new string[] { "피카츄인형이다" });
+        msgDictionary.Add(99001, new string[] { "피카츄인형이다!" });
+        msgDictionary.Add(99002, new string[] { "푸린인형이다!" });
+        msgDictionary.Add(99003, new string[] { "라디오다!" });
+        msgDictionary.Add(99004, new string[] { "TV에서 영화를 하고 있다. 남자아이 둘이서 여행을 하고 있다","기차의 창너머로 별이 보인다.....","....나도 빨리 가봐야지!" });
+        msgDictionary.Add(99005, new string[] { "포켓몬 그림책이 모여있군!" });
+        msgDictionary.Add(99006, new string[] { "내 방에 있는 나무다!\n어머니가 매일 물을 주신다." });
+        msgDictionary.Add(99007, new string[] { "성도지방의 지도다" });
+        msgDictionary.Add(99008, new string[] { "냉장고 안에는.....","맛있는 물이 가득\n그리고 달콤한 후르츠 밀크!" });
+        msgDictionary.Add(99009, new string[] { "빤짝빤짝거리는 싱크대!" });
+        msgDictionary.Add(99010, new string[] { "엄마가 맛있는 밥을 하고 있다!" });
+
+        msgDictionary.Add(99011, new string[] { "오박사님의 컴퓨터다!","........","화면을 이해할 수가 없다...." });
+        msgDictionary.Add(99012, new string[] { "책장에는 포켓몬 관련 전공 서적들이 꽂혀있다." });
+        msgDictionary.Add(99013, new string[] { "비어 있는 쓰레기통이다." });
+
+        msgDictionary.Add(99014, new string[] { "우리집이다!" });
+        msgDictionary.Add(99015, new string[] { "오박사님 연구소다!" });
+        msgDictionary.Add(99016, new string[] { "포켓몬 센터다!","여기서 포켓몬을 치료할 수 있다."});
+        msgDictionary.Add(99017, new string[] { "포켓몬 숍이다!", "여기서 포켓몬관련 도구들을 구매할 수 있다." });
+        msgDictionary.Add(99018, new string[] { "연두마을" });
+        msgDictionary.Add(99019, new string[] { "옆마을" });
+        msgDictionary.Add(99020, new string[] { "포켓몬 체육관이다!","관장을 쓰러뜨리면 뱃지를 얻을 수 있다." });
+
+        msgDictionary.Add(99021, new string[] { "각종 물건들이 진열되어 있다." });
+        msgDictionary.Add(99022, new string[] { "1번 도로" });
     }
 }

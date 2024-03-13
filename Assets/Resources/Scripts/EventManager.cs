@@ -13,6 +13,10 @@ public class EventManager : MonoBehaviour
 
     private Dictionary<string, int> eventProgress;
 
+    private GameObject exclamationMark;
+    private bool isExMark = false;
+    private float exMarkCheck = 0f;
+
     private void Awake()
     {
         instance = this;
@@ -36,7 +40,39 @@ public class EventManager : MonoBehaviour
                 ActiveNextEvent();
             }
         }
+
+        if (isExMark)
+        {
+            exMarkCheck -= Time.deltaTime;
+            if (exMarkCheck < 0)
+            {
+                isExMark = false;
+                UnActiveExMark();
+            }
+        }
     }
+
+    private void SetExMark()
+    {
+        exclamationMark = transform.Find("ExclamationMark").gameObject;
+    }
+
+    private void ActiveExMark(Vector2 position, float poseTime)
+    {
+        isExMark = true;
+        exMarkCheck = poseTime;
+        exclamationMark.transform.position = new Vector3(position.x, position.y+1f, 0);
+        var spriteRenderer = exclamationMark.GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = true;
+    }
+
+    private void UnActiveExMark()
+    {
+        var spriteRenderer = exclamationMark.GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = false;
+    }
+
+
 
     private void Init()
     {
@@ -44,6 +80,7 @@ public class EventManager : MonoBehaviour
         eventProgress = new Dictionary<string, int>();
 
         SetEventProgress();
+        SetExMark();
     }
 
     private void SetEventProgress()
@@ -87,7 +124,7 @@ public class EventManager : MonoBehaviour
                 break;
 
             case 3:
-                if (eventProgress["mainEvent"] == 2)//포켓몬 안 고르고 나갈려고 할때
+                if (eventProgress["mainEvent"] == 2)//포켓몬 안 고르고 연구소 나갈려고 할때
                 {
                     AddEventDirec(2, Unit.Direc.DOWN, 0.1f);
                     AddEventDialog(2003);
@@ -98,9 +135,10 @@ public class EventManager : MonoBehaviour
                 break;
 
             case 4:
-                if (eventProgress["mainEvent"] == 1)//포켓몬 안 고르고 나갈려고 할때
+                if (eventProgress["mainEvent"] == 1)//포켓몬 안 고르고 마을 밖으로 나갈려고 할때
                 {
-                    AddEventDirec(18, Unit.Direc.LEFT, 0.2f);
+                    AddEventDirec(18, Unit.Direc.LEFT, 0.1f);
+                    AddEventExMark(18, 0.5f);
                     AddEventDirec(0, Unit.Direc.RIGHT, 0.1f);                    
                     AddEventDialog(18002);
                     AddEventMove(0, Unit.Direc.RIGHT, 2);
@@ -198,6 +236,14 @@ public class EventManager : MonoBehaviour
             unit.eventPose = tmpEvent.poseTime;
             unit.isEventPose = true;
         }
+        else if(tmpEvent.eventKind == EventKind.EXMARK)
+        {
+            Unit unit = NpcManager.npcManager.npcs[tmpEvent.unitID];
+            unit.eventPose = tmpEvent.poseTime;
+            unit.isEventPose = true;
+
+            ActiveExMark(unit.transform.position, tmpEvent.poseTime);
+        }
     }
 
 
@@ -214,6 +260,11 @@ public class EventManager : MonoBehaviour
         events.Enqueue(new Event(EventKind.DIREC, unitID, (int)direc, poseTime));
     }
 
+    private void AddEventExMark(int unitID, float poseTime)
+    {
+        events.Enqueue(new Event(EventKind.EXMARK, unitID, poseTime));
+    }
+
     private void AddEventDialog(int dialogID)
     {
         events.Enqueue(new Event(EventKind.DIALOG, dialogID));
@@ -221,7 +272,7 @@ public class EventManager : MonoBehaviour
 
     class Event
     {
-        public EventKind eventKind;//[0]케릭터 움직임, [1]대화창, [2]트레이너 배틀, [3]야생 포켓몬 배틀, [4]포켓몬 사진 출력, [5]케릭터 방향전환
+        public EventKind eventKind;//[0]케릭터 움직임, [1]대화창, [2]트레이너 배틀, [3]야생 포켓몬 배틀, [4]포켓몬 사진 출력, [5]케릭터 방향전환. [6]케릭터 느낌표
         public int unitID;
         public int direc;
         public int dialogID;
@@ -247,6 +298,13 @@ public class EventManager : MonoBehaviour
             this.direc = direc;
             this.poseTime = poseTime;
         }
+
+        public Event(EventKind eventKind, int unitID, float poseTime)//느낌표
+        {
+            this.eventKind = eventKind;
+            this.unitID = unitID;
+            this.poseTime = poseTime;
+        }
     }
     
     enum EventKind
@@ -256,7 +314,8 @@ public class EventManager : MonoBehaviour
         BATTLE_TRAINER,
         BATTLE_POKEMON,
         SHOW_POKEMON,
-        DIREC
+        DIREC,
+        EXMARK
     }
     
 }

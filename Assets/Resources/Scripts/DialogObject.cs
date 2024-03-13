@@ -6,6 +6,7 @@ public class DialogObject : MonoBehaviour
 {
     public int dialogID;
     public int objKind = 0;
+    public int eventID;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,9 @@ public class DialogObject : MonoBehaviour
 
     public void ActiveDialog()
     {
-        DialogManager.instance.Active(dialogID);
+        if (objKind == 0)
+        {
+            DialogManager.instance.Active(dialogID);
+        }        
     }
 }
