@@ -1969,6 +1969,32 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f48857e247ca542a8bbc2db1d14cd2, type: 3}
+--- !u!1 &800199937 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7396509064228478694, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+  m_PrefabInstance: {fileID: 6317163205584015304}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &800199941
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800199937}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c322bfaea941e834696a995ef65bd73c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2951423313480978162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2041,6 +2067,10 @@ PrefabInstance:
     - target: {fileID: 5101556541560485508, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -160
+      objectReference: {fileID: 0}
+    - target: {fileID: 5474814689592402174, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -61
       objectReference: {fileID: 0}
     - target: {fileID: 8832470344865084200, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
       propertyPath: m_Name
@@ -2129,7 +2159,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7396509064228478694, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 800199941}
   m_SourcePrefab: {fileID: 100100000, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
