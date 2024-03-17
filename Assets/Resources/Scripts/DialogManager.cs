@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,8 +27,17 @@ public class DialogManager : MonoBehaviour
     private float dialogMsgSpeed = 25f;
     private bool dialogMsgDone = false;
     private float dialogStun = 0f;
-
     private GameObject dialogCursor;
+
+    private bool questIsQuest = false;
+    private int questYesEventID = 0;
+    private int questNoEventID = 0;
+    private float questCursorPos = 0f;
+    private GameObject questObject;
+    private GameObject questCursor;
+    private int questCursorNum = 0;
+    private float questCursorSpeed = 0.1f;
+    private float questCursorInputStun = 0f;
 
     private GlobalInput input;
     private UIManager uiManager;
@@ -38,6 +48,8 @@ public class DialogManager : MonoBehaviour
         dialogTransform = GetComponent<RectTransform>();
         textMesh = transform.GetChild(0).GetComponent<TMP_Text>();
         dialogCursor = transform.Find("Cursor").gameObject;
+        questObject = transform.Find("Quest").gameObject;
+        questCursor = questObject.transform.Find("QuestCursor").gameObject;
     }
 
     // Start is called before the first frame update
@@ -56,17 +68,25 @@ public class DialogManager : MonoBehaviour
         {
             PushAButton();
         }
+
+        if (questIsQuest)
+        {
+            QuestInputUpdate();
+            QuestCursorUpdate();
+        }
     }
+
+
 
     private void PushAButton()
     {
-        
-        if (isActive)
-        {            
-            if (dialogStun < 0)
+            
+        if (dialogStun < 0)
+        {
+            dialogStun = 0.1f;
+            if (dialogMsgDone)
             {
-                dialogStun = 0.1f;
-                if (dialogMsgDone)
+                if (!(questIsQuest))
                 {
                     if (!GoNextPage())
                     {
@@ -75,15 +95,29 @@ public class DialogManager : MonoBehaviour
                 }
                 else
                 {
-                    /* 빠른 스킵
-                    dialogMsgCheck = dialogMsg.Length;
-                    dialogMsgDone = true;
-                    dialogCursor.SetActive(true);
-                    ShowMsg(dialogMsg);
-                    */
+                    //선택
+                    UnActive();
+
+                    if (questCursorNum == 0)
+                    {
+                        EventManager.instance.StartEvent(questYesEventID);
+                    }
+                    else
+                    {
+                        EventManager.instance.StartEvent(questNoEventID);
+                    }                    
                 }
-            }
                 
+            }
+            else
+            {
+                /* 빠른 스킵
+                dialogMsgCheck = dialogMsg.Length;
+                dialogMsgDone = true;
+                dialogCursor.SetActive(true);
+                ShowMsg(dialogMsg);
+                */
+            }
         }
     }
 
@@ -118,22 +152,51 @@ public class DialogManager : MonoBehaviour
             }
             else
             {
-                dialogMsgDone = true;
-                dialogCursor.SetActive(true);
+                if (!dialogMsgDone)
+                {
+                    dialogStun = 0.1f;
+                    dialogMsgDone = true;                    
+
+                    if (!questIsQuest)
+                    {
+                        dialogCursor.SetActive(true);
+                    }
+                    else
+                    {
+                        questObject.SetActive(true);
+                    }
+                }
+                
             }
 
             dialogStun -= Time.deltaTime;
         }
     }
 
-    public void Active(int msgId)
+    public void Active(int msgId, params int[] args)
     {
         posTime = 0f;
         isActive = true;
-
         SetMsgById(msgId);
 
         uiManager.SetUIActive(true);
+        
+
+        if (args.Length > 0)
+        {
+            if (args[0] == 0)
+            {
+                QuestCursorInit(args[1], args[2]);
+            }
+            if (args[0] == 1)
+            {
+
+            }
+        }
+        else
+        {
+            questIsQuest = false;
+        }
     }
 
     private void UnActive()
@@ -142,6 +205,7 @@ public class DialogManager : MonoBehaviour
         isActive = false;
 
         uiManager.SetUIActive(false);
+        questObject.SetActive(false);
 
         EventManager.instance.ActiveNextEvent(0.3f);
     }
@@ -177,6 +241,8 @@ public class DialogManager : MonoBehaviour
 
         input = GlobalInput.globalInput;
         uiManager = UIManager.instance;
+
+        questObject.SetActive(false);
     }
 
     private void UpdateUi()
@@ -209,6 +275,66 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    private void QuestInputUpdate()
+    {
+        if (dialogMsgDone)
+        {
+            questCursorInputStun -= Time.deltaTime;
+            if (questCursorInputStun < 0f)
+            {
+                if (input.verticalRaw != 0)
+                {
+                    if (questCursorNum == 0 && questCursorPos == 0)
+                    {
+                        questCursorNum = 1;
+                        questCursorInputStun = questCursorSpeed + 0.2f;
+                    }
+
+                    if (questCursorNum == 1 && questCursorPos == questCursorSpeed)
+                    {
+                        questCursorNum = 0;
+                        questCursorInputStun = questCursorSpeed + 0.2f;
+                    }
+                }
+            }
+            
+        }
+    }
+
+    private void QuestCursorInit(int yesID, int noID)
+    {
+        questIsQuest = true;
+        questYesEventID = yesID;
+        questNoEventID = noID;
+        questCursorPos = 0f;
+        questCursorNum = 0;
+
+        var cursorYPos = (float)Math.Cos(questCursorPos * (Math.PI) / questCursorSpeed);
+        var rTrans = (RectTransform)questCursor.transform;
+        rTrans.anchoredPosition = new Vector2(-59f, -2.5f + 17.5f * cursorYPos);
+    }
+
+    private void QuestCursorUpdate()
+    {
+        if (dialogMsgDone)
+        {
+            if (questCursorNum == 0 && questCursorPos > 0)
+            {
+                questCursorPos = Math.Max(0, questCursorPos - Time.deltaTime);
+                var cursorYPos = (float)Math.Cos(questCursorPos * (Math.PI) / questCursorSpeed);
+                var rTrans = (RectTransform)questCursor.transform;
+                rTrans.anchoredPosition = new Vector2(-59f, -2.5f + 17.5f*cursorYPos);
+            }
+            if (questCursorNum == 1 && questCursorPos < questCursorSpeed)
+            {
+                questCursorPos = Math.Min(questCursorSpeed, questCursorPos + Time.deltaTime);
+                var cursorYPos = (float)Math.Cos(questCursorPos * (Math.PI) / questCursorSpeed);
+                var rTrans = (RectTransform)questCursor.transform;
+                rTrans.anchoredPosition = new Vector2(-59f, -2.5f + 17.5f * cursorYPos);
+            }
+        }
+    }
+
     private void SetUIPos()
     {
         dialogTransform.anchoredPosition = new Vector3(0, posY - 180f, 0);
@@ -227,9 +353,13 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(2002, new string[] { "여기 너에게 줄 포켓몬이 있단다 신중하게 고르렴" });
         msgDictionary.Add(2003, new string[] { "여행을 떠나려면 포켓몬이 있어야 한단다." });
         msgDictionary.Add(2004, new string[] { "너의 첫 포켓몬이니 신중하게 고르렴", "천천히 골라도 괜찮단다." });
+        msgDictionary.Add(2005, new string[] { "풀 포켓몬 이상해씨란다. 그 포켓몬으로 결정하겠니?" });
+        msgDictionary.Add(2006, new string[] { "불 포켓몬 파이리란다. 그 포켓몬으로 결정하겠니?" });
+        msgDictionary.Add(2007, new string[] { "물 포켓몬 꼬부기란다. 그 포켓몬으로 결정하겠니?" });
 
         //NPC3_크리스
         msgDictionary.Add(3001, new string[] { "안녕 난 오박사님의 조수 크리스야","앞으로 잘 부탁해!"});
+        msgDictionary.Add(3002, new string[] { "난 그럼 이 포켓몬으로 할게!" });
 
         //NPC18_마을여자
         msgDictionary.Add(18001, new string[] { "도희야 좋은 아침", "포켓몬 없이 풀숲에 들어가는 것은 위험하단다."});
@@ -265,5 +395,8 @@ public class DialogManager : MonoBehaviour
 
         msgDictionary.Add(99021, new string[] { "각종 물건들이 진열되어 있다." });
         msgDictionary.Add(99022, new string[] { "1번 도로" });
+
+        msgDictionary.Add(99023, new string[] { "{poke}(을)를 얻었다." });
+        msgDictionary.Add(99024, new string[] { "{item}(을)를 얻었다." });
     }
 }

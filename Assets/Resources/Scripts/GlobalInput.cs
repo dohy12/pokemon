@@ -13,6 +13,7 @@ public class GlobalInput : MonoBehaviour
 
     public bool aButtonDown { get; private set; }
 
+
     public Vector2 keyCheck;
 
     void Awake()

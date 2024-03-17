@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,17 @@ public class DialogObject : MonoBehaviour
         if (objKind == 0)
         {
             DialogManager.instance.Active(dialogID);
-        }        
+        }
+        else
+        {
+            switch (eventID)
+            {
+                case 1://Æ÷ÄÏº¼
+                    var pokeballNum = Int32.Parse((transform.name).Substring(8,1));
+                    EventManager.instance.StartEvent(5, pokeballNum);
+                    EventManager.instance.eventObj = gameObject;
+                    break;
+            }
+        }
     }
 }
