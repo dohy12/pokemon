@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6780629487340470265}
   - component: {fileID: 2371623575371697998}
+  - component: {fileID: 726034458824886360}
   - component: {fileID: 208499972883934802}
-  - component: {fileID: -935331016095931310}
   m_Layer: 0
   m_Name: Item
-  m_TagString: Block
+  m_TagString: DialogObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,6 +86,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &726034458824886360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538493659925096896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a6f8c44a76bb0a45b1780953081cf99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogID: 0
+  objKind: 1
+  eventID: 1
+  itemID: 0
 --- !u!61 &208499972883934802
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -131,32 +147,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-935331016095931310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538493659925096896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc0813b5d68298e44afe747adeba5d82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  direc: 0
-  moveX: 0
-  moveY: 0
-  moveZ: 0
-  movingCheck: 0
-  movingStep: 0
-  movingSpeed: 5
-  movingWalk: 2
-  isMoving: 0
-  spriteRenderer: {fileID: 0}
-  sprites: []
-  isSpriteMov: 0
-  npcId: 0
-  isEventMove: 0
-  isEventPose: 0
-  eventPose: 0
-  npcKind: 0

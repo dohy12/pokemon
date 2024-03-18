@@ -133,6 +133,40 @@ public class EventManager : MonoBehaviour
 
                 ActiveNextEvent();
             }
+            if (eventProgress["mainEvent"] == 3)//포켓몬 고르고 연구소 밖으로 나가려고 할때 배틀
+            {
+                var playerX = (int)NpcManager.npcManager.npcs[0].transform.position.x;
+                var destinationX = -48;
+                if (playerX == -48)
+                    destinationX = -47;
+
+                var distance = (int)(NpcManager.npcManager.npcs[3].transform.position.x - destinationX);
+                AddEventDirec(3, Unit.Direc.DOWN, 0.1f);
+                AddEventExMark(3, 0.5f);
+                AddEventMove(3, Unit.Direc.LEFT, distance);
+                AddEventMove(3, Unit.Direc.DOWN, 3);
+                if (playerX == -47)
+                {
+                    AddEventDirec(3, Unit.Direc.RIGHT, 0.1f);
+                    AddEventDirec(0, Unit.Direc.LEFT, 0.1f);
+                }
+                else
+                {
+                    AddEventDirec(3, Unit.Direc.LEFT, 0.1f);
+                    AddEventDirec(0, Unit.Direc.RIGHT, 0.1f);
+                }
+
+                AddEventDialog(3003);
+                AddEventFight(0);
+                AddEventDialog(3004);
+                AddEventMove(3, Unit.Direc.DOWN, 6);
+                AddEventDelete(true, 3);
+
+
+                eventProgress["mainEvent"] = 4;
+
+                ActiveNextEvent();
+            }
         }
         else if(eventID == 4)//포켓몬 안 고르고 마을 밖으로 나갈려고 할때
         {
@@ -149,7 +183,7 @@ public class EventManager : MonoBehaviour
         }
         else if(eventID == 5)
         {
-            if (eventProgress["mainEvent"] == 2)//
+            if (eventProgress["mainEvent"] == 2)
             {
                 var pokeballNum = args[0];
                 AddEventQuest(2005 + pokeballNum, 100 + pokeballNum, 103);
@@ -171,6 +205,7 @@ public class EventManager : MonoBehaviour
             AddEventMove(3, Unit.Direc.RIGHT, 2 + __left);
             AddEventMove(3, Unit.Direc.UP, 1);
             AddEventDialog(3002);
+            AddEventDelete(false, __left);
         }
         else if (eventID == 103)
         {
@@ -202,6 +237,11 @@ public class EventManager : MonoBehaviour
                     AddEventDialog(2004);
                     ActiveNextEvent();
                 }
+                else
+                {
+                    AddEventDialog(2008);
+                    ActiveNextEvent();
+                }
                 break;
 
             case 3://크리스
@@ -217,13 +257,8 @@ public class EventManager : MonoBehaviour
                 }
                 break;
 
-            case 18://마을여자
-                AddEventDialog(18001);
-                ActiveNextEvent();
-                break;
-
-            case 19://마을뚱보
-                AddEventDialog(19001);
+            default:
+                AddEventDialog(npcID*1000 + 001);
                 ActiveNextEvent();
                 break;
         }
@@ -283,6 +318,21 @@ public class EventManager : MonoBehaviour
         {
             DialogManager.instance.Active(tmpEvent.dialogID, 0, tmpEvent.questYes, tmpEvent.questNo);
         }
+        else if(tmpEvent.eventKind == EventKind.DELETE)
+        {
+            if (tmpEvent.deleteKind)
+            {
+                NpcManager.npcManager.DeleteNpc(tmpEvent.unitID, true);
+            }
+            else
+            {
+                ItemManager.Instance.DeleteItem(tmpEvent.unitID, true);
+            }
+        }
+        else if(tmpEvent.eventKind == EventKind.FIGHT)
+        {
+            FightManager.instance.Fight(tmpEvent.dialogID);
+        }
 
     }
 
@@ -291,28 +341,66 @@ public class EventManager : MonoBehaviour
     {
         for (var i=0; i < count; i++)
         {
-            events.Enqueue(new Event(EventKind.MOVE, unitID, (int)direc));
+            Event ev = new Event();
+            ev.eventKind = EventKind.MOVE;
+            ev.unitID = unitID;
+            ev.direc = (int)direc;
+            events.Enqueue(ev);
         }
     }
 
     private void AddEventDirec(int unitID, Unit.Direc direc, float poseTime)
     {
-        events.Enqueue(new Event(EventKind.DIREC, unitID, (int)direc, poseTime));
+        Event ev = new Event();
+        ev.eventKind = EventKind.DIREC;
+        ev.unitID = unitID;
+        ev.direc = (int)direc;
+        ev.poseTime = poseTime;
+        events.Enqueue(ev);
     }
 
     private void AddEventExMark(int unitID, float poseTime)
     {
-        events.Enqueue(new Event(EventKind.EXMARK, unitID, poseTime));
+        Event ev = new Event();
+        ev.eventKind = EventKind.EXMARK;
+        ev.unitID = unitID;
+        ev.poseTime= poseTime;
+        events.Enqueue(ev);
     }
 
     private void AddEventDialog(int dialogID)
     {
-        events.Enqueue(new Event(EventKind.DIALOG, dialogID));
+        Event ev = new Event();
+        ev.eventKind = EventKind.DIALOG;
+        ev.dialogID = dialogID;
+        events.Enqueue(ev);
     }
 
     private void AddEventQuest(int dialogID, int questYes, int questNo)
     {
-        events.Enqueue(new Event(EventKind.QUEST, dialogID, questYes, questNo));
+        Event ev = new Event();
+        ev.eventKind = EventKind.QUEST;
+        ev.dialogID = dialogID;
+        ev.questYes = questYes;
+        ev.questNo = questNo;
+        events.Enqueue(ev);
+    }
+
+    private void AddEventDelete(bool deleteKind, int unitID)
+    {
+        Event ev = new Event();
+        ev.eventKind = EventKind.DELETE;
+        ev.unitID = unitID;
+        ev.deleteKind = deleteKind;
+        events.Enqueue(ev);
+    }
+
+    private void AddEventFight(int fightID)
+    {
+        Event ev = new Event();
+        ev.eventKind = EventKind.FIGHT;
+        ev.dialogID = fightID;
+        events.Enqueue(ev);
     }
 
     class Event
@@ -324,41 +412,11 @@ public class EventManager : MonoBehaviour
         public float poseTime;
         public int questYes;
         public int questNo;
+        public bool deleteKind;
 
-        public Event(EventKind eventKind, int unitID, int direc)//움직임
+        public Event()
         {
-            this.eventKind = eventKind;
-            this.unitID = unitID;
-            this.direc = direc;
-        }
-       
-        public Event(EventKind eventKind, int dialogID)//대화창
-        {
-            this.eventKind = eventKind;
-            this.dialogID = dialogID;
-        }
 
-        public Event(EventKind eventKind, int unitID, int direc, float poseTime)//방향전환
-        {
-            this.eventKind = eventKind;
-            this.unitID = unitID;
-            this.direc = direc;
-            this.poseTime = poseTime;
-        }
-
-        public Event(EventKind eventKind, int unitID, float poseTime)//느낌표
-        {
-            this.eventKind = eventKind;
-            this.unitID = unitID;
-            this.poseTime = poseTime;
-        }
-
-        public Event(EventKind eventKind, int dialogID, int questYes, int questNo)//퀘스트창
-        {
-            this.eventKind = eventKind;
-            this.dialogID = dialogID;
-            this.questYes = questYes;
-            this.questNo = questNo;
         }
     }
     
@@ -371,7 +429,9 @@ public class EventManager : MonoBehaviour
         SHOW_POKEMON,
         DIREC,
         EXMARK,
-        QUEST
+        QUEST,
+        DELETE,
+        FIGHT
     }
 
 

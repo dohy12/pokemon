@@ -38,4 +38,14 @@ public class NpcManager : MonoBehaviour
         }
         
     }
+
+    public void DeleteNpc(int ncpID, bool isEvent)
+    {
+        Destroy(npcs[ncpID].gameObject);
+
+        if (isEvent)
+        {
+            EventManager.instance.ActiveNextEvent();
+        }
+    }
 }

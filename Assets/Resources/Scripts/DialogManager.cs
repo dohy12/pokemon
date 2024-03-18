@@ -356,10 +356,13 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(2005, new string[] { "풀 포켓몬 이상해씨란다. 그 포켓몬으로 결정하겠니?" });
         msgDictionary.Add(2006, new string[] { "불 포켓몬 파이리란다. 그 포켓몬으로 결정하겠니?" });
         msgDictionary.Add(2007, new string[] { "물 포켓몬 꼬부기란다. 그 포켓몬으로 결정하겠니?" });
+        msgDictionary.Add(2008, new string[] { "여행 응원한단다.\n멋진 포켓몬 트레이너가 되거라" });
 
         //NPC3_크리스
         msgDictionary.Add(3001, new string[] { "안녕 난 오박사님의 조수 크리스야","앞으로 잘 부탁해!"});
         msgDictionary.Add(3002, new string[] { "난 그럼 이 포켓몬으로 할게!" });
+        msgDictionary.Add(3003, new string[] { "서로 포켓몬을 얻었으니 바로 배틀이지!" });
+        msgDictionary.Add(3004, new string[] { "즐거운 배틀이었어!\n다음에 또 보자!" });
 
         //NPC18_마을여자
         msgDictionary.Add(18001, new string[] { "도희야 좋은 아침", "포켓몬 없이 풀숲에 들어가는 것은 위험하단다."});
