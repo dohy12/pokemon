@@ -5,7 +5,9 @@ using UnityEngine;
 public class Npc : Unit
 {
     public int npcKind;//0)안움직임,  1)방향만 바뀜, 2)배회형, 3)포켓몬
-    
+
+    public bool isBattle = false;
+    public int fightID = 0;
 
     private float alarm = 0;
 
@@ -32,7 +34,7 @@ public class Npc : Unit
     // Update is called once per frame
     void Update()
     {
-        if (CheckDistanceFromPlayer())
+        if (GetDistanceFromPlayer() < 9)
         {
             if (ControllCheck())
             {
@@ -54,19 +56,13 @@ public class Npc : Unit
     }
 
 
-    bool CheckDistanceFromPlayer()
+    public int GetDistanceFromPlayer()
     {
         Player player = Player.player;
         var heading = player.transform.position - transform.position;
         var distance = heading.magnitude;
 
-        if (distance < 8f)
-        {
-            return true;
-        }
-
-
-        return false;
+        return (int)distance;
     }
 
     void NpcUpdate()

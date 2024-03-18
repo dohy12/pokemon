@@ -6,6 +6,7 @@ public class NpcManager : MonoBehaviour
 {
     public static NpcManager npcManager;
     public Dictionary<int, Unit> npcs;
+    public Dictionary<int, HealMachine> healMachines;
 
     private void Awake()
     {
@@ -15,7 +16,7 @@ public class NpcManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        init();
+        Init();
     }
 
     // Update is called once per frame
@@ -25,7 +26,7 @@ public class NpcManager : MonoBehaviour
     }
 
 
-    void init()
+    void Init()
     {
         npcs = new Dictionary<int, Unit>();
 
@@ -37,6 +38,15 @@ public class NpcManager : MonoBehaviour
             npcs.Add(unit.npcId, unit);
         }
         
+        healMachines = new Dictionary<int, HealMachine>();
+        
+        var heals = transform.parent.Find("HealMachines");
+        for (var i=0; i< heals.childCount; i++)
+        {
+            var heal = heals.GetChild(i).GetComponent<HealMachine>();
+            healMachines.Add(heal.machineID, heal);
+        }       
+
     }
 
     public void DeleteNpc(int ncpID, bool isEvent)

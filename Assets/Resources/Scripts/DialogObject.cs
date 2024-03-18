@@ -29,12 +29,27 @@ public class DialogObject : MonoBehaviour
         }
         else
         {
+            EventManager evm = EventManager.instance;
             switch (eventID)
             {
                 case 1://포켓볼
-                    var pokeballNum = Int32.Parse((transform.name).Substring(8,1));
-                    EventManager.instance.StartEvent(5, pokeballNum);
-                    EventManager.instance.eventObj = gameObject;
+                    if (evm.eventProgress["mainEvent"] == 2)
+                    {
+                        var pokeballNum = Int32.Parse((transform.name).Substring(8, 1));
+                        evm.StartEvent(100, pokeballNum);
+                        evm.eventObj = gameObject;
+                    }
+                    else
+                    {
+                        DialogManager.instance.Active(dialogID);
+                    }
+                    break;
+
+                case 2://연구소 힐링머신
+                    if (evm.eventProgress["mainEvent"] > 3)
+                    {
+                        evm.StartEvent(200, 0);
+                    }
                     break;
             }
         }

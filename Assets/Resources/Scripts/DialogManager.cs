@@ -282,19 +282,16 @@ public class DialogManager : MonoBehaviour
             questCursorInputStun -= Time.deltaTime;
             if (questCursorInputStun < 0f)
             {
-                if (input.verticalRaw != 0)
+                if (input.verticalRaw == -1 && questCursorNum == 0 && questCursorPos == 0)
                 {
-                    if (questCursorNum == 0 && questCursorPos == 0)
-                    {
-                        questCursorNum = 1;
-                        questCursorInputStun = questCursorSpeed + 0.2f;
-                    }
+                    questCursorNum = 1;
+                    questCursorInputStun = questCursorSpeed + 0.2f;
+                }
 
-                    if (questCursorNum == 1 && questCursorPos == questCursorSpeed)
-                    {
-                        questCursorNum = 0;
-                        questCursorInputStun = questCursorSpeed + 0.2f;
-                    }
+                if (input.verticalRaw == 1 && questCursorNum == 1 && questCursorPos == questCursorSpeed)
+                {
+                    questCursorNum = 0;
+                    questCursorInputStun = questCursorSpeed + 0.2f;
                 }
             }
             
@@ -347,6 +344,7 @@ public class DialogManager : MonoBehaviour
         //NPC1_엄마
         msgDictionary.Add(1001, new string[] { "아 도희!\n옆집의 오박사님이 찾아왔었단다.", "뭔지 너에게\n부탁할 것이 있다고 하셔서", "연구소는 집 왼쪽에 있으니 어서 찾아가 보렴"});
         msgDictionary.Add(1002, new string[] { "연구소는 집 왼쪽에 있단다." });
+        msgDictionary.Add(1003, new string[] { "어머 귀여운 포켓몬이네\n여행 중 몸 조심 하렴" });
 
         //NPC2_오박사
         msgDictionary.Add(2001, new string[] { "연구소에 잘 왔다!\n나는 오박사 포켓몬 박사란다.", "오늘부터 모험을 시작하게 된것을 축하한단다."});
@@ -364,6 +362,52 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(3003, new string[] { "서로 포켓몬을 얻었으니 바로 배틀이지!" });
         msgDictionary.Add(3004, new string[] { "즐거운 배틀이었어!\n다음에 또 보자!" });
 
+        //NPC4_연구원
+        msgDictionary.Add(4001, new string[] { "아- 바뻐요" });
+
+        //NPC5_연구원
+        msgDictionary.Add(5001, new string[] { "오늘도 야근이야" });
+        msgDictionary.Add(5002, new string[] { "도희군!","여기 몬스터볼이야\n포켓몬을 잡으려면 몬스터볼이 필요해" });
+
+        //NPC6_연구원
+        msgDictionary.Add(6001, new string[] { "여기선 포켓몬을 치료할 수 있어" });
+
+        //NPC7_연구원
+        msgDictionary.Add(7001, new string[] { "비상은 주로 비행 타입의 포켓몬을 사용해","약한 상대가 아니니 조심하렴!" });
+
+        //npc8
+        msgDictionary.Add(8001, new string[] { "체육관 관장 비상은 너무 강해","내 포켓몬들이 아무것도 못하고 모두 당해버렸어" });
+
+        //npc9
+        msgDictionary.Add(9001, new string[] { "체육관 트레이너2" });
+        msgDictionary.Add(9002, new string[] { "체육관 트레이너2 전투종료" });
+
+        //npc10
+        msgDictionary.Add(10001, new string[] { "체육관 트레이너1 전투" });
+        msgDictionary.Add(10002, new string[] { "체육관 트레이너1 전투종료" });
+
+        //npc11
+        msgDictionary.Add(11001, new string[] { "풀숲에는 포켓몬이 숨어있다\n언제 튀어나올지 몰라" });
+
+        //npc12
+        msgDictionary.Add(12001, new string[] { "포켓몬 트레이너로써의 실력을 확인하려는거?","그렇다면 각지에 있는 포켓몬 체육관에서 배지를 모으는 것이 좋아" });
+
+        //npc13
+        msgDictionary.Add(13001, new string[] { "길거리 트레이너" });
+        msgDictionary.Add(13002, new string[] { "길거리 트레이너 전투종료" });
+
+        //npc14
+        msgDictionary.Add(14001, new string[] { "내 포켓몬이 모두 쓰려져서 치료하러 왔어" });
+
+        //npc15
+        msgDictionary.Add(15001, new string[] { "여긴 신기한 아이템이 정말 많아!" });
+
+        //npc16
+        msgDictionary.Add(16001, new string[] { "내 피카츄 귀엽지?","난 세상에서 피카츄가 제일 좋아!" });
+
+        //npc17
+        msgDictionary.Add(17001, new string[] { "거기에 언덕이 있지?","뛰어 내리는 건 무서워도 풀숲을 걸어가지 않고 마을로 갈 수 있지!" });
+
         //NPC18_마을여자
         msgDictionary.Add(18001, new string[] { "도희야 좋은 아침", "포켓몬 없이 풀숲에 들어가는 것은 위험하단다."});
         msgDictionary.Add(18002, new string[] { "어! 도희야", "혼자서 어디 가니?","이런! 포켓몬도 지니지 않고 도로에 나가다니 위험해!","근처의 마을까지는 야생의 포켓몬이 튀어 나오는 풀숲이 있으니까"});
@@ -371,6 +415,49 @@ public class DialogManager : MonoBehaviour
         //NPC19_뚱보
         msgDictionary.Add(19001, new string[] { "어이! 도희", "오박사님이 새로운 포켓몬을 발견하셨대" });
 
+        //NPC20
+        msgDictionary.Add(20001, new string[] { "여기 맛있는건 혹시 없을까?" });
+
+        //NPC21
+        msgDictionary.Add(21001, new string[] { "여기서 파는 약은 사람에게는 효과가 없구나" });
+
+        //NPC22
+        msgDictionary.Add(22001, new string[] { "나도 젊었을 때는 힘찬 트레이너였단다!" ,"그런 나로부터 어드바이스!\n포켓몬을 많이 잡아라!","그리고 온화함을 지니고 포켓몬을 대해주는 것이다!"});
+
+        //npc23 간호순
+        msgDictionary.Add(23001, new string[] { "안녕하세요!\n포켓몬 센터입니다!","이곳에서는 포켓몬의 체력을 회복합니다!"});
+        msgDictionary.Add(23002, new string[] { "다음 번에도 방문하시길 기다리겠습니다!" });
+        msgDictionary.Add(23003, new string[] { "오래 기다리셨습니다!","맡아 놓으신 포켓몬은 모두 건강해졌습니다!"});
+        msgDictionary.Add(23004, new string[] { "안녕하세요!\n포켓몬 센터입니다!", "이곳에서는 포켓몬의 체력을 회복합니다!", "아쉽지만 포켓몬이 없으면 시설을 이용하실 수 없습니다." });
+        msgDictionary.Add(23005, new string[] { "당신의 포켓몬을 쉬게 하겠습니까?" });
+        
+        //npc24 간호순
+        msgDictionary.Add(24001, new string[] { "간호순 테스트" });
+
+        //npc25 
+        msgDictionary.Add(25001, new string[] { "상점주인 테스트" });
+
+        //npc26
+        msgDictionary.Add(26001, new string[] { "상점주인 테스트" });
+
+        //npc27
+        msgDictionary.Add(27001, new string[] { "풀숲을 지나가다가 벌레포켓몬에게 독을 쏘였었다!","그대로 걸어가다가 포켓몬이 쓰러졌었다!","해독제는 가지고 가는편이 좋아" });
+
+        //npc28
+        msgDictionary.Add(28001, new string[] { "내 옆에 있는 컴퓨터를 통해 포켓몬을 맡기고 데려올 수 있단다!" });
+
+        //npc29
+        msgDictionary.Add(29001, new string[] { "피카피카!" });
+
+        //npc30~31
+        msgDictionary.Add(30001, new string[] { "체육관 뱃지가 없으면 이곳을 통과하실 수 없습니다" });
+        msgDictionary.Add(31001, new string[] { "체육관 뱃지가 없으면 이곳을 통과하실 수 없습니다" });
+
+        //npc32 관장
+        msgDictionary.Add(32001, new string[] { "관장 테스트" });
+
+        //npc33
+        msgDictionary.Add(33001, new string[] { "피카피카!" });
 
         //오브젝트들
         msgDictionary.Add(99001, new string[] { "피카츄인형이다!" });
@@ -401,5 +488,9 @@ public class DialogManager : MonoBehaviour
 
         msgDictionary.Add(99023, new string[] { "{poke}(을)를 얻었다." });
         msgDictionary.Add(99024, new string[] { "{item}(을)를 얻었다." });
+
+        msgDictionary.Add(99025, new string[] { "남은 몬스터볼이다.\n오박사님이 잘 키워 주시겠지?" });
+
+        msgDictionary.Add(99026, new string[] { "포켓몬을 회복시키겠습니까?" });
     }
 }

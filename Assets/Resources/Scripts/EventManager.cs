@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using static Unit;
 
 public class EventManager : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class EventManager : MonoBehaviour
     private GameObject exclamationMark;
     private bool isExMark = false;
     private float exMarkCheck = 0f;
+
+    private int healMachineID = -1;
+    private int healerID = -1;
 
     public GameObject eventObj = null;
 
@@ -87,7 +92,10 @@ public class EventManager : MonoBehaviour
     private void SetEventProgress()
     {
         eventProgress.Add("mainEvent", 0);
-        eventProgress.Add("FirstPokemon", -1);
+        eventProgress.Add("FirstPokemon", -1); 
+        eventProgress.Add("Npc13Battle", 0);
+        eventProgress.Add("Npc9Battle", 0);
+        eventProgress.Add("Npc10Battle", 0);
     }
 
     public void StartEvent(int eventID, params int[] args)
@@ -183,18 +191,60 @@ public class EventManager : MonoBehaviour
         }
         else if(eventID == 5)
         {
+            if (eventProgress["Npc13Battle"] == 0)
+            {
+                NPCBattleFind(13);
+            }
+        }
+        else if (eventID == 6)
+        {
+            if (eventProgress["Npc10Battle"] == 0)
+            {
+                NPCBattleFind(10);
+            }
+        }
+        else if (eventID == 7)
+        {
+            if (eventProgress["Npc9Battle"] == 0)
+            {
+                NPCBattleFind(9);
+            }
+        }
+        else if (eventID == 8)
+        {
+            if (eventProgress["mainEvent"] == 4)
+            {
+                Npc npc = (Npc)NpcManager.npcManager.npcs[5];
+
+                var direc = npc.GetDirecToPlayer();
+                var distance = npc.GetDistanceFromPlayer() - 1;
+
+                AddEventDirec(5, (Unit.Direc)direc, 0.1f);
+                AddEventExMark(5, 0.5f);
+                if (distance > 0)
+                {
+                    AddEventMove(5, (Unit.Direc)direc, distance);
+                }
+                AddEventDialog(5002);
+
+                ActiveNextEvent();
+                eventProgress["mainEvent"] = 5;
+            }
+        }
+        else if(eventID == 100)
+        {
             if (eventProgress["mainEvent"] == 2)
             {
                 var pokeballNum = args[0];
-                AddEventQuest(2005 + pokeballNum, 100 + pokeballNum, 103);
+                AddEventQuest(2005 + pokeballNum, 101 + pokeballNum, 104);
                 ActiveNextEvent();
             }
         }
-        else if(eventID>=100 && eventID <= 102)
+        else if(eventID>=101 && eventID <= 103)
         {
             GetItem();
             eventProgress["mainEvent"] = 3;
-            eventProgress["FirstPokemon"] = eventID - 100;
+            eventProgress["FirstPokemon"] = eventID - 101;
 
             AddEventMove(3, Unit.Direc.DOWN, 2);
             var __left = eventProgress["FirstPokemon"] + 1;
@@ -207,10 +257,50 @@ public class EventManager : MonoBehaviour
             AddEventDialog(3002);
             AddEventDelete(false, __left);
         }
-        else if (eventID == 103)
+        else if (eventID == 104)
         {
             AddEventDialog(2004);
             ActiveNextEvent();
+        }
+        else if (eventID == 200)//연구소 힐
+        {
+            healMachineID = args[0];
+            AddEventQuest(99026, 204, -1);
+            ActiveNextEvent();
+        }
+        else if (eventID == 201)//간호순 힐
+        {
+            healMachineID = args[0];
+            healerID = args[1];
+            AddEventDialog(23001);
+            AddEventQuest(23005, 205, 202);
+            ActiveNextEvent();
+        }
+        else if (eventID == 202)//간호순 인사
+        {
+            AddEventDirec(healerID, Unit.Direc.UP, 0.5f);
+            AddEventDirec(healerID, Unit.Direc.DOWN, 0.5f);
+            AddEventDialog(23002);
+            ActiveNextEvent();
+        }
+        else if (eventID == 203)//간호순, 포켓몬이 없을 경우
+        {
+            healerID = args[0];
+            AddEventDialog(23004);
+            AddNextEvent(202);
+            ActiveNextEvent();
+        }
+        else if (eventID == 204)
+        {
+            AddEventHeal(healMachineID);
+        }
+        else if (eventID == 205)
+        {
+            AddEventDirec(healerID, Unit.Direc.LEFT, 0.5f);
+            AddEventHeal(healMachineID);
+            AddEventDirec(healerID, Unit.Direc.DOWN, 0.2f);
+            AddEventDialog(23003);
+            AddNextEvent(202);
         }
         else
         {
@@ -220,15 +310,21 @@ public class EventManager : MonoBehaviour
     }
 
     public void NpcEventStart(int npcID)//npc한테 말 걸었을 때
-    {
+    {       
+
+
         switch (npcID)
         {
             case 1://엄마
                 if (eventProgress["mainEvent"] == 1)
                 {
-                    AddEventDialog(1002);
-                    ActiveNextEvent();
+                    AddEventDialog(1002);                    
                 }
+                else
+                {
+                    AddEventDialog(1003);
+                }
+                ActiveNextEvent();
                 break;
 
             case 2://오박사
@@ -257,9 +353,44 @@ public class EventManager : MonoBehaviour
                 }
                 break;
 
+            case 23:
+                if (eventProgress["mainEvent"] > 3)
+                {
+                    StartEvent(201, 2, 23);
+                }
+                else
+                {
+                    StartEvent(203,23);
+                }
+                    
+                break;
+
+            case 24:
+                if (eventProgress["mainEvent"] > 3)
+                {
+                    StartEvent(201, 1, 24);
+                }
+                else
+                {
+                    StartEvent(203, 24);
+                }
+                break;
+
             default:
-                AddEventDialog(npcID*1000 + 001);
-                ActiveNextEvent();
+                if (!((Npc)NpcManager.npcManager.npcs[npcID]).isBattle)
+                {
+                    AddEventDialog(npcID * 1000 + 001);
+                    ActiveNextEvent();
+                }
+                else
+                {
+                    if (eventProgress.GetValueOrDefault("Npc" + npcID + "Battle", 1) == 0)
+                    {
+                        NPCBattleFind(npcID);
+                    }
+                }
+                
+                
                 break;
         }
     }
@@ -333,6 +464,15 @@ public class EventManager : MonoBehaviour
         {
             FightManager.instance.Fight(tmpEvent.dialogID);
         }
+        else if(tmpEvent.eventKind == EventKind.HEAL)
+        {
+            var machine = NpcManager.npcManager.healMachines[tmpEvent.unitID];
+            machine.Active(6);
+        }
+        else if(tmpEvent.eventKind == EventKind.EVENT)
+        {
+            StartEvent(tmpEvent.unitID);
+        }
 
     }
 
@@ -403,6 +543,22 @@ public class EventManager : MonoBehaviour
         events.Enqueue(ev);
     }
 
+    private void AddEventHeal(int machineID)
+    {
+        Event ev = new Event();
+        ev.eventKind = EventKind.HEAL;
+        ev.unitID = machineID;
+        events.Enqueue(ev);
+    }
+
+    private void AddNextEvent(int eventID)
+    {
+        Event ev = new Event();
+        ev.eventKind = EventKind.EVENT;
+        ev.unitID = eventID;
+        events.Enqueue(ev);
+    }
+
     class Event
     {
         public EventKind eventKind;//[0]케릭터 움직임, [1]대화창, [2]트레이너 배틀, [3]야생 포켓몬 배틀, [4]포켓몬 사진 출력, [5]케릭터 방향전환. [6]케릭터 느낌표
@@ -431,7 +587,9 @@ public class EventManager : MonoBehaviour
         EXMARK,
         QUEST,
         DELETE,
-        FIGHT
+        FIGHT,
+        HEAL,
+        EVENT
     }
 
 
@@ -452,4 +610,23 @@ public class EventManager : MonoBehaviour
         Destroy(eventObj);
     }
 
+
+    private void NPCBattleFind(int npcID)
+    {
+        Npc npc = (Npc)NpcManager.npcManager.npcs[npcID];
+
+        var direc = npc.GetDirecToPlayer();
+        var distance = npc.GetDistanceFromPlayer() - 1;
+
+        AddEventDirec(npcID, (Unit.Direc)direc, 0.1f);
+        AddEventExMark(npcID, 0.5f);
+        if (distance > 0)
+        {
+            AddEventMove(npcID, (Unit.Direc)direc, distance);
+        }
+        AddEventDialog(npcID * 1000 + 001);
+        AddEventFight(npc.fightID);
+        AddEventDialog(npcID * 1000 + 002);
+        ActiveNextEvent();
+    }
 }
