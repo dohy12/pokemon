@@ -13,8 +13,9 @@ public class GlobalInput : MonoBehaviour
 
     public bool aButtonDown { get; private set; }
 
+    public bool bButtonDown { get; private set; }
 
-    public Vector2 keyCheck;
+    public bool startButtonDown { get; private set; }
 
     void Awake()
     {
@@ -38,7 +39,9 @@ public class GlobalInput : MonoBehaviour
 
         aButtonDown = Input.GetButtonDown("AButton");
 
-        keyCheck = new Vector2(vertical, horizontal);
+        bButtonDown = Input.GetButtonDown("BButton");
+
+        startButtonDown = Input.GetButtonDown("Submit");
 
     }
 }
