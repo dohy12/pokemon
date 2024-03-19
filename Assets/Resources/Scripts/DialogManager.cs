@@ -85,28 +85,23 @@ public class DialogManager : MonoBehaviour
         {
             dialogStun = 0.1f;
             if (dialogMsgDone)
-            {
-                if (!(questIsQuest))
+            {                
+                if (!GoNextPage())
                 {
-                    if (!GoNextPage())
-                    {
-                        UnActive();
-                    }
-                }
-                else
-                {
-                    //선택
                     UnActive();
+                    if ((questIsQuest))
+                    {//선택
 
-                    if (questCursorNum == 0)
-                    {
-                        EventManager.instance.StartEvent(questYesEventID);
+                        if (questCursorNum == 0)
+                        {
+                            EventManager.instance.StartEvent(questYesEventID);
+                        }
+                        else
+                        {
+                            EventManager.instance.StartEvent(questNoEventID);
+                        }
                     }
-                    else
-                    {
-                        EventManager.instance.StartEvent(questNoEventID);
-                    }                    
-                }
+                }               
                 
             }
             else
@@ -155,16 +150,19 @@ public class DialogManager : MonoBehaviour
                 if (!dialogMsgDone)
                 {
                     dialogStun = 0.1f;
-                    dialogMsgDone = true;                    
+                    dialogMsgDone = true;
 
-                    if (!questIsQuest)
+                    if (dialogMsgPage < dialogMsgMaxPage)
                     {
                         dialogCursor.SetActive(true);
                     }
                     else
                     {
-                        questObject.SetActive(true);
-                    }
+                        if (questIsQuest)
+                        {
+                            questObject.SetActive(true);
+                        }
+                    }                    
                 }
                 
             }
@@ -207,7 +205,8 @@ public class DialogManager : MonoBehaviour
         uiManager.SetUIActive(false);
         questObject.SetActive(false);
 
-        EventManager.instance.ActiveNextEvent(0.3f);
+        if (!(questIsQuest))
+            EventManager.instance.ActiveNextEvent(0.3f);
     }
 
     private void SetMsgById(int msgId)
@@ -425,11 +424,10 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(22001, new string[] { "나도 젊었을 때는 힘찬 트레이너였단다!" ,"그런 나로부터 어드바이스!\n포켓몬을 많이 잡아라!","그리고 온화함을 지니고 포켓몬을 대해주는 것이다!"});
 
         //npc23 간호순
-        msgDictionary.Add(23001, new string[] { "안녕하세요!\n포켓몬 센터입니다!","이곳에서는 포켓몬의 체력을 회복합니다!"});
+        msgDictionary.Add(23001, new string[] { "안녕하세요!\n포켓몬 센터입니다!", "이곳에서는 포켓몬의 체력을 회복합니다!", "당신의 포켓몬을 쉬게 하겠습니까?" });
         msgDictionary.Add(23002, new string[] { "다음 번에도 방문하시길 기다리겠습니다!" });
         msgDictionary.Add(23003, new string[] { "오래 기다리셨습니다!","맡아 놓으신 포켓몬은 모두 건강해졌습니다!"});
         msgDictionary.Add(23004, new string[] { "안녕하세요!\n포켓몬 센터입니다!", "이곳에서는 포켓몬의 체력을 회복합니다!", "아쉽지만 포켓몬이 없으면 시설을 이용하실 수 없습니다." });
-        msgDictionary.Add(23005, new string[] { "당신의 포켓몬을 쉬게 하겠습니까?" });
         
         //npc24 간호순
         msgDictionary.Add(24001, new string[] { "간호순 테스트" });

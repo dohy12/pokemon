@@ -256,6 +256,7 @@ public class EventManager : MonoBehaviour
             AddEventMove(3, Unit.Direc.UP, 1);
             AddEventDialog(3002);
             AddEventDelete(false, __left);
+            ActiveNextEvent();
         }
         else if (eventID == 104)
         {
@@ -272,8 +273,7 @@ public class EventManager : MonoBehaviour
         {
             healMachineID = args[0];
             healerID = args[1];
-            AddEventDialog(23001);
-            AddEventQuest(23005, 205, 202);
+            AddEventQuest(23001, 205, 202);
             ActiveNextEvent();
         }
         else if (eventID == 202)//간호순 인사
@@ -301,6 +301,7 @@ public class EventManager : MonoBehaviour
             AddEventDirec(healerID, Unit.Direc.DOWN, 0.2f);
             AddEventDialog(23003);
             AddNextEvent(202);
+            ActiveNextEvent();
         }
         else
         {
