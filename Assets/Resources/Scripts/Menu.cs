@@ -67,6 +67,7 @@ public class Menu : MonoBehaviour
             if (!UIManager.instance.GetUIActive())
             {
                 Active();
+                return;
             }
         }
 
@@ -75,11 +76,13 @@ public class Menu : MonoBehaviour
             if (input.bButtonDown || input.startButtonDown)
             {
                 UnActive();
+                return;
             }
 
             if (input.aButtonDown)
             {
                 StartMenu();
+                return;
             }
 
             cursorInputStun -= Time.deltaTime;
