@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PokeDexManager : MonoBehaviour
+public class PokeDexManager : SlideUI
 {
     public static PokeDexManager instance;
 
@@ -14,10 +14,6 @@ public class PokeDexManager : MonoBehaviour
     private UIManager.TYPE uiType2;
     private UIManager.TYPE nowUitype;
 
-    private float posY = 0;
-    private float posTime = 0f;
-    private bool isActive = false;
-    private RectTransform rectTransform;
     private GlobalInput input;
 
     Dictionary<int, int> pokeDex; //[0]미발견, [1]발견, [2]잡음 
@@ -57,12 +53,13 @@ public class PokeDexManager : MonoBehaviour
     {
         uiManager = UIManager.instance;
         input = GlobalInput.globalInput;
+        SlideUiInit();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateUi();
+        SlideUiUpdate();
         InputCheck();
         SelectBoxUpdate();
     }
@@ -168,8 +165,7 @@ public class PokeDexManager : MonoBehaviour
 
     public void ActivePokedex()
     {
-        posTime = 0f;
-        isActive = true;
+        SlideUiActive();
         uiManager.ActiveUI(uiType1);
 
         SetPokeDex();
@@ -211,8 +207,7 @@ public class PokeDexManager : MonoBehaviour
 
     private void UnActivePokedex()
     {
-        posTime = 0.5f;
-        isActive = false;
+        SlideUiUnActive();
         uiManager.UnActiveUI();
     }
 
@@ -357,41 +352,6 @@ public class PokeDexManager : MonoBehaviour
                 scroll.anchoredPosition = new Vector2(-126.7f, -132.3f - scrollPos);
             }
         }
-    }
-
-    void UpdateUi()
-    {
-        if (isActive)
-        {
-            if (posY < 560f)
-            {
-                posTime += Time.deltaTime * 2;
-                posY = -2240 * posTime * posTime + 2240 * posTime;
-                if (posY > 550f)
-                {
-                    posY = 560f;
-                }
-                SetUIPos();
-            }
-        }
-        else
-        {
-            if (posY > 0)
-            {
-                posTime += Time.deltaTime * 2;
-                posY = -2240 * posTime * posTime + 2240 * posTime;
-                if (posY < 10f)
-                {
-                    posY = 0f;
-                }
-                SetUIPos();
-            }
-        }
-    }
-
-    void SetUIPos()
-    {
-        rectTransform.anchoredPosition = new Vector2(0f, 560 - posY);
     }
 
 

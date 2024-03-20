@@ -2,16 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+public class Menu : SlideUI
 {
     public static Menu Instance;
     private int menuNum;
     private RectTransform cursor;
 
-    private RectTransform menuRectTransform;
-    private bool isActive = false;
-    private float posX = 0;
-    private float posTime = 0f;
     private GlobalInput input;
 
     private float cursorY = 0;
@@ -31,15 +27,15 @@ public class Menu : MonoBehaviour
     {
         cursor = transform.Find("MenuCursor").GetComponent<RectTransform>();
         input = GlobalInput.globalInput;
-        menuRectTransform = (RectTransform)transform;
         uiType = UIManager.TYPE.MENU;
+        SlideUiInit();
     }
 
     // Update is called once per frame
     void Update()
     {
         InputCheck();
-        UpdateUi();
+        SlideUiUpdate();
 
         if (isActive )
         {
@@ -50,8 +46,7 @@ public class Menu : MonoBehaviour
 
     void Active()
     {
-        posTime = 0f;
-        isActive = true;
+        SlideUiActive();
         menuNum = 0;
 
         UIManager.instance.ActiveUI(uiType);
@@ -59,8 +54,7 @@ public class Menu : MonoBehaviour
 
     void UnActive()
     {
-        posTime = 0.5f;
-        isActive = false;
+        SlideUiUnActive();
         UIManager.instance.UnActiveUI();
     }
 
@@ -106,40 +100,6 @@ public class Menu : MonoBehaviour
         
     }
 
-    void UpdateUi()
-    {
-        if (isActive)
-        {
-            if (posX < 227f)
-            {
-                posTime += Time.deltaTime * 2;
-                posX = -908 * posTime * posTime + 908 * posTime;
-                if (posX > 225f)
-                {
-                    posX = 227f;
-                }
-                SetUIPos();
-            }
-        }
-        else
-        {
-            if (posX > 0)
-            {
-                posTime += Time.deltaTime * 2;
-                posX = -908 * posTime * posTime + 908 * posTime;
-                if (posX < 2)
-                {
-                    posX = 0f;
-                }
-                SetUIPos();
-            }
-        }
-    }
-
-    void SetUIPos()
-    {
-        menuRectTransform.anchoredPosition = new Vector2(527 - posX,190f);
-    }
 
     void CursorUpdate()
     {
@@ -163,6 +123,10 @@ public class Menu : MonoBehaviour
         {
             case 0://포켓몬 도감
                 PokeDexManager.instance.ActivePokedex();
+                break;
+
+            case 2://가방
+                Bag.instance.Active();
                 break;
 
 
