@@ -12,9 +12,12 @@ public class UIManager : MonoBehaviour
     private float blackOutSpeed;
     public static bool isUIActive = false;
 
+    private Stack<TYPE> uiStack;
+
     private void Awake()
     {
         instance = this;
+       
     }
 
     // Start is called before the first frame update
@@ -23,6 +26,7 @@ public class UIManager : MonoBehaviour
         blackout = transform.Find("BlackOut").GetComponent<Image>();
         blackout.gameObject.SetActive(false);
         isBlackout = false;
+        uiStack = new Stack<TYPE>();
     }
 
     // Update is called once per frame
@@ -66,8 +70,7 @@ public class UIManager : MonoBehaviour
             {
                 UnActiveBlackOut();
             }
-        }
-        
+        }        
     }
 
     public bool GetUIActive()
@@ -80,4 +83,43 @@ public class UIManager : MonoBehaviour
         isUIActive = _isUIActive;
     }
 
+    public void ActiveUI(TYPE type)
+    {
+        isUIActive = true;
+        uiStack.Push(type);
+    }
+
+    public void UnActiveUI()
+    {
+        Invoke("PopStack", 0.1f);//Áö¿¬        
+    }
+
+    private void PopStack()
+    {
+        if (uiStack.Count > 0) { uiStack.Pop(); }
+        if (uiStack.Count == 0){ isUIActive = false; }
+    }
+
+    public bool CheckUITYPE(TYPE type)
+    {
+        var nowUI = TYPE.NONE;
+        if(uiStack.Count > 0)
+        {
+            nowUI = uiStack.Peek();
+        }
+        return (nowUI == type);
+    }
+
+
+    public enum TYPE
+    {
+        NONE,
+        DIALOG,
+        MENU,
+        POKEDEX1,
+        POKEDEX2,
+        POKEMON1,
+        POKEMON2,
+        BAG
+    }
 }

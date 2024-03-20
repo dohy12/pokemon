@@ -41,6 +41,7 @@ public class DialogManager : MonoBehaviour
 
     private GlobalInput input;
     private UIManager uiManager;
+    private UIManager.TYPE uiType;
 
     private void Awake()
     {
@@ -50,6 +51,7 @@ public class DialogManager : MonoBehaviour
         dialogCursor = transform.Find("Cursor").gameObject;
         questObject = transform.Find("Quest").gameObject;
         questCursor = questObject.transform.Find("QuestCursor").gameObject;
+        uiType = UIManager.TYPE.DIALOG;
     }
 
     // Start is called before the first frame update
@@ -177,7 +179,7 @@ public class DialogManager : MonoBehaviour
         isActive = true;
         SetMsgById(msgId);
 
-        uiManager.SetUIActive(true);
+        uiManager.ActiveUI(uiType);
         
 
         if (args.Length > 0)
@@ -202,7 +204,7 @@ public class DialogManager : MonoBehaviour
         posTime = 0.5f;
         isActive = false;
 
-        uiManager.SetUIActive(false);
+        uiManager.UnActiveUI();
         questObject.SetActive(false);
 
         if (!(questIsQuest))

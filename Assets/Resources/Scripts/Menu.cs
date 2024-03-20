@@ -19,6 +19,8 @@ public class Menu : MonoBehaviour
 
     public float cursorTmpY = 60f;
 
+    private UIManager.TYPE uiType;
+
     private void Awake()
     {
         Instance = this;
@@ -30,6 +32,7 @@ public class Menu : MonoBehaviour
         cursor = transform.Find("MenuCursor").GetComponent<RectTransform>();
         input = GlobalInput.globalInput;
         menuRectTransform = (RectTransform)transform;
+        uiType = UIManager.TYPE.MENU;
     }
 
     // Update is called once per frame
@@ -50,52 +53,57 @@ public class Menu : MonoBehaviour
         posTime = 0f;
         isActive = true;
         menuNum = 0;
-        UIManager.instance.SetUIActive(true);
+
+        UIManager.instance.ActiveUI(uiType);
     }
 
     void UnActive()
     {
         posTime = 0.5f;
         isActive = false;
-        UIManager.instance.SetUIActive(false);
+        UIManager.instance.UnActiveUI();
     }
 
     void InputCheck()
     {
         if (input.startButtonDown)
         {
-            if (!UIManager.instance.GetUIActive())
+            if (!UIManager.instance.GetUIActive() && !EventManager.isEvent)
             {
                 Active();
                 return;
             }
         }
 
-        if (isActive)
+        if (UIManager.instance.CheckUITYPE(uiType))
         {
-            if (input.bButtonDown || input.startButtonDown)
+            if (isActive)
             {
-                UnActive();
-                return;
-            }
+                if (input.bButtonDown || input.startButtonDown)
+                {
+                    UnActive();
+                    return;
+                }
 
-            if (input.aButtonDown)
-            {
-                StartMenu();
-                return;
-            }
+                if (input.aButtonDown)
+                {
+                    StartMenu();
+                    return;
+                }
 
-            cursorInputStun -= Time.deltaTime;
-            if (cursorInputStun < 0 && input.verticalRaw != 0 )
-            {
-                cursorInputStun = 0.2f;
+                cursorInputStun -= Time.deltaTime;
+                if (cursorInputStun < 0 && input.verticalRaw != 0)
+                {
+                    cursorInputStun = 0.2f;
 
-                menuNum -= (int)input.verticalRaw;
+                    menuNum -= (int)input.verticalRaw;
 
-                if (menuNum < 0) { menuNum = 4; }
-                if (menuNum > 4) { menuNum = 0; }
+                    if (menuNum < 0) { menuNum = 4; }
+                    if (menuNum > 4) { menuNum = 0; }
+                }
             }
         }
+        
     }
 
     void UpdateUi()
@@ -153,7 +161,9 @@ public class Menu : MonoBehaviour
 
         switch (menuNum)
         {
-
+            case 0://포켓몬 도감
+                PokeDexManager.instance.ActivePokedex();
+                break;
 
 
             case 4:
