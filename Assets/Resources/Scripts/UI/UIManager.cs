@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
 
     private Stack<TYPE> uiStack;
 
+    public TYPE type;
+
     private void Awake()
     {
         instance = this;
@@ -33,6 +35,16 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         BlackOutUpdate();
+
+        if (uiStack.Count > 0)
+        {
+            type = uiStack.Peek();
+        }
+        else
+        {
+            type = TYPE.NONE;
+        }
+        
     }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PokeDexManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PokeDexManager : MonoBehaviour
     private UIManager uiManager;
     private UIManager.TYPE uiType1;
     private UIManager.TYPE uiType2;
+    private UIManager.TYPE nowUitype;
 
     private float posY = 0;
     private float posTime = 0f;
@@ -31,7 +33,12 @@ public class PokeDexManager : MonoBehaviour
     private float inputStun = 0f;
 
     private RectTransform scroll;
-    private float scrollPos;    
+    private float scrollPos;
+
+    private GameObject pokedexDetail;
+
+    private Image pokeImage1;
+    private Image pokeImage2;
 
     private void Awake()
     {
@@ -66,7 +73,7 @@ public class PokeDexManager : MonoBehaviour
         
         for (var i = 0; i < 23; i++)
         {
-            pokeDex.Add(i, 2);
+            pokeDex.Add(i, Random.Range(0, 3));
         }        
 
         pokeDexStrings = new string[7];
@@ -85,10 +92,15 @@ public class PokeDexManager : MonoBehaviour
 
         selectBox = (RectTransform)transform.Find("SelectBox");
         scroll = (RectTransform)transform.Find("Scroll");
+        pokeImage1 = transform.Find("Image").GetComponent<Image>();  
+        pokedexDetail = transform.Find("Detail").gameObject;
+        pokedexDetail.SetActive(false);
+        pokeImage2 = pokedexDetail.transform.Find("Image").GetComponent<Image>();
     }
 
     private void SetPokeDex()
     {
+        nowUitype = UIManager.TYPE.POKEDEX1;
         pokeDexPage = 0;
         SetPokeString();        
 
@@ -118,7 +130,7 @@ public class PokeDexManager : MonoBehaviour
     {
         for (var i = 0; i < 7; i++)
         {
-            if (pokeDex[i] > 0) { pokeDexStrings[i] = PokemonInfo.Instance.pokemons[i + pokeDexPage].name; }
+            if (pokeDex[i + pokeDexPage] > 0) { pokeDexStrings[i] = PokemonInfo.Instance.pokemons[i + pokeDexPage].name; }
             else { pokeDexStrings[i] = "- - - - - "; }            
         }
 
@@ -131,6 +143,8 @@ public class PokeDexManager : MonoBehaviour
             if (pokeDex[i + pokeDexPage] == 2) { img.SetActive(true); }
             else { img.SetActive(false); }
         }
+
+        pokeImage1.sprite = GetSprite(selectNum + pokeDexPage);
     }
 
     private void GoPage(int pageTmp)
@@ -159,6 +173,40 @@ public class PokeDexManager : MonoBehaviour
         SetPokeDex();
     }
 
+    private void ActiveDetail()
+    {
+        uiManager.ActiveUI(uiType2);
+        pokedexDetail.SetActive(true);
+
+        SetDetail();
+    }
+
+    private void SetDetail()
+    {
+        var num = selectNum + pokeDexPage;
+        var poke = PokemonInfo.Instance.pokemons[num];
+        var detailObj = transform.Find("Detail");
+
+        detailObj.Find("Number").GetComponent<TMP_Text>().text = "No." + (num+1).ToString("D3");
+        detailObj.Find("Name").GetComponent<TMP_Text>().text = poke.name;
+        detailObj.Find("Kind").GetComponent<TMP_Text>().text = "큰턱포켓몬";
+
+        if (pokeDex[num] == 1)
+        {
+            detailObj.Find("Height").GetComponent<TMP_Text>().text = "???m";
+            detailObj.Find("Weight").GetComponent<TMP_Text>().text = "???kg";
+            detailObj.Find("DetailText").GetComponent<TMP_Text>().text = " ";
+        }
+        else
+        {
+            detailObj.Find("Height").GetComponent<TMP_Text>().text = "0.0m";
+            detailObj.Find("Weight").GetComponent<TMP_Text>().text = "0.0kg";
+            detailObj.Find("DetailText").GetComponent<TMP_Text>().text = "발달한 턱은 매우 강해서 뭐든지 물어뜯어 버리기 때문에 어버이 트레이너도 주의해야 한다.";
+        }
+
+        pokeImage2.sprite = GetSprite(num);
+    }
+
     private void UnActivePokedex()
     {
         posTime = 0.5f;
@@ -166,14 +214,32 @@ public class PokeDexManager : MonoBehaviour
         uiManager.UnActiveUI();
     }
 
+    private void UnActivePokedex2()
+    {
+        inputStun = 0.1f;
+        uiManager.UnActiveUI();
+        pokedexDetail.SetActive(false);
+
+        selectBoxPos = 912 - selectBoxPosYY * selectNum;
+        selectBox.anchoredPosition = new Vector2(449f, selectBoxPos);
+    }
+
     private void InputCheck()
     {
 
         if (uiManager.CheckUITYPE(uiType1))
         {
-            if (input.bButtonDown)
+            if (input.bButtonDown && inputStun < 0)
             {
                 UnActivePokedex();
+            }
+
+            if (input.aButtonDown)
+            {
+                if (pokeDex[selectNum + pokeDexPage] > 0)
+                {
+                    ActiveDetail();
+                }                
             }
 
             inputStun -= Time.deltaTime;
@@ -191,8 +257,71 @@ public class PokeDexManager : MonoBehaviour
                     selectNum = 6;
                     GoPage(1);
                 }
+                pokeImage1.sprite = GetSprite(selectNum + pokeDexPage);
             }
         }
+
+        if (uiManager.CheckUITYPE(uiType2))
+        {
+            inputStun -= Time.deltaTime;
+            if (input.bButtonDown && inputStun < 0)
+            {
+                UnActivePokedex2();
+            }
+
+            if (input.verticalRaw != 0 && inputStun < 0)
+            {
+                inputStun = 0.3f;
+                if (input.verticalRaw == 1) { if (GoPreviousPokemon()) { SetDetail(); } }
+                else { if (GoNextPokemon()) { SetDetail(); } }
+            }
+        }
+    }
+
+    private bool GoNextPokemon()
+    {
+        var num = selectNum + pokeDexPage;
+
+        while (num < 23)
+        {
+            num++;
+            selectNum += 1;
+            if (selectNum > 6)
+            {
+                selectNum = 6;
+                pokeDexPage += 1;
+                if (pokeDexPage > 16)
+                {
+                    pokeDexPage = 16;
+                }
+            }
+
+            if (pokeDex[num] > 0) { SetPokeString(); return true; }
+        }
+        return false;
+    }
+
+    private bool GoPreviousPokemon()
+    {
+        var num = selectNum + pokeDexPage;
+
+        while (num >= 0)
+        {
+            num--;
+            selectNum -= 1;
+            if (selectNum < 0)
+            {
+                selectNum = 0;
+                pokeDexPage -= 1;
+                if (pokeDexPage < 0)
+                {
+                    pokeDexPage = 0;
+                }
+            }
+
+            if (pokeDex[num] > 0) { SetPokeString();     return true; }                
+        }
+        return false;
     }
 
     private void SelectBoxUpdate()
@@ -261,5 +390,14 @@ public class PokeDexManager : MonoBehaviour
     void SetUIPos()
     {
         rectTransform.anchoredPosition = new Vector2(0f, 560 - posY);
+    }
+
+
+    Sprite GetSprite(int num)
+    {
+        if (pokeDex[num] == 0)
+            return PokeSpr.instance.sprites[0];
+
+        return PokeSpr.instance.sprites[num + 1];
     }
 }
