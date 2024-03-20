@@ -73,7 +73,7 @@ public class PokeDexManager : MonoBehaviour
         
         for (var i = 0; i < 23; i++)
         {
-            pokeDex.Add(i, Random.Range(0, 3));
+            pokeDex.Add(i, Random.Range(0,3));
         }        
 
         pokeDexStrings = new string[7];
@@ -123,6 +123,8 @@ public class PokeDexManager : MonoBehaviour
 
         scrollPos = 0f;
         scroll.anchoredPosition = new Vector2(-126.7f, -132.3f);
+
+        pokeImage1.sprite = GetSprite(selectNum + pokeDexPage);
     }
 
 
@@ -184,12 +186,12 @@ public class PokeDexManager : MonoBehaviour
     private void SetDetail()
     {
         var num = selectNum + pokeDexPage;
-        var poke = PokemonInfo.Instance.pokemons[num];
         var detailObj = transform.Find("Detail");
+        var info = PokeDexInfo.instance.info[num];
 
         detailObj.Find("Number").GetComponent<TMP_Text>().text = "No." + (num+1).ToString("D3");
-        detailObj.Find("Name").GetComponent<TMP_Text>().text = poke.name;
-        detailObj.Find("Kind").GetComponent<TMP_Text>().text = "큰턱포켓몬";
+        detailObj.Find("Name").GetComponent<TMP_Text>().text = info.name;
+        detailObj.Find("Kind").GetComponent<TMP_Text>().text = info.kind;
 
         if (pokeDex[num] == 1)
         {
@@ -199,9 +201,9 @@ public class PokeDexManager : MonoBehaviour
         }
         else
         {
-            detailObj.Find("Height").GetComponent<TMP_Text>().text = "0.0m";
-            detailObj.Find("Weight").GetComponent<TMP_Text>().text = "0.0kg";
-            detailObj.Find("DetailText").GetComponent<TMP_Text>().text = "발달한 턱은 매우 강해서 뭐든지 물어뜯어 버리기 때문에 어버이 트레이너도 주의해야 한다.";
+            detailObj.Find("Height").GetComponent<TMP_Text>().text = info.height;
+            detailObj.Find("Weight").GetComponent<TMP_Text>().text = info.weight;
+            detailObj.Find("DetailText").GetComponent<TMP_Text>().text = info.detail;
         }
 
         pokeImage2.sprite = GetSprite(num);
