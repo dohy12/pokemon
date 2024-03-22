@@ -25,7 +25,7 @@ public class DialogObject : MonoBehaviour
     {
         if (objKind == 0)
         {
-            DialogManager.instance.Active(dialogID);
+            DialogManager.instance.Active(dialogID, null, DialogManager.Type.NORMAL);
         }
         else
         {
@@ -41,15 +41,16 @@ public class DialogObject : MonoBehaviour
                     }
                     else
                     {
-                        DialogManager.instance.Active(dialogID);
+                        DialogManager.instance.Active(dialogID, null, DialogManager.Type.NORMAL);
                     }
                     break;
 
                 case 2://연구소 힐링머신
-                    if (evm.eventProgress["mainEvent"] > 3)
-                    {
-                        evm.StartEvent(200, 0);
-                    }
+                    evm.StartEvent(200, 0);
+                    break;
+
+                case 3:
+                    evm.StartEvent(999);
                     break;
             }
         }

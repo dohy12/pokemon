@@ -4,15 +4,16 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class SelectUI : SlideUI, CursorUI
+public class SelectUI : MonoBehaviour, CursorUI
 {
     public static SelectUI instance;
     private UIManager uiManager;
-    private int uiID = -1;
+    private int uiID = -999;
     private Cursor cursor;
     private SelectUIRedirec redirec;
     private int cursorMaxNum;
     private float uiWidth;
+    private Vector2 uiPos;
     private int[] args;
 
     private GlobalInput input;
@@ -22,12 +23,13 @@ public class SelectUI : SlideUI, CursorUI
         instance = this;
     }
 
-    public void Active(int uiID, int cursorMaxNum, string menus, SelectUIRedirec redirec, float width, params int[] args)
+    public void Active(int uiID, int cursorMaxNum, string menus, SelectUIRedirec redirec, float width, Vector2 pos, params int[] args)
     {
         this.uiID = uiID;
         this.cursorMaxNum = cursorMaxNum;
         this.redirec = redirec;
         this.uiWidth = width;
+        this.uiPos = pos;
         this.args = args;
         cursor.cursorMaxNum = this.cursorMaxNum; ;
 
@@ -36,24 +38,22 @@ public class SelectUI : SlideUI, CursorUI
         uiManager.ActiveUI(uiID);
 
         SetSize();
-        SlideUiInit();
-        SlideUiActive();
     }
 
     private void SetSize()
     {
         RectTransform rect = (RectTransform)transform;
         rect.sizeDelta = new Vector2(uiWidth, 85f + cursorMaxNum * 35f);
-        rect.anchoredPosition = new Vector2(-14f, -54.5f + cursorMaxNum * -17.5f);
-
-        slideUIstartPos = rect.anchoredPosition;
-        slideUIendPos = new Vector2(slideUIstartPos.x, -slideUIstartPos.y);
+        rect.anchoredPosition = uiPos;
     }
 
     private void UnActive()
     {
-        uiManager.UnActiveUI();
-        SlideUiUnActive();
+        uiManager.UnActiveUI(uiID);
+        input.InputStun();
+
+        RectTransform rect = (RectTransform)transform;
+        rect.anchoredPosition = new Vector2(9999f, 9999f);
     }
 
     // Start is called before the first frame update
@@ -61,14 +61,12 @@ public class SelectUI : SlideUI, CursorUI
     {
         uiManager = UIManager.instance;
         input = GlobalInput.globalInput;
-
     }
 
     // Update is called once per frame
     void Update()
     {
         InputCheck();
-        SlideUiUpdate();
     }
 
     public void InputCheck()
@@ -77,6 +75,7 @@ public class SelectUI : SlideUI, CursorUI
         {
             input.InputStun();
             UnActive();
+            redirec.OnSelectRedirec(cursorMaxNum, args);
         }
     }
 

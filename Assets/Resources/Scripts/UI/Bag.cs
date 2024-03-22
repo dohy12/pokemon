@@ -55,6 +55,8 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
             stringObj_Num[i] = transform.GetChild(i).GetChild(1).GetComponent<TMP_Text>();
         }
 
+        items[0] = 1;
+        items[1] = 1;
         for (var i = 0; i < 10; i++)
         {
             var n = Random.Range(2, 13);
@@ -118,8 +120,9 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
     public void UnActive()
     {
+        input.InputStun();
         SlideUiUnActive();
-        UIManager.instance.UnActiveUI();
+        UIManager.instance.UnActiveUI(uiID);
     }
 
     private void InputCheck()
@@ -177,26 +180,42 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
     public void OnSelectRedirec(int num, params int[] args)
     {
-        var itmsList = items.Keys.ToList();
-        var itm = info.info[itmsList[args[0]]];
-        Debug.Log(itm.name);
-
-        if (num == 0)//사용한다.
+        if ( num != -1)
         {
-            if (itm.type == ItemInfo.Type.BALL)
-            {                
-                DialogManager.instance.Active(99027);
+            var itmsList = items.Keys.ToList();
+            var itm = info.info[itmsList[args[0]]];
+
+            if (num == 0)//사용한다.
+            {
+                if (itm.type == ItemInfo.Type.BALL)
+                {
+                    DialogManager.instance.Active(99027, null, DialogManager.Type.NORMAL);
+                }
+            }
+            if (num == 1)//버린다
+            {
+                if (itm.type == ItemInfo.Type.IMPOTANT)
+                {
+                    DialogManager.instance.Active(99028, null, DialogManager.Type.NORMAL);
+                }
+                else
+                {
+                    DialogManager.instance.Active(99029, this, DialogManager.Type.COUNT, items[itmsList[args[0]]]);
+                }
             }
         }
-        
-        
+        else
+        {
+            Debug.Log("버리기 [" + args[0] + "] 개");
+        }
     }
 
     private void SelectUIActive(int num)
     {
         SelectUI select = SelectUI.instance;
-
-        select.Active(uiID+1,2,"사용한다\n버린다\n그만둔다",this, 240f, num);
+        var cursorMaxNum = 2;
+        Vector2 pos = new Vector2(-14f, 54.5f + (cursorMaxNum) * 17.5f);
+        select.Active(uiID+1, cursorMaxNum, "사용한다\n버린다\n그만둔다",this, 240f, pos, num);
     }
 
 }

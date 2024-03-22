@@ -20,6 +20,10 @@ public class Cursor : MonoBehaviour
 
     private bool isCursorJump = false;
 
+    private float comboTime = 0;
+    private int comboCh = 0;
+    public float comboOn = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,10 +48,12 @@ public class Cursor : MonoBehaviour
         if (parent.GetActive())
         {
             inputStun -= Time.deltaTime;
+            comboTime -= Time.deltaTime;
 
             if (input.verticalRaw !=0 && inputStun < 0)
             {
-                inputStun = 0.2f;
+                ComboUpdate();
+                inputStun = 0.2f / comboOn;
                 cursorNum -= (int)input.verticalRaw;
 
                 if (cursorNum < 0)
@@ -88,6 +94,25 @@ public class Cursor : MonoBehaviour
                 parent.CursorChoose(cursorNum);                
             }
         }
+    }
+
+    void ComboUpdate()
+    {
+        comboOn = 1f; 
+        if (comboTime > 0)
+        {
+            comboCh++;
+            if (comboCh > 2)
+            {
+                comboOn = 2f;
+            }
+        }
+        else
+        {
+            comboCh = 1;
+        }
+
+        comboTime = 0.21f;
     }
 
     void CursorUpdate()

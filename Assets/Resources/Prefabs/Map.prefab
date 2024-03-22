@@ -47917,6 +47917,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2800766381128900255, guid: 726eec5d1f10193438a2e19f999cad5e, type: 3}
+      propertyPath: eventID
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800766381128900255, guid: 726eec5d1f10193438a2e19f999cad5e, type: 3}
       propertyPath: objKind
       value: 1
       objectReference: {fileID: 0}

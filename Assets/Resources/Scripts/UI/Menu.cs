@@ -38,7 +38,8 @@ public class Menu : SlideUI, CursorUI
     void UnActive()
     {
         SlideUiUnActive();
-        UIManager.instance.UnActiveUI();
+        UIManager.instance.UnActiveUI(uiID);
+        input.InputStun();
     }
 
     void InputCheck()

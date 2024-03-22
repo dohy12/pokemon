@@ -5,7 +5,7 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using static Unit;
 
-public class EventManager : MonoBehaviour
+public class EventManager : MonoBehaviour, SelectUIRedirec
 {
     public static EventManager instance;
     private Queue<Event> events;
@@ -304,6 +304,16 @@ public class EventManager : MonoBehaviour
             AddNextEvent(202);
             ActiveNextEvent();
         }
+        else if (eventID == 999)
+        {
+            AddEventQuest(99999, 998, -1);
+            ActiveNextEvent();
+        }
+        else if (eventID == 998)
+        {
+            AddEventDialog(99998);
+            ActiveNextEvent();
+        }
         else
         {
             isEvent = false;
@@ -430,7 +440,7 @@ public class EventManager : MonoBehaviour
         }
         else if(tmpEvent.eventKind == EventKind.DIALOG)
         {
-            DialogManager.instance.Active(tmpEvent.dialogID);
+            DialogManager.instance.Active(tmpEvent.dialogID, null, DialogManager.Type.NORMAL);
         }
         else if(tmpEvent.eventKind == EventKind.DIREC)
         {
@@ -449,7 +459,7 @@ public class EventManager : MonoBehaviour
         }
         else if(tmpEvent.eventKind == EventKind.QUEST)
         {
-            DialogManager.instance.Active(tmpEvent.dialogID, 0, tmpEvent.questYes, tmpEvent.questNo);
+            DialogManager.instance.Active(tmpEvent.dialogID, this, DialogManager.Type.QUEST, tmpEvent.arg1, tmpEvent.arg2);
         }
         else if(tmpEvent.eventKind == EventKind.DELETE)
         {
@@ -474,6 +484,10 @@ public class EventManager : MonoBehaviour
         else if(tmpEvent.eventKind == EventKind.EVENT)
         {
             StartEvent(tmpEvent.unitID);
+        }
+        else if (tmpEvent.eventKind == EventKind.COUNT)
+        {
+            DialogManager.instance.Active(tmpEvent.dialogID, this, DialogManager.Type.COUNT, tmpEvent.arg1);
         }
 
     }
@@ -523,8 +537,17 @@ public class EventManager : MonoBehaviour
         Event ev = new Event();
         ev.eventKind = EventKind.QUEST;
         ev.dialogID = dialogID;
-        ev.questYes = questYes;
-        ev.questNo = questNo;
+        ev.arg1 = questYes;
+        ev.arg2 = questNo;
+        events.Enqueue(ev);
+    }
+
+    private void AddEventCount(int dialogID, int countMaxNum)
+    {
+        Event ev = new Event();
+        ev.eventKind = EventKind.COUNT;
+        ev.dialogID = dialogID;
+        ev.arg1 = countMaxNum;
         events.Enqueue(ev);
     }
 
@@ -568,9 +591,9 @@ public class EventManager : MonoBehaviour
         public int direc;
         public int dialogID;
         public float poseTime;
-        public int questYes;
-        public int questNo;
         public bool deleteKind;
+        public int arg1;
+        public int arg2;
 
         public Event()
         {
@@ -591,7 +614,8 @@ public class EventManager : MonoBehaviour
         DELETE,
         FIGHT,
         HEAL,
-        EVENT
+        EVENT,
+        COUNT
     }
 
 
@@ -631,4 +655,11 @@ public class EventManager : MonoBehaviour
         AddEventDialog(npcID * 1000 + 002);
         ActiveNextEvent();
     }
+
+    public void OnSelectRedirec(int num, params int[] args)
+    {
+        Debug.Log(num +" " + args[0] + " " + args[1]);
+        StartEvent(args[num]);
+    }
+
 }

@@ -197,13 +197,15 @@ public class PokeDexManager : SlideUI, CursorUI
     private void UnActivePokedex()
     {
         SlideUiUnActive();
-        uiManager.UnActiveUI();
+        uiManager.UnActiveUI(uiID1);
+        input.InputStun();
     }
 
     private void UnActivePokedex2()
     {
         inputStun = 0.1f;
-        uiManager.UnActiveUI();
+        uiManager.UnActiveUI(uiID2);
+        input.InputStun();
         pokedexDetail.SetActive(false);
 
         cursor.SetCursor(cursor.cursorNum);

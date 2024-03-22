@@ -7,16 +7,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
+using static Unit;
 
-public class DialogManager : MonoBehaviour
+public class DialogManager : SlideUI, SelectUIRedirec
 {
     public static DialogManager instance;
     Dictionary<int, string[]> msgDictionary;
-    RectTransform dialogTransform;
     TMP_Text textMesh;
-    bool isActive = false;
-    float posY = 0;
-    float posTime = 0f;
 
     private int dialogMsgId = 0;
     private int dialogMsgPage = 0;
@@ -29,40 +26,34 @@ public class DialogManager : MonoBehaviour
     private float dialogStun = 0f;
     private GameObject dialogCursor;
 
-    private bool questIsQuest = false;
-    private int questYesEventID = 0;
-    private int questNoEventID = 0;
-    private float questCursorPos = 0f;
-    private GameObject questObject;
-    private GameObject questCursor;
-    private int questCursorNum = 0;
-    private float questCursorSpeed = 0.1f;
-    private float questCursorInputStun = 0f;
+    private bool isQuest = false;
+    private bool isCount = false;
+    private int[] dialogArgs;
 
     private GlobalInput input;
     private UIManager uiManager;
     private int uiID = 9001;
 
+    private SelectUIRedirec redirec;
+
     private void Awake()
     {
         instance = this;
-        dialogTransform = GetComponent<RectTransform>();
         textMesh = transform.GetChild(0).GetComponent<TMP_Text>();
         dialogCursor = transform.Find("Cursor").gameObject;
-        questObject = transform.Find("Quest").gameObject;
-        questCursor = questObject.transform.Find("QuestCursor").gameObject;
     }
 
     // Start is called before the first frame update
     void Start()
     {        
-        Init();        
+        Init();
+        SlideUiInit();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateUi();
+        SlideUiUpdate();
         DialogUpdate();
 
         if (isActive && input.aButtonDown)
@@ -70,13 +61,7 @@ public class DialogManager : MonoBehaviour
             PushAButton();
         }
 
-        if (questIsQuest)
-        {
-            QuestInputUpdate();
-            QuestCursorUpdate();
-        }
     }
-
 
 
     private void PushAButton()
@@ -88,31 +73,15 @@ public class DialogManager : MonoBehaviour
             if (dialogMsgDone)
             {                
                 if (!GoNextPage())
-                {
-                    UnActive();
-                    if ((questIsQuest))
-                    {//선택
-
-                        if (questCursorNum == 0)
-                        {
-                            EventManager.instance.StartEvent(questYesEventID);
-                        }
-                        else
-                        {
-                            EventManager.instance.StartEvent(questNoEventID);
-                        }
+                {                    
+                    if (!(isQuest || isCount))
+                    {
+                        UnActive();
                     }
+
+
                 }               
                 
-            }
-            else
-            {
-                /* 빠른 스킵
-                dialogMsgCheck = dialogMsg.Length;
-                dialogMsgDone = true;
-                dialogCursor.SetActive(true);
-                ShowMsg(dialogMsg);
-                */
             }
         }
     }
@@ -159,9 +128,13 @@ public class DialogManager : MonoBehaviour
                     }
                     else
                     {
-                        if (questIsQuest)
+                        if (isQuest)
                         {
-                            questObject.SetActive(true);
+                            SelectUIActive();
+                        }
+                        if (isCount)
+                        {
+                            CountUIActive();
                         }
                     }                    
                 }
@@ -172,41 +145,41 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public void Active(int msgId, params int[] args)
+    public void Active(int msgId, SelectUIRedirec redirec, Type type, params int[] args)
     {
-        posTime = 0f;
-        isActive = true;
+        SlideUiActive();
         SetMsgById(msgId);
 
         uiManager.ActiveUI(uiID);
-        
+        this.redirec = redirec;
 
-        if (args.Length > 0)
+        if (type != Type.NORMAL)
         {
-            if (args[0] == 0)
+            if (type == Type.QUEST)
             {
-                QuestCursorInit(args[1], args[2]);
+                QuestInit(args[0], args[1]);
             }
-            if (args[0] == 1)
+            if (type == Type.COUNT)
             {
-
+                CountInit(args[0]);
             }
         }
         else
         {
-            questIsQuest = false;
+            isQuest = false;
+            isCount = false;
         }
     }
 
     private void UnActive()
     {
-        posTime = 0.5f;
-        isActive = false;
+        SlideUiUnActive();
 
-        uiManager.UnActiveUI();
-        questObject.SetActive(false);
+        uiManager.UnActiveUI(uiID);
 
-        if (!(questIsQuest))
+        input.InputStun();
+
+        if(!(isQuest || isCount))
             EventManager.instance.ActiveNextEvent(0.3f);
     }
 
@@ -241,101 +214,20 @@ public class DialogManager : MonoBehaviour
 
         input = GlobalInput.globalInput;
         uiManager = UIManager.instance;
-
-        questObject.SetActive(false);
     }
 
-    private void UpdateUi()
+    private void QuestInit(params int[] args)
     {
-        if (isActive)
-        {
-            if (posY < 200)
-            {
-                posTime += Time.deltaTime*2;
-                posY = -800 * posTime * posTime + 800 * posTime;
-                if (posY >199f) 
-                {
-                    posY = 200f;
-                }
-                SetUIPos();
-            }
-        }
-        else
-        {
-            if (posY > 0)
-            {
-                posTime += Time.deltaTime * 2;
-                posY = -800 * posTime * posTime + 800 * posTime;
-                if (posY < 2)
-                {
-                    posY = 0f;
-                }
-                SetUIPos();
-            }
-        }
+        isQuest = true;
+        this.dialogArgs = args;
     }
 
-    private void QuestInputUpdate()
+    private void CountInit(params int[] args)
     {
-        if (dialogMsgDone)
-        {
-            questCursorInputStun -= Time.deltaTime;
-            if (questCursorInputStun < 0f)
-            {
-                if (input.verticalRaw == -1 && questCursorNum == 0 && questCursorPos == 0)
-                {
-                    questCursorNum = 1;
-                    questCursorInputStun = questCursorSpeed + 0.2f;
-                }
-
-                if (input.verticalRaw == 1 && questCursorNum == 1 && questCursorPos == questCursorSpeed)
-                {
-                    questCursorNum = 0;
-                    questCursorInputStun = questCursorSpeed + 0.2f;
-                }
-            }
-            
-        }
+        isCount = true;
+        this.dialogArgs = args;
     }
 
-    private void QuestCursorInit(int yesID, int noID)
-    {
-        questIsQuest = true;
-        questYesEventID = yesID;
-        questNoEventID = noID;
-        questCursorPos = 0f;
-        questCursorNum = 0;
-
-        var cursorYPos = (float)Math.Cos(questCursorPos * (Math.PI) / questCursorSpeed);
-        var rTrans = (RectTransform)questCursor.transform;
-        rTrans.anchoredPosition = new Vector2(-59f, -2.5f + 17.5f * cursorYPos);
-    }
-
-    private void QuestCursorUpdate()
-    {
-        if (dialogMsgDone)
-        {
-            if (questCursorNum == 0 && questCursorPos > 0)
-            {
-                questCursorPos = Math.Max(0, questCursorPos - Time.deltaTime);
-                var cursorYPos = (float)Math.Cos(questCursorPos * (Math.PI) / questCursorSpeed);
-                var rTrans = (RectTransform)questCursor.transform;
-                rTrans.anchoredPosition = new Vector2(-59f, -2.5f + 17.5f*cursorYPos);
-            }
-            if (questCursorNum == 1 && questCursorPos < questCursorSpeed)
-            {
-                questCursorPos = Math.Min(questCursorSpeed, questCursorPos + Time.deltaTime);
-                var cursorYPos = (float)Math.Cos(questCursorPos * (Math.PI) / questCursorSpeed);
-                var rTrans = (RectTransform)questCursor.transform;
-                rTrans.anchoredPosition = new Vector2(-59f, -2.5f + 17.5f * cursorYPos);
-            }
-        }
-    }
-
-    private void SetUIPos()
-    {
-        dialogTransform.anchoredPosition = new Vector3(0, posY - 180f, 0);
-    }
 
     private void SetDialog()//npcID__대화ID
     {
@@ -350,7 +242,7 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(2001, new string[] { "연구소에 잘 왔다!\n나는 오박사 포켓몬 박사란다.", "오늘부터 모험을 시작하게 된것을 축하한단다."});
         msgDictionary.Add(2002, new string[] { "여기 너에게 줄 포켓몬이 있단다 신중하게 고르렴" });
         msgDictionary.Add(2003, new string[] { "여행을 떠나려면 포켓몬이 있어야 한단다." });
-        msgDictionary.Add(2004, new string[] { "너의 첫 포켓몬이니 신중하게 고르렴", "천천히 골라도 괜찮단다." });
+        msgDictionary.Add(2004, new string[] { "너의 첫 포켓몬이니 신중하게 고르거라\n천천히 골라도 괜찮단다" });
         msgDictionary.Add(2005, new string[] { "풀 포켓몬 이상해씨란다. 그 포켓몬으로 결정하겠니?" });
         msgDictionary.Add(2006, new string[] { "불 포켓몬 파이리란다. 그 포켓몬으로 결정하겠니?" });
         msgDictionary.Add(2007, new string[] { "물 포켓몬 꼬부기란다. 그 포켓몬으로 결정하겠니?" });
@@ -493,5 +385,39 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(99026, new string[] { "포켓몬을 회복시키겠습니까?" });
 
         msgDictionary.Add(99027, new string[] { "해당 아이템은 지금 사용하실 수 없습니다." });
+        msgDictionary.Add(99028, new string[] { "중요 아이템은 버릴 수 없습니다." });
+        msgDictionary.Add(99029, new string[] { "몇 개 버리시겠습니까?" });
+
+        msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
+        msgDictionary.Add(99998, new string[] { "테스트용 메세지 입니다.2" });
+    }
+
+    public void OnSelectRedirec(int num, params int[] args)
+    {
+        UnActive();
+        redirec.OnSelectRedirec(num, args);        
+    }
+
+    private void SelectUIActive()
+    {
+        SelectUI select = SelectUI.instance;
+        var cursorMaxNum = 1;
+        Vector2 pos = new Vector2(-14f, 232f);
+        select.Active(uiID + 1, cursorMaxNum, "예\n아니오", this, 200f, pos, dialogArgs);
+    }
+
+    private void CountUIActive()
+    {
+        CountUI ui = CountUI.instance;
+        var cursorMaxNum = dialogArgs[0];
+        Vector2 pos = new Vector2(-17.3f, 218.8f);
+        ui.Active(uiID + 1, cursorMaxNum, this, pos);
+    }
+
+    public enum Type
+    {
+        NORMAL,
+        QUEST,
+        COUNT
     }
 }

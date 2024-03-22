@@ -38,9 +38,12 @@ public class SlideUI : MonoBehaviour
 
     public void SlideUiActive()
     {
+        if (slideUIpos != slideUIdistance)
+        {            
+            slideUIpos = 0f;
+            slideUIposTime = 0f;
+        }
         isActive = true;
-        slideUIpos = 0f;
-        slideUIposTime = 0f;
     }
 
     public void SlideUiUnActive()
