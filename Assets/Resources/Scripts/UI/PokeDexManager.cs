@@ -10,8 +10,8 @@ public class PokeDexManager : SlideUI, CursorUI
     public static PokeDexManager instance;
 
     private UIManager uiManager;
-    private int uiID1 = 1001; //도감
-    private int uiID2 = 1002; //도감상세
+    private GameObject uiID1; //도감
+    private GameObject uiID2; //도감상세
 
     private GlobalInput input;
 
@@ -34,6 +34,7 @@ public class PokeDexManager : SlideUI, CursorUI
 
     private void Awake()
     {
+        
         instance = this;
 
         rectTransform = (RectTransform)transform;
@@ -85,6 +86,9 @@ public class PokeDexManager : SlideUI, CursorUI
         pokedexDetail = transform.Find("Detail").gameObject;
         pokedexDetail.SetActive(false);
         pokeImage2 = pokedexDetail.transform.Find("Image").GetComponent<Image>();
+
+        uiID1 = gameObject;
+        uiID2 = pokedexDetail;
     }
 
     private void SetPokeDex()

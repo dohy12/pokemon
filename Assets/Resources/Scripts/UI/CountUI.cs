@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CountUI : MonoBehaviour
 {
     public static CountUI instance;
 
-    private int uiID = -999;
+    private GameObject uiID;
     private SelectUIRedirec redirec;
     private int num;
     private int maxNum;
@@ -19,6 +20,7 @@ public class CountUI : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        uiID = gameObject;
     }
 
     // Start is called before the first frame update
@@ -68,9 +70,8 @@ public class CountUI : MonoBehaviour
         txt.text = "X " + num.ToString("D2");
     }
 
-    public void Active(int uiID, int maxNum, SelectUIRedirec redirec, Vector2 pos, params int[] args)
+    public void Active(int maxNum, SelectUIRedirec redirec, Vector2 pos, params int[] args)
     {
-        this.uiID = uiID;
         this.maxNum = maxNum;
         this.redirec = redirec;
         num = 1;

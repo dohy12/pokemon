@@ -12,9 +12,9 @@ public class UIManager : MonoBehaviour
     private float blackOutSpeed;
     public static bool isUIActive = false;
 
-    private List<int> uiStack;
+    private List<GameObject> uiStack;
 
-    public int uiID;
+    public GameObject uiID;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
         blackout = transform.Find("BlackOut").GetComponent<Image>();
         blackout.gameObject.SetActive(false);
         isBlackout = false;
-        uiStack = new List<int>();
+        uiStack = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            uiID = -1;
+            uiID = null;
         }        
     }
 
@@ -92,21 +92,21 @@ public class UIManager : MonoBehaviour
         isUIActive = _isUIActive;
     }
 
-    public void ActiveUI(int uiID)
+    public void ActiveUI(GameObject uiID)
     {
         isUIActive = true;
         uiStack.Add(uiID);
     }
 
-    public void UnActiveUI(int uiID)
+    public void UnActiveUI(GameObject uiID)
     {
         if (uiStack.Count > 0) { uiStack.Remove(uiID); }
         if (uiStack.Count == 0) { isUIActive = false; }
     }
 
-    public bool CheckUITYPE(int uiID)
+    public bool CheckUITYPE(GameObject uiID)
     {
-        var nowUI = -1;
+        GameObject nowUI = null;
         if(uiStack.Count > 0)
         {
             nowUI = uiStack[uiStack.Count - 1];

@@ -140,6 +140,7 @@ public class Cursor : MonoBehaviour
     public void Active()
     {
         cursorNum = 0;
+        posY = 0;
         cursor.anchoredPosition = startPos;
         inputStun = 0.2f;
     }

@@ -8,7 +8,7 @@ public class SelectUI : MonoBehaviour, CursorUI
 {
     public static SelectUI instance;
     private UIManager uiManager;
-    private int uiID = -999;
+    private GameObject uiID;
     private Cursor cursor;
     private SelectUIRedirec redirec;
     private int cursorMaxNum;
@@ -21,11 +21,11 @@ public class SelectUI : MonoBehaviour, CursorUI
     private void Awake()
     {
         instance = this;
+        uiID = gameObject;
     }
 
-    public void Active(int uiID, int cursorMaxNum, string menus, SelectUIRedirec redirec, float width, Vector2 pos, params int[] args)
+    public void Active(int cursorMaxNum, string menus, SelectUIRedirec redirec, float width, Vector2 pos, params int[] args)
     {
-        this.uiID = uiID;
         this.cursorMaxNum = cursorMaxNum;
         this.redirec = redirec;
         this.uiWidth = width;

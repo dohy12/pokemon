@@ -32,7 +32,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
     private GlobalInput input;
     private UIManager uiManager;
-    private int uiID = 9001;
+    private GameObject uiID;
 
     private SelectUIRedirec redirec;
 
@@ -209,6 +209,8 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
     private void Init()
     {
+        uiID = gameObject;
+
         msgDictionary = new Dictionary<int, string[]>();
         SetDialog();
 
@@ -219,12 +221,14 @@ public class DialogManager : SlideUI, SelectUIRedirec
     private void QuestInit(params int[] args)
     {
         isQuest = true;
+        isCount = false;
         this.dialogArgs = args;
     }
 
     private void CountInit(params int[] args)
     {
         isCount = true;
+        isQuest = false;
         this.dialogArgs = args;
     }
 
@@ -403,7 +407,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         SelectUI select = SelectUI.instance;
         var cursorMaxNum = 1;
         Vector2 pos = new Vector2(-14f, 232f);
-        select.Active(uiID + 1, cursorMaxNum, "예\n아니오", this, 200f, pos, dialogArgs);
+        select.Active(cursorMaxNum, "예\n아니오", this, 200f, pos, dialogArgs);
     }
 
     private void CountUIActive()
@@ -411,7 +415,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         CountUI ui = CountUI.instance;
         var cursorMaxNum = dialogArgs[0];
         Vector2 pos = new Vector2(-17.3f, 218.8f);
-        ui.Active(uiID + 1, cursorMaxNum, this, pos);
+        ui.Active(cursorMaxNum, this, pos);
     }
 
     public enum Type

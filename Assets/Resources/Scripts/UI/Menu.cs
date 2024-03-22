@@ -6,11 +6,12 @@ public class Menu : SlideUI, CursorUI
 {
     public static Menu Instance;
     private GlobalInput input;
-    private int uiID = 8001;
+    private GameObject uiID;
     private Cursor cursor;
 
     private void Awake()
     {
+        uiID = gameObject;
         Instance = this;
     }
 

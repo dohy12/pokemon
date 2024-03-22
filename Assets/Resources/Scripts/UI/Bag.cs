@@ -8,7 +8,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 {
     public static Bag instance;
     private GlobalInput input;
-    private int uiID = 3001;
+    private GameObject uiID;
     private Cursor cursor;
     public int page = 0;
 
@@ -42,6 +42,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
     private void Init()
     {
+        uiID = gameObject;
         input = GlobalInput.globalInput;
         info = ItemInfo.instance;
         items = new Dictionary<int, int>();
@@ -215,7 +216,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         SelectUI select = SelectUI.instance;
         var cursorMaxNum = 2;
         Vector2 pos = new Vector2(-14f, 54.5f + (cursorMaxNum) * 17.5f);
-        select.Active(uiID+1, cursorMaxNum, "사용한다\n버린다\n그만둔다",this, 240f, pos, num);
+        select.Active(cursorMaxNum, "사용한다\n버린다\n그만둔다",this, 240f, pos, num);
     }
 
 }
