@@ -177,14 +177,14 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
     public void OnSelectRedirec(int num, params int[] args)
     {
-        Debug.Log(num + " , " + args[0]);
         var itmsList = items.Keys.ToList();
-        var itm = info.info[num];
+        var itm = info.info[itmsList[args[0]]];
+        Debug.Log(itm.name);
 
         if (num == 0)//사용한다.
         {
-            if (itm.type != ItemInfo.Type.HEAL)
-            {
+            if (itm.type == ItemInfo.Type.BALL)
+            {                
                 DialogManager.instance.Active(99027);
             }
         }

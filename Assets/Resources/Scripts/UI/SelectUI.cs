@@ -87,6 +87,7 @@ public class SelectUI : SlideUI, CursorUI
 
     public void CursorChoose(int num)
     {
+        UnActive();
         redirec.OnSelectRedirec(num, args);        
     }
 
