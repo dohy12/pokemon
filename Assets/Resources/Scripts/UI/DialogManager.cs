@@ -491,5 +491,7 @@ public class DialogManager : MonoBehaviour
         msgDictionary.Add(99025, new string[] { "남은 몬스터볼이다.\n오박사님이 잘 키워 주시겠지?" });
 
         msgDictionary.Add(99026, new string[] { "포켓몬을 회복시키겠습니까?" });
+
+        msgDictionary.Add(99027, new string[] { "해당 아이템은 지금 사용하실 수 없습니다." });
     }
 }

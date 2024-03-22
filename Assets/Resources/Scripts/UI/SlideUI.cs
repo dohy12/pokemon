@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlideUI : MonoBehaviour
 {
-    public bool isActive;
+    public bool isActive = false;
     public RectTransform rectTransform;
     public float slideUIpos = 0;
     public float slideUIposTime = 0f;

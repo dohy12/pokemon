@@ -217,7 +217,6 @@ public class PokeDexManager : SlideUI, CursorUI
             inputStun -= Time.deltaTime;
             if (input.bButtonDown && inputStun < 0)
             {
-                Debug.Log("bButton");
                 UnActivePokedex();
             }
         }

@@ -84,7 +84,8 @@ public class Cursor : MonoBehaviour
 
             if (input.aButtonDown && inputStun< 0.1f)
             {
-                parent.CursorChoose(cursorNum);
+                input.InputStun();
+                parent.CursorChoose(cursorNum);                
             }
         }
     }

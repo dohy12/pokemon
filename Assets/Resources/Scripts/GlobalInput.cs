@@ -44,4 +44,19 @@ public class GlobalInput : MonoBehaviour
         startButtonDown = Input.GetButtonDown("Submit");
 
     }
+
+    public void InputStun()
+    {
+        vertical = 0f;
+        horizontal = 0f;
+
+        verticalRaw = 0f;
+        horizontalRaw = 0f;
+
+        aButtonDown = false;
+
+        bButtonDown = false;
+
+        startButtonDown = false;
+    }
 }

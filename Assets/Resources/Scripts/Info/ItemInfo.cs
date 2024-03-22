@@ -7,6 +7,11 @@ public class ItemInfo : MonoBehaviour
     public static ItemInfo instance;
     public Dictionary<int, Item> info;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,9 +43,7 @@ public class ItemInfo : MonoBehaviour
 
         info.Add(++itmID, new Item(itmID, "몬스터볼", Type.BALL));
         info.Add(++itmID, new Item(itmID, "슈퍼볼", Type.BALL));
-        info.Add(++itmID, new Item(itmID, "하이퍼볼", Type.BALL));
-
-        
+        info.Add(++itmID, new Item(itmID, "하이퍼볼", Type.BALL));        
     }
 
     public class Item
