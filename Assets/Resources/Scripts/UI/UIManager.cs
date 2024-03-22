@@ -12,9 +12,9 @@ public class UIManager : MonoBehaviour
     private float blackOutSpeed;
     public static bool isUIActive = false;
 
-    private Stack<TYPE> uiStack;
+    private Stack<int> uiStack;
 
-    public TYPE type;
+    public int uiID;
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
         blackout = transform.Find("BlackOut").GetComponent<Image>();
         blackout.gameObject.SetActive(false);
         isBlackout = false;
-        uiStack = new Stack<TYPE>();
+        uiStack = new Stack<int>();
     }
 
     // Update is called once per frame
@@ -38,15 +38,13 @@ public class UIManager : MonoBehaviour
 
         if (uiStack.Count > 0)
         {
-            type = uiStack.Peek();
+            uiID = uiStack.Peek();
         }
         else
         {
-            type = TYPE.NONE;
-        }
-        
+            uiID = -1;
+        }        
     }
-
 
     public void ActiveBlackOut(float blackOutSpeed)
     {
@@ -95,10 +93,10 @@ public class UIManager : MonoBehaviour
         isUIActive = _isUIActive;
     }
 
-    public void ActiveUI(TYPE type)
+    public void ActiveUI(int uiID)
     {
         isUIActive = true;
-        uiStack.Push(type);
+        uiStack.Push(uiID);
     }
 
     public void UnActiveUI()
@@ -112,26 +110,14 @@ public class UIManager : MonoBehaviour
         if (uiStack.Count == 0){ isUIActive = false; }
     }
 
-    public bool CheckUITYPE(TYPE type)
+    public bool CheckUITYPE(int uiID)
     {
-        var nowUI = TYPE.NONE;
+        var nowUI = -1;
         if(uiStack.Count > 0)
         {
             nowUI = uiStack.Peek();
         }
-        return (nowUI == type);
+        return (nowUI == uiID);
     }
 
-
-    public enum TYPE
-    {
-        NONE,
-        DIALOG,
-        MENU,
-        POKEDEX1,
-        POKEDEX2,
-        POKEMON1,
-        POKEMON2,
-        BAG
-    }
 }

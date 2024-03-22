@@ -2,20 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : SlideUI
+public class Menu : SlideUI, CursorUI
 {
     public static Menu Instance;
-    private int menuNum;
-    private RectTransform cursor;
-
     private GlobalInput input;
-
-    private float cursorY = 0;
-    private float cursorInputStun = 0f;
-
-    public float cursorTmpY = 60f;
-
-    private UIManager.TYPE uiType;
+    private int uiID = 8001;
+    private Cursor cursor;
 
     private void Awake()
     {
@@ -25,9 +17,7 @@ public class Menu : SlideUI
     // Start is called before the first frame update
     void Start()
     {
-        cursor = transform.Find("MenuCursor").GetComponent<RectTransform>();
         input = GlobalInput.globalInput;
-        uiType = UIManager.TYPE.MENU;
         SlideUiInit();
     }
 
@@ -36,20 +26,13 @@ public class Menu : SlideUI
     {
         InputCheck();
         SlideUiUpdate();
-
-        if (isActive )
-        {
-            CursorUpdate();
-        }
-        
     }
 
     void Active()
     {
         SlideUiActive();
-        menuNum = 0;
-
-        UIManager.instance.ActiveUI(uiType);
+        UIManager.instance.ActiveUI(uiID);
+        cursor.Active();
     }
 
     void UnActive()
@@ -69,7 +52,7 @@ public class Menu : SlideUI
             }
         }
 
-        if (UIManager.instance.CheckUITYPE(uiType))
+        if (UIManager.instance.CheckUITYPE(uiID))
         {
             if (isActive)
             {
@@ -78,48 +61,19 @@ public class Menu : SlideUI
                     UnActive();
                     return;
                 }
-
-                if (input.aButtonDown)
-                {
-                    StartMenu();
-                    return;
-                }
-
-                cursorInputStun -= Time.deltaTime;
-                if (cursorInputStun < 0 && input.verticalRaw != 0)
-                {
-                    cursorInputStun = 0.2f;
-
-                    menuNum -= (int)input.verticalRaw;
-
-                    if (menuNum < 0) { menuNum = 4; }
-                    if (menuNum > 4) { menuNum = 0; }
-                }
             }
         }
         
     }
 
 
-    void CursorUpdate()
+    public bool GetActive() { return UIManager.instance.CheckUITYPE(uiID);}
+
+    public void CursorChange(int pageTmp) { }
+
+    public void CursorChoose(int num)
     {
-        var tmpCursorY = cursorTmpY * menuNum;
-        if (cursorY != tmpCursorY)
-        {
-            cursorY = tmpCursorY/10f + cursorY*9/10f;
-            if (Mathf.Abs(cursorY - tmpCursorY) < 1f)
-            {
-                cursorY = tmpCursorY;
-            }
-        }
-
-        cursor.anchoredPosition = new Vector2(-59, 125 - cursorY);
-    }
-
-    void StartMenu()
-    {
-
-        switch (menuNum)
+        switch (num)
         {
             case 0://포켓몬 도감
                 PokeDexManager.instance.ActivePokedex();
@@ -134,5 +88,13 @@ public class Menu : SlideUI
                 UnActive();
                 break;
         }
+    }
+
+    public void CursorInit(Cursor cursor)
+    {
+        this.cursor = cursor;
+        int cursorMaxNum = 5 - 1;
+        float yDist = 60f;
+        cursor.Init(cursorMaxNum, yDist, true);
     }
 }

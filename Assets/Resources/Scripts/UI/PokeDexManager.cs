@@ -5,14 +5,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PokeDexManager : SlideUI
+public class PokeDexManager : SlideUI, CursorUI
 {
     public static PokeDexManager instance;
 
     private UIManager uiManager;
-    private UIManager.TYPE uiType1;
-    private UIManager.TYPE uiType2;
-    private UIManager.TYPE nowUitype;
+    private int uiID1 = 1001; //도감
+    private int uiID2 = 1002; //도감상세
 
     private GlobalInput input;
 
@@ -21,10 +20,6 @@ public class PokeDexManager : SlideUI
     private Transform[] pokeDexStringObjs;
 
     private int pokeDexPage = 0;
-    private int selectNum = 0;
-    private RectTransform selectBox;
-    private float selectBoxPos;
-    private float selectBoxPosYY = 284f;
 
     private float inputStun = 0f;
 
@@ -35,13 +30,11 @@ public class PokeDexManager : SlideUI
 
     private Image pokeImage1;
     private Image pokeImage2;
+    private Cursor cursor;
 
     private void Awake()
     {
         instance = this;
-
-        uiType1 = UIManager.TYPE.POKEDEX1;
-        uiType2 = UIManager.TYPE.POKEDEX2;
 
         rectTransform = (RectTransform)transform;
 
@@ -87,7 +80,6 @@ public class PokeDexManager : SlideUI
             pokeDexStringObjs[i] = list.GetChild(i);
         }
 
-        selectBox = (RectTransform)transform.Find("SelectBox");
         scroll = (RectTransform)transform.Find("Scroll");
         pokeImage1 = transform.Find("Image").GetComponent<Image>();  
         pokedexDetail = transform.Find("Detail").gameObject;
@@ -97,7 +89,6 @@ public class PokeDexManager : SlideUI
 
     private void SetPokeDex()
     {
-        nowUitype = UIManager.TYPE.POKEDEX1;
         pokeDexPage = 0;
         SetPokeString();        
 
@@ -115,13 +106,10 @@ public class PokeDexManager : SlideUI
         var catch_text = transform.Find("Catch").GetComponent<TMP_Text>();
         catch_text.text = "잡은 수   " + catch_poke.ToString("D3");
 
-        selectNum = 0;
-        selectBox.anchoredPosition = new Vector2(449f, 912f);
-
         scrollPos = 0f;
         scroll.anchoredPosition = new Vector2(-126.7f, -132.3f);
 
-        pokeImage1.sprite = GetSprite(selectNum + pokeDexPage);
+        pokeImage1.sprite = GetSprite(cursor.cursorNum + pokeDexPage);
     }
 
 
@@ -143,7 +131,7 @@ public class PokeDexManager : SlideUI
             else { img.SetActive(false); }
         }
 
-        pokeImage1.sprite = GetSprite(selectNum + pokeDexPage);
+        pokeImage1.sprite = GetSprite(cursor.cursorNum + pokeDexPage);
     }
 
     private void GoPage(int pageTmp)
@@ -166,14 +154,15 @@ public class PokeDexManager : SlideUI
     public void ActivePokedex()
     {
         SlideUiActive();
-        uiManager.ActiveUI(uiType1);
+        uiManager.ActiveUI(uiID1);
+        cursor.Active();
 
         SetPokeDex();
     }
 
     private void ActiveDetail()
     {
-        uiManager.ActiveUI(uiType2);
+        uiManager.ActiveUI(uiID2);
         pokedexDetail.SetActive(true);
 
         SetDetail();
@@ -181,7 +170,7 @@ public class PokeDexManager : SlideUI
 
     private void SetDetail()
     {
-        var num = selectNum + pokeDexPage;
+        var num = cursor.cursorNum + pokeDexPage;
         var detailObj = transform.Find("Detail");
         var info = PokeDexInfo.instance.info[num];
 
@@ -217,51 +206,26 @@ public class PokeDexManager : SlideUI
         uiManager.UnActiveUI();
         pokedexDetail.SetActive(false);
 
-        selectBoxPos = 912 - selectBoxPosYY * selectNum;
-        selectBox.anchoredPosition = new Vector2(449f, selectBoxPos);
+        cursor.SetCursor(cursor.cursorNum);
     }
 
     private void InputCheck()
     {
 
-        if (uiManager.CheckUITYPE(uiType1))
+        if (uiManager.CheckUITYPE(uiID1))
         {
+            inputStun -= Time.deltaTime;
             if (input.bButtonDown && inputStun < 0)
             {
+                Debug.Log("bButton");
                 UnActivePokedex();
-            }
-
-            if (input.aButtonDown)
-            {
-                if (pokeDex[selectNum + pokeDexPage] > 0)
-                {
-                    ActiveDetail();
-                }                
-            }
-
-            inputStun -= Time.deltaTime;
-            if (input.verticalRaw != 0 && inputStun<0)
-            {
-                inputStun = 0.2f;
-                selectNum -= (int)input.verticalRaw;
-                if (selectNum < 0)
-                {
-                    selectNum = 0;
-                    GoPage(-1);
-                }
-                if (selectNum > 6)
-                {
-                    selectNum = 6;
-                    GoPage(1);
-                }
-                pokeImage1.sprite = GetSprite(selectNum + pokeDexPage);
             }
         }
 
-        if (uiManager.CheckUITYPE(uiType2))
+        if (uiManager.CheckUITYPE(uiID2))
         {
             inputStun -= Time.deltaTime;
-            if (input.bButtonDown && inputStun < 0)
+            if (input.bButtonDown)
             {
                 UnActivePokedex2();
             }
@@ -277,15 +241,15 @@ public class PokeDexManager : SlideUI
 
     private bool GoNextPokemon()
     {
-        var num = selectNum + pokeDexPage;
+        var num = cursor.cursorNum + pokeDexPage;
 
         while (num < 23)
         {
             num++;
-            selectNum += 1;
-            if (selectNum > 6)
+            cursor.cursorNum += 1;
+            if (cursor.cursorNum > 6)
             {
-                selectNum = 6;
+                cursor.cursorNum = 6;
                 pokeDexPage += 1;
                 if (pokeDexPage > 16)
                 {
@@ -293,6 +257,7 @@ public class PokeDexManager : SlideUI
                 }
             }
 
+            if (num == 23) { return false; }
             if (pokeDex[num] > 0) { SetPokeString(); return true; }
         }
         return false;
@@ -300,15 +265,15 @@ public class PokeDexManager : SlideUI
 
     private bool GoPreviousPokemon()
     {
-        var num = selectNum + pokeDexPage;
+        var num = cursor.cursorNum + pokeDexPage;
 
         while (num >= 0)
         {
             num--;
-            selectNum -= 1;
-            if (selectNum < 0)
+            cursor.cursorNum -= 1;
+            if (cursor.cursorNum < 0)
             {
-                selectNum = 0;
+                cursor.cursorNum = 0;
                 pokeDexPage -= 1;
                 if (pokeDexPage < 0)
                 {
@@ -323,23 +288,10 @@ public class PokeDexManager : SlideUI
 
     private void SelectBoxUpdate()
     {
-        if (uiManager.CheckUITYPE(uiType1))
+        if (uiManager.CheckUITYPE(uiID1))
         {
-            var tmpPos = 912 - selectBoxPosYY * selectNum;
-            
-            if (tmpPos != selectBoxPos)
-            {
-                selectBoxPos = tmpPos / 10f + selectBoxPos * 9 / 10f;
-                if (Mathf.Abs(tmpPos - selectBoxPos) < 5f)
-                {
-                    selectBoxPos = tmpPos;
-                }
-
-                selectBox.anchoredPosition = new Vector2(449f, selectBoxPos);
-            }
-
-            var scrollNum = selectNum + pokeDexPage;
-            tmpPos = 89.1091f * scrollNum;
+            var scrollNum = cursor.cursorNum + pokeDexPage;
+            var tmpPos = 89.1091f * scrollNum;
 
             if (tmpPos != scrollPos)
             {
@@ -362,4 +314,34 @@ public class PokeDexManager : SlideUI
 
         return PokeSpr.instance.sprites[num + 1];
     }
+
+
+    public bool GetActive() { return UIManager.instance.CheckUITYPE(uiID1); }
+
+    public void CursorChange(int pageTmp) 
+    {
+        if (pageTmp != 0)
+        {
+            GoPage(pageTmp);
+        }
+        
+        pokeImage1.sprite = GetSprite(cursor.cursorNum + pokeDexPage);
+    }
+
+    public void CursorChoose(int num)
+    {
+        if (pokeDex[num + pokeDexPage] > 0)
+        {
+            ActiveDetail();
+        }
+    }
+
+    public void CursorInit(Cursor cursor)
+    {
+        this.cursor = cursor;
+        int cursorMaxNum = 7 - 1;
+        float yDist = 284f;
+        cursor.Init(cursorMaxNum, yDist, false);
+    }
+
 }
