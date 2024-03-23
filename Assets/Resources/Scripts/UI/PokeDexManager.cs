@@ -33,8 +33,7 @@ public class PokeDexManager : SlideUI, CursorUI
     private Cursor cursor;
 
     private void Awake()
-    {
-        
+    {        
         instance = this;
 
         rectTransform = (RectTransform)transform;

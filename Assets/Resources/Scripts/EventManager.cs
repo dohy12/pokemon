@@ -236,6 +236,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
             if (eventProgress["mainEvent"] == 2)
             {
                 var pokeballNum = args[0];
+                AddEventPicture(pokeballNum * 3 + 1);
                 AddEventQuest(2005 + pokeballNum, 101 + pokeballNum, 104);
                 ActiveNextEvent();
             }
@@ -489,6 +490,10 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         {
             DialogManager.instance.Active(tmpEvent.dialogID, this, DialogManager.Type.COUNT, tmpEvent.arg1);
         }
+        else if (tmpEvent.eventKind == EventKind.PICTURE)
+        {
+            PokemonPicture.instance.Active(tmpEvent.arg1);
+        }
 
     }
 
@@ -584,6 +589,14 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         events.Enqueue(ev);
     }
 
+    private void AddEventPicture(int pokeID)
+    {
+        Event ev = new Event();
+        ev.eventKind = EventKind.PICTURE;
+        ev.arg1 = pokeID;
+        events.Enqueue(ev);
+    }
+
     class Event
     {
         public EventKind eventKind;//[0]케릭터 움직임, [1]대화창, [2]트레이너 배틀, [3]야생 포켓몬 배틀, [4]포켓몬 사진 출력, [5]케릭터 방향전환. [6]케릭터 느낌표
@@ -615,7 +628,8 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         FIGHT,
         HEAL,
         EVENT,
-        COUNT
+        COUNT,
+        PICTURE
     }
 
 
