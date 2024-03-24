@@ -13,11 +13,14 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
     public int page = 0;
 
     private ItemInfo info;
+    private Money money;
 
-    private Dictionary<int, int> items;
+    public Dictionary<int, int> items;
     private int[] showItmList;
     private TMP_Text[] stringObj_Txt;
     private TMP_Text[] stringObj_Num;
+
+    private bool isShop = false;
 
     private void Awake()
     {
@@ -58,12 +61,20 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
         items[0] = 1;
         items[1] = 1;
-        for (var i = 0; i < 10; i++)
-        {
-            var n = Random.Range(2, 13);
-            items[n] = items.GetValueOrDefault(n, 0) + 1;
-        }
 
+        money = transform.parent.Find("Money").GetComponent<Money>();
+    }
+
+    private void ShowAllKeys()
+    {
+        var itmList = items.Keys.ToList();
+        var str = "모든 키("+itmList.Count+") : ";
+
+        foreach(var itm in itmList)
+        {
+            str = str + info.info[itm].name + " ";
+        }
+        Debug.Log(str);
     }
 
 
@@ -94,7 +105,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
                 if(!isChecked)
                 {
                     cursor.cursorMaxNum = i;
-                    if (args[0])
+                    if (args.Length>0 && args[0])
                         cursor.cursorNum = i;
                     isChecked = true;
                     stringObj_Txt[i].text = "그만두다";
@@ -109,7 +120,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
     }
 
 
-    public void Active()
+    public void Active(params bool[] args)
     {
         SlideUiActive();
         UIManager.instance.ActiveUI(uiID);
@@ -117,6 +128,14 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
         page = 0;
         SetString();
+
+        ActiveMoney();
+        isShop = false;
+
+        if (args.Length>0)
+        {
+            isShop = true;
+        }
     }
 
     public void UnActive()
@@ -124,6 +143,21 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         input.InputStun();
         SlideUiUnActive();
         UIManager.instance.UnActiveUI(uiID);
+
+        UnActiveMoney();
+    }
+
+    private void ActiveMoney()
+    {
+        money.Active();
+    }
+
+    private void UnActiveMoney()
+    {
+        if (!isShop)
+        {
+            money.UnActive();
+        }
     }
 
     private void InputCheck()
@@ -167,7 +201,23 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         }
         else
         {
-            SelectUIActive(num + page);
+            if (!isShop)
+            {
+                SelectUIActive(num + page);
+            }
+            else
+            {
+                int itmID = items.Keys.ToList()[num + page];
+                if (info.info[itmID].type != ItemInfo.Type.IMPOTANT)
+                {
+                    ShopUIActive(itmID);
+                }
+                else
+                {
+                    DialogManager.instance.Active(99031, null, DialogManager.Type.NORMAL);
+                }
+                
+            }
         }
     }
 
@@ -179,21 +229,22 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         cursor.Init(cursorMaxNum, yDist, false);
     }
 
-    public void OnSelectRedirec(int num, params int[] args)
+    public void OnSelectRedirec(int selectNum, params int[] args)
     {
-        if ( num != -1)
+        if (args[0] == 0)
         {
             var itmsList = items.Keys.ToList();
-            var itm = info.info[itmsList[args[0]]];
+            var itmID = args[1];
+            var itm = info.info[itmID];
 
-            if (num == 0)//사용한다.
+            if (selectNum == 0)//사용한다.
             {
                 if (itm.type == ItemInfo.Type.BALL)
                 {
                     DialogManager.instance.Active(99027, null, DialogManager.Type.NORMAL);
                 }
             }
-            if (num == 1)//버린다
+            if (selectNum == 1)//버린다
             {
                 if (itm.type == ItemInfo.Type.IMPOTANT)
                 {
@@ -201,14 +252,63 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
                 }
                 else
                 {
-                    DialogManager.instance.Active(99029, this, DialogManager.Type.COUNT, items[itmsList[args[0]]]);
+                    DialogManager.instance.Active(99029, this, DialogManager.Type.COUNT, items[itmID], 0, itmID, 1);
                 }
             }
         }
-        else
+        else if (args[0] == 1)
         {
-            Debug.Log("버리기 [" + args[0] + "] 개");
+            if (selectNum == 0)
+            {
+                return;
+            }
+
+            if (args[1] == 0)//버리기
+            {
+                var itmID = args[2];
+                Debug.Log("버리기 : " + info.info[itmID].name + " [" + selectNum + "] 개를 버리시겠습니까?");
+                SelectUIActive(0, itmID, selectNum);
+            }
+            else
+            {
+                var itmID = args[2];
+                Debug.Log("판매하기 : " + info.info[itmID].name + "[" + selectNum + "] 개를 판매하시겠습니까?");
+                SelectUIActive(1, itmID, selectNum);
+            }
+            ShowAllKeys();
         }
+        else if (args[0] == 2)
+        {
+            if (selectNum == 0)
+            {
+                var itmID = args[2];
+                var itmNum = args[3];
+                items[itmID] -= itmNum;
+                if (items[itmID] == 0)
+                {
+                    items.Remove(itmID);
+                }
+                ShowAllKeys();
+                SetString();
+
+                if (args[1] == 0)//버리기
+                {
+                    Debug.Log("버리기 : " + info.info[itmID].name + " [" + itmNum + "] 개를 버렸습니다");
+                }
+                else
+                {
+                    Debug.Log("판매하기 : " + info.info[itmID].name + " [" + itmNum + "] 개를 판매했습니다");
+                    
+                    Money m = Money.instance;                    
+                    int money = m.GetMoney();
+                    money = money + info.info[itmID].price * itmNum;
+                    m.SetMoney(money);
+                }
+
+                
+            }
+        }
+
     }
 
     private void SelectUIActive(int num)
@@ -216,7 +316,23 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         SelectUI select = SelectUI.instance;
         var cursorMaxNum = 2;
         Vector2 pos = new Vector2(-14f, 54.5f + (cursorMaxNum) * 17.5f);
-        select.Active(cursorMaxNum, "사용한다\n버린다\n그만둔다",this, 240f, pos, num);
+
+        int itmID = items.Keys.ToList()[num];
+        select.Active(cursorMaxNum, "사용한다\n버린다\n그만둔다",this, 240f, pos, 0, itmID);
+    }
+
+    private void SelectUIActive(int isShop, int itmID, int num)
+    {
+        if (isShop == 0)
+            DialogManager.instance.Active(99032, this, DialogManager.Type.QUEST, 2, isShop, itmID, num);
+        else
+            DialogManager.instance.Active(99033, this, DialogManager.Type.QUEST, 2, isShop, itmID, num);
+    }
+
+    private void ShopUIActive(int itemID)
+    {
+        Debug.Log("아이템 판매 : " + info.info[itemID].name);
+        DialogManager.instance.Active(99030, this, DialogManager.Type.COUNT, items[itemID], 1, itemID, 1);
     }
 
 }

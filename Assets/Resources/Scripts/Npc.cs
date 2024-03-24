@@ -6,7 +6,7 @@ public class Npc : Unit
 {
     public int npcKind;//0)안움직임,  1)방향만 바뀜, 2)배회형, 3)포켓몬
 
-    public bool isBattle = false;
+    public Type npcType = Type.NORMAL;
     public int fightID = 0;
 
     private float alarm = 0;
@@ -17,8 +17,6 @@ public class Npc : Unit
     private float pokemonSpriteStep = 1f;
 
     private UIManager uiManager;
-
-    private bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -157,4 +155,11 @@ public class Npc : Unit
         EventManager.instance.NpcEventStart(npcId);
     }
 
+    public enum Type
+    {
+        NORMAL,
+        BATTLE,
+        NURSE,
+        SHOP
+    }
 }

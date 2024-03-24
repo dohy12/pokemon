@@ -7,19 +7,34 @@ using UnityEngine;
 public class CountUI : MonoBehaviour
 {
     public static CountUI instance;
+    public static CountUI monCountInstance;
 
     private GameObject uiID;
     private SelectUIRedirec redirec;
     private int num;
     private int maxNum;
+    private int itmID;
+    private int redirectID;
     private float inputStun = 0;
     private GlobalInput input;
     private TMP_Text txt;
+    private TMP_Text money;
     private UIManager uiManager;
+
+    public bool isShop = false;
+    private int shopPrice = 200;
 
     private void Awake()
     {
-        instance = this;
+        if (!isShop)
+        {
+            instance = this;
+        }
+        else
+        {
+            monCountInstance = this;
+        }
+        
         uiID = gameObject;
     }
 
@@ -29,6 +44,11 @@ public class CountUI : MonoBehaviour
         input = GlobalInput.globalInput;
         uiManager = UIManager.instance;
         txt = transform.Find("Text").GetComponent<TMP_Text>();
+
+        if (isShop)
+        {
+            money = transform.Find("Money").GetComponent<TMP_Text>();
+        }
     }
 
     // Update is called once per frame
@@ -67,7 +87,16 @@ public class CountUI : MonoBehaviour
 
     private void SetString()
     {
-        txt.text = "X " + num.ToString("D2");
+        if (!isShop)
+        {
+            txt.text = "X " + num.ToString("D2");
+        }
+        else
+        {
+            txt.text = "X " + num.ToString("D2");
+            money.text = (num * shopPrice).ToString() + "  ¿ø";
+        }
+        
     }
 
     public void Active(int maxNum, SelectUIRedirec redirec, Vector2 pos, params int[] args)
@@ -78,8 +107,18 @@ public class CountUI : MonoBehaviour
 
         RectTransform rect = (RectTransform)transform;
         rect.anchoredPosition = pos;
-        SetString();
+        
         uiManager.ActiveUI(uiID);
+
+        itmID = args[0];
+        redirectID = args[1];   
+        
+        if (isShop)
+        {
+            shopPrice = ItemInfo.instance.info[itmID].price;
+        }
+
+        SetString();
     }
 
     private void UnActive()
@@ -91,6 +130,9 @@ public class CountUI : MonoBehaviour
 
     private void Redirec(int num)
     {
-        redirec.OnSelectRedirec(-1, num);
+        if (!isShop)
+            redirec.OnSelectRedirec(num, redirectID, 0, itmID);
+        else
+            redirec.OnSelectRedirec(num, redirectID, 1, itmID);
     }
 }

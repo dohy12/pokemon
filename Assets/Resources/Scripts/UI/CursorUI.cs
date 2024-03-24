@@ -7,7 +7,7 @@ public interface CursorUI
 
     bool GetActive();
 
-    void CursorChoose(int num);
+    void CursorChoose(int selectNum);
 
     void CursorInit(Cursor cursor);
 

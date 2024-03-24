@@ -124,8 +124,6 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
                 AddEventDirec(2, Unit.Direc.RIGHT, 0.5f);
                 AddEventDialog(2002);
                 AddEventDirec(2, Unit.Direc.DOWN, 0.1f);
-                AddEventMove(0, Unit.Direc.DOWN, 1);
-                AddEventMove(0, Unit.Direc.RIGHT, 2);
 
                 ActiveNextEvent();
                 eventProgress["mainEvent"] = 2;
@@ -246,6 +244,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
             GetItem();
             eventProgress["mainEvent"] = 3;
             eventProgress["FirstPokemon"] = eventID - 101;
+            AddEventPokedex(eventProgress["FirstPokemon"] * 3);
 
             AddEventMove(3, Unit.Direc.DOWN, 2);
             var __left = eventProgress["FirstPokemon"] + 1;
@@ -305,14 +304,9 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
             AddNextEvent(202);
             ActiveNextEvent();
         }
-        else if (eventID == 999)
+        else if (eventID == 999)// 다이알로그 실행
         {
-            AddEventQuest(99999, 998, -1);
-            ActiveNextEvent();
-        }
-        else if (eventID == 998)
-        {
-            AddEventDialog(99998);
+            AddEventDialog(args[0]);
             ActiveNextEvent();
         }
         else
@@ -330,79 +324,58 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         {
             case 1://엄마
                 if (eventProgress["mainEvent"] == 1)
-                {
-                    AddEventDialog(1002);                    
-                }
+                    StartEvent(999, 1002);
                 else
-                {
-                    AddEventDialog(1003);
-                }
-                ActiveNextEvent();
+                    StartEvent(999, 1003);
                 break;
 
             case 2://오박사
                 if (eventProgress["mainEvent"] == 2)
-                {
-                    AddEventDialog(2004);
-                    ActiveNextEvent();
-                }
+                    StartEvent(999, 2004);
                 else
-                {
-                    AddEventDialog(2008);
-                    ActiveNextEvent();
-                }
+                    StartEvent(999, 2008);
                 break;
 
             case 3://크리스
                 if (eventProgress["mainEvent"] == 2)
-                {
-                    AddEventDialog(3001);
-                    ActiveNextEvent();
-                }
+                    StartEvent(999, 3001);
                 else if (eventProgress["mainEvent"] == 3)
-                {
-                    AddEventDialog(3002);
-                    ActiveNextEvent();
-                }
-                break;
-
-            case 23:
-                if (eventProgress["mainEvent"] > 3)
-                {
-                    StartEvent(201, 2, 23);
-                }
-                else
-                {
-                    StartEvent(203,23);
-                }
-                    
-                break;
-
-            case 24:
-                if (eventProgress["mainEvent"] > 3)
-                {
-                    StartEvent(201, 1, 24);
-                }
-                else
-                {
-                    StartEvent(203, 24);
-                }
+                    StartEvent(999, 3002);
                 break;
 
             default:
-                if (!((Npc)NpcManager.npcManager.npcs[npcID]).isBattle)
+                Npc npc = (Npc)NpcManager.npcManager.npcs[npcID];
+
+                switch (npc.npcType)
                 {
-                    AddEventDialog(npcID * 1000 + 001);
-                    ActiveNextEvent();
+                    case Npc.Type.NORMAL: //일반 npc
+                        StartEvent(999, npcID * 1000 + 001);
+                        break;
+
+                    case Npc.Type.BATTLE:
+                        if (eventProgress.GetValueOrDefault("Npc" + npcID + "Battle", 1) == 0)
+                        {
+                            NPCBattleFind(npcID);
+                        }
+                        break;
+
+                    case Npc.Type.NURSE:
+                        if (eventProgress["mainEvent"] > 3)
+                        {
+                            StartEvent(201, 2, npcID);
+                        }
+                        else
+                        {
+                            StartEvent(203, npcID);
+                        }
+                        break;
+
+                    case Npc.Type.SHOP:
+                        StartEvent(999, 25001);
+                        Shop.instance.Active();
+                        
+                        break;
                 }
-                else
-                {
-                    if (eventProgress.GetValueOrDefault("Npc" + npcID + "Battle", 1) == 0)
-                    {
-                        NPCBattleFind(npcID);
-                    }
-                }
-                
                 
                 break;
         }
@@ -486,13 +459,14 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         {
             StartEvent(tmpEvent.unitID);
         }
-        else if (tmpEvent.eventKind == EventKind.COUNT)
-        {
-            DialogManager.instance.Active(tmpEvent.dialogID, this, DialogManager.Type.COUNT, tmpEvent.arg1);
-        }
         else if (tmpEvent.eventKind == EventKind.PICTURE)
         {
             PokemonPicture.instance.Active(tmpEvent.arg1);
+        }
+        else if (tmpEvent.eventKind == EventKind.POKEDEX)
+        {
+            PokeDexManager.instance.CatchPoke(tmpEvent.arg1);
+            PokeDexManager.instance.ActiveDetail(tmpEvent.arg1);            
         }
 
     }
@@ -547,15 +521,6 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         events.Enqueue(ev);
     }
 
-    private void AddEventCount(int dialogID, int countMaxNum)
-    {
-        Event ev = new Event();
-        ev.eventKind = EventKind.COUNT;
-        ev.dialogID = dialogID;
-        ev.arg1 = countMaxNum;
-        events.Enqueue(ev);
-    }
-
     private void AddEventDelete(bool deleteKind, int unitID)
     {
         Event ev = new Event();
@@ -597,6 +562,14 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         events.Enqueue(ev);
     }
 
+    private void AddEventPokedex(int pokeID)
+    {
+        Event ev = new Event();
+        ev.eventKind = EventKind.POKEDEX;
+        ev.arg1 = pokeID;
+        events.Enqueue(ev);
+    }
+
     class Event
     {
         public EventKind eventKind;//[0]케릭터 움직임, [1]대화창, [2]트레이너 배틀, [3]야생 포켓몬 배틀, [4]포켓몬 사진 출력, [5]케릭터 방향전환. [6]케릭터 느낌표
@@ -628,8 +601,8 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         FIGHT,
         HEAL,
         EVENT,
-        COUNT,
-        PICTURE
+        PICTURE,
+        POKEDEX
     }
 
 

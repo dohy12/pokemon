@@ -49,8 +49,8 @@ public class DialogObject : MonoBehaviour
                     evm.StartEvent(200, 0);
                     break;
 
-                case 3:
-                    evm.StartEvent(999);
+                case 3://Å×½ºÆ®
+                    evm.StartEvent(999, 99999);
                     break;
             }
         }

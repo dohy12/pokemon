@@ -47755,6 +47755,10 @@ PrefabInstance:
       value: 26
       objectReference: {fileID: 0}
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+      propertyPath: npcType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: sprites.Array.size
       value: 12
       objectReference: {fileID: 0}
@@ -48395,6 +48399,10 @@ PrefabInstance:
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: npcId
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+      propertyPath: npcType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: isBattle
@@ -50177,6 +50185,10 @@ PrefabInstance:
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: npcId
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+      propertyPath: npcType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: isBattle
@@ -53377,6 +53389,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+      propertyPath: npcType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: isBattle
       value: 1
       objectReference: {fileID: 0}
@@ -53563,6 +53579,10 @@ PrefabInstance:
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: npcId
       value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+      propertyPath: npcType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: sprites.Array.size
@@ -54303,6 +54323,10 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+      propertyPath: npcType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: sprites.Array.size
       value: 12
       objectReference: {fileID: 0}
@@ -54827,6 +54851,10 @@ PrefabInstance:
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: npcId
       value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+      propertyPath: npcType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -935331016095931310, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
       propertyPath: sprites.Array.size

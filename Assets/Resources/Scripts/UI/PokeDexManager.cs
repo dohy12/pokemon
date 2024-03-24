@@ -32,6 +32,10 @@ public class PokeDexManager : SlideUI, CursorUI
     private Image pokeImage2;
     private Cursor cursor;
 
+    private bool isOnlyDetail = false;
+
+    private int findPokeNum = 0;
+
     private void Awake()
     {        
         instance = this;
@@ -63,7 +67,7 @@ public class PokeDexManager : SlideUI, CursorUI
         
         for (var i = 0; i < 23; i++)
         {
-            pokeDex.Add(i, Random.Range(0,3));
+            pokeDex.Add(i, 0);
         }        
 
         pokeDexStrings = new string[7];
@@ -105,6 +109,7 @@ public class PokeDexManager : SlideUI, CursorUI
 
         var find_text = transform.Find("Find").GetComponent<TMP_Text>();
         find_text.text = "발견한 수 " + find_poke.ToString("D3");
+        findPokeNum = find_poke;
 
         var catch_text = transform.Find("Catch").GetComponent<TMP_Text>();
         catch_text.text = "잡은 수   " + catch_poke.ToString("D3");
@@ -153,9 +158,11 @@ public class PokeDexManager : SlideUI, CursorUI
     }
 
 
-
     public void ActivePokedex()
     {
+        pokedexDetail.SetActive(false);
+
+        isOnlyDetail = false;
         SlideUiActive();
         uiManager.ActiveUI(uiID1);
         cursor.Active();
@@ -167,6 +174,18 @@ public class PokeDexManager : SlideUI, CursorUI
     {
         uiManager.ActiveUI(uiID2);
         pokedexDetail.SetActive(true);
+
+        SetDetail();
+    }
+
+    public void ActiveDetail(int pokeMonID)
+    {        
+        SlideUiActive();
+        isOnlyDetail = true;
+        uiManager.ActiveUI(uiID2);
+        pokedexDetail.SetActive(true);
+        cursor.cursorNum = 0;
+        pokeDexPage = pokeMonID;
 
         SetDetail();
     }
@@ -209,9 +228,19 @@ public class PokeDexManager : SlideUI, CursorUI
         inputStun = 0.1f;
         uiManager.UnActiveUI(uiID2);
         input.InputStun();
-        pokedexDetail.SetActive(false);
+        
 
-        cursor.SetCursor(cursor.cursorNum);
+        if (!isOnlyDetail)
+        {
+            pokedexDetail.SetActive(false);
+            cursor.SetCursor(cursor.cursorNum);
+        }            
+        else
+        {
+            SlideUiUnActive();
+            EventManager.instance.ActiveNextEvent(); 
+        }
+            
     }
 
     private void InputCheck()
@@ -229,22 +258,37 @@ public class PokeDexManager : SlideUI, CursorUI
         if (uiManager.CheckUITYPE(uiID2))
         {
             inputStun -= Time.deltaTime;
-            if (input.bButtonDown)
-            {
-                UnActivePokedex2();
-            }
+            
 
-            if (input.verticalRaw != 0 && inputStun < 0)
+            if (!isOnlyDetail)
             {
-                inputStun = 0.3f;
-                if (input.verticalRaw == 1) { if (GoPreviousPokemon()) { SetDetail(); } }
-                else { if (GoNextPokemon()) { SetDetail(); } }
+                if (input.bButtonDown)
+                {
+                    UnActivePokedex2();
+                }
+
+                if (input.verticalRaw != 0 && inputStun < 0)
+                {
+                    inputStun = 0.3f;
+                    if (input.verticalRaw == 1) { if (GoPreviousPokemon()) { SetDetail(); } }
+                    else { if (GoNextPokemon()) { SetDetail(); } }
+                }
             }
+            else
+            {
+                if (input.aButtonDown || input.bButtonDown)
+                {
+                    UnActivePokedex2();
+                }
+            }
+            
         }
     }
 
     private bool GoNextPokemon()
     {
+        if (findPokeNum<=1){ return false; }
+
         var num = cursor.cursorNum + pokeDexPage;
 
         while (num < 23)
@@ -269,6 +313,8 @@ public class PokeDexManager : SlideUI, CursorUI
 
     private bool GoPreviousPokemon()
     {
+        if (findPokeNum <= 1) { return false; }
+
         var num = cursor.cursorNum + pokeDexPage;
 
         while (num >= 0)
@@ -348,4 +394,20 @@ public class PokeDexManager : SlideUI, CursorUI
         cursor.Init(cursorMaxNum, yDist, false);
     }
 
+    public void FindPoke(int pokeID)
+    {
+        if (pokeDex[pokeID] == 0)
+        {
+            pokeDex[pokeID] = 1;
+        }
+            
+    }
+
+    public void CatchPoke(int pokeID)
+    {
+        if (pokeDex[pokeID] < 2)
+        {
+            pokeDex[pokeID] = 2;
+        }            
+    }
 }

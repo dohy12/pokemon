@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour
 
     public void UnActiveUI(GameObject uiID)
     {
-        if (uiStack.Count > 0) { uiStack.Remove(uiID); }
+        if (uiStack.Count > 0) { uiStack.RemoveAll(d => d.gameObject == uiID); }
         if (uiStack.Count == 0) { isUIActive = false; }
     }
 

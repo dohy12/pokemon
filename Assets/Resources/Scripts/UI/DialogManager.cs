@@ -56,7 +56,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         SlideUiUpdate();
         DialogUpdate();
 
-        if (isActive && input.aButtonDown)
+        if (isActive && input.aButtonDown && GetActive())
         {
             PushAButton();
         }
@@ -66,7 +66,6 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
     private void PushAButton()
     {
-            
         if (dialogStun < 0)
         {
             dialogStun = 0.1f;
@@ -157,11 +156,11 @@ public class DialogManager : SlideUI, SelectUIRedirec
         {
             if (type == Type.QUEST)
             {
-                QuestInit(args[0], args[1]);
+                QuestInit(args);
             }
             if (type == Type.COUNT)
             {
-                CountInit(args[0]);
+                CountInit(args);
             }
         }
         else
@@ -171,7 +170,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         }
     }
 
-    private void UnActive()
+    public void UnActive()
     {
         SlideUiUnActive();
 
@@ -329,11 +328,9 @@ public class DialogManager : SlideUI, SelectUIRedirec
         //npc24 간호순
         msgDictionary.Add(24001, new string[] { "간호순 테스트" });
 
-        //npc25 
-        msgDictionary.Add(25001, new string[] { "상점주인 테스트" });
-
-        //npc26
-        msgDictionary.Add(26001, new string[] { "상점주인 테스트" });
+        //npc25 상점주인
+        msgDictionary.Add(25001, new string[] { "안녕하세요 프랜들리 숍입니다\n무엇을 도와드릴까요?" }); 
+        msgDictionary.Add(25002, new string[] { "감사합니다\n다음에도 또 와주세요!" });
 
         //npc27
         msgDictionary.Add(27001, new string[] { "풀숲을 지나가다가 벌레포켓몬에게 독을 쏘였었다!","그대로 걸어가다가 포켓몬이 쓰러졌었다!","해독제는 가지고 가는편이 좋아" });
@@ -391,9 +388,16 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99027, new string[] { "해당 아이템은 지금 사용하실 수 없습니다." });
         msgDictionary.Add(99028, new string[] { "중요 아이템은 버릴 수 없습니다." });
         msgDictionary.Add(99029, new string[] { "몇 개 버리시겠습니까?" });
+        msgDictionary.Add(99030, new string[] { "몇 개 판매 하시겠습니까?" });
+        msgDictionary.Add(99031, new string[] { "중요 아이템은 판매 하실 수 없습니다." });
+        msgDictionary.Add(99032, new string[] { "정말 아이템을 버리시겠습니까?" });
+        msgDictionary.Add(99033, new string[] { "정말 판매하시겠습니까?" });
+        msgDictionary.Add(99034, new string[] { "몇 개 구매 하시겠습니까?" });
+        msgDictionary.Add(99035, new string[] { "정말 구매하시겠습니까?" });
+        msgDictionary.Add(99036, new string[] { "죄송합니다. 돈이 부족합니다" });
+        msgDictionary.Add(99037, new string[] { "감사합니다!" });
 
         msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
-        msgDictionary.Add(99998, new string[] { "테스트용 메세지 입니다.2" });
     }
 
     public void OnSelectRedirec(int num, params int[] args)
@@ -412,10 +416,21 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
     private void CountUIActive()
     {
-        CountUI ui = CountUI.instance;
+        CountUI ui;
+        if (dialogArgs[1] == 0)
+        {
+            ui = CountUI.instance;
+        }            
+        else
+        {
+            ui = CountUI.monCountInstance;            
+        }
+            
         var cursorMaxNum = dialogArgs[0];
+        var itmID = dialogArgs[2];
+        var redirectID = dialogArgs[3];
         Vector2 pos = new Vector2(-17.3f, 218.8f);
-        ui.Active(cursorMaxNum, this, pos);
+        ui.Active(cursorMaxNum, this, pos, itmID, redirectID);
     }
 
     public enum Type
@@ -424,4 +439,6 @@ public class DialogManager : SlideUI, SelectUIRedirec
         QUEST,
         COUNT
     }
+
+    public bool GetActive() { return UIManager.instance.CheckUITYPE(uiID); }
 }
