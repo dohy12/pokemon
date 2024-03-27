@@ -71,6 +71,15 @@ public class CountUI : MonoBehaviour
                 SetString();
             }
 
+            if (input.horizontalRaw != 0 && inputStun < 0)
+            {
+                inputStun = 0.2f;
+                num += (int)input.horizontalRaw * 10;
+                if (num < 1) { num = 1; }
+                if (num > maxNum) { num = maxNum; }
+                SetString();
+            }
+
             if (input.aButtonDown)
             {
                 UnActive();

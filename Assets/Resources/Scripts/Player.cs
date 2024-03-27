@@ -24,6 +24,7 @@ public class Player : Unit
     public Sprite[] enterGrassSprites;
     private float enterGrassCheck;
     private bool isEnterGrass = false;
+    private float runCh = 1.0f;
 
     private UIManager uiManager;
 
@@ -117,6 +118,7 @@ public class Player : Unit
             }
             
         }      
+
 
         int GetDirecFromVector(float v, float h, int direc)
         {

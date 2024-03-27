@@ -1,0 +1,3449 @@
+fileFormatVersion: 2
+guid: 68ad118d20a918c468c7b82f76b6ab5d
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pokeIconSpr_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a115c959087deb4e829c1f113706568
+      internalID: -1529348882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a1c31faadd911644b3d208083cb89a7
+      internalID: -1524004868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_2
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9600af70fb6619418a318c0f4c4c539
+      internalID: -370394059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_3
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c6ce93f670d20746abcb8a5c8504acb
+      internalID: -1969134395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_4
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f988c8c655a4e1846a5e7696c0749a82
+      internalID: 1457351044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_5
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77c66f50eecf5034897bb659a084e21f
+      internalID: -1308694673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_6
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78e1ef5a76aef704aa0827ce7e784af8
+      internalID: 1523316873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_7
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17b19bea43787364a93c5b3434a4ea7f
+      internalID: -1605586080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_8
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eadefdb216f083d418ddb1abfee7534a
+      internalID: 1599534381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_9
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7d2ccf167d8ba3438edc8d544e16612
+      internalID: -1049423622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_10
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a000dfddb825484eb63118cc895529a
+      internalID: 304170854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_11
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 770
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df64fd00b7140de4190abc44fe10a576
+      internalID: -623807424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_12
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f8afaf566bd0814cb119d5213f44c32
+      internalID: 409797756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_13
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94876f5dd7d665345a8313302b0b3c82
+      internalID: 80946075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_14
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 529e5f04e0c3d4e459c71534090a4902
+      internalID: -356189010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_15
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce53365c8628e2f4b974103def05c279
+      internalID: 265494253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_16
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba07510231c80694dbf6207b4fefe0df
+      internalID: -1655307895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_17
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c4afd0136f4d540a72e933334307d2
+      internalID: 1478342849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_18
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea0820d5dbd7a8e408fbebeeb240b48e
+      internalID: 34933256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_19
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e89bab4514cac3e4483fea84c260e474
+      internalID: 582461295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_20
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72306b0f824573445beaf51c00519d2a
+      internalID: 852767002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_21
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a088b7176bf98942a8f1584307f9991
+      internalID: 1614096715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_22
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d038707454efe24b81b0ee616979683
+      internalID: -455179009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_23
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 706
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 537aaac621450e14f8cd98b81379bfc5
+      internalID: -1779948007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_24
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 285b8f9600ff8214f87abe586d435b3c
+      internalID: 1005800687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_25
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e561a57f64839e4408c56de77836bc20
+      internalID: 2134256263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_26
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bea69bf8af19864bbbe4615bb1b29ff
+      internalID: -890711085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_27
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70f8f6a90f8b9354e8bc19358622d757
+      internalID: 1697933637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_28
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 376b63d2c7249d24f8098bbcc1c22f7b
+      internalID: -1712819780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_29
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb42c1770787444aad80eeaa4ca2471
+      internalID: -251654279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_30
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 210adecb500970f419bea747936af78e
+      internalID: -1697470029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_31
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e839b0604302a6488f0ba9ef05cc02b
+      internalID: -1143778614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_32
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 835c55b847c18bc43a199e0cc0243d88
+      internalID: -433022433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_33
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2997ba6f267b68f428c14c62a4000c25
+      internalID: -1493087576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_34
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3879b2f3dcb23f94a87c88848c30014e
+      internalID: 2063349376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_35
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 642
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b7b6d4442bfdff4097cd68373cbdd2c
+      internalID: -408795801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_36
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79fb76e857205274f8bee6c65e7b02d1
+      internalID: 751911888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_37
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c8e00fe7b1c8304487f889956f15976
+      internalID: -1630079282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_38
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04c375634bafcf249a2520ab47ffdc8c
+      internalID: -2067120739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_39
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c65fced136558d4a8ac99f73bf80fa5
+      internalID: -2115236233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_40
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 622880eb1eeda4f4c8c8c4e201481d3a
+      internalID: -1100327405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_41
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0212b22e69ce74ea767b9d05f617e6
+      internalID: 369284871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_42
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cbc34e6ad83f8d4bb2a6ce4a8307190
+      internalID: 361703647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_43
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 824196077f1349e4abffc3deca495d03
+      internalID: 994354201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_44
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 370669cd34153d446bc94b6a9c5a2e27
+      internalID: -537279549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_45
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 801ea3a819145d24582b76da36d0e9b1
+      internalID: 644500803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_46
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd9988a26650e2340973815c844175c2
+      internalID: 882270457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_47
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 578
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74fa90c5914d4454090f5ff18b8d1a90
+      internalID: 2080023226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_48
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bee487345ef9f8d4fb6d18b0aa330227
+      internalID: 1091205555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_49
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 448955ae25a9b3e43ba1720bab050bcb
+      internalID: 689014659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_50
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ebd042b0eb9190488c4d23bd7befb36
+      internalID: 1666871535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_51
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7fc5c723a7b9f347b50ee76302b616c
+      internalID: 629433351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_52
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56fc0e49ba22fa64a8c5e2ab5e7d17d9
+      internalID: 1070933901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_53
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aff72ce10e6aa2b41807bebf232cddc5
+      internalID: -834257379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_54
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8e117401a732d34bb7150b1f8d4ec82
+      internalID: 258299910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_55
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deb4dfda5e14dd24fa8720c18522e63f
+      internalID: 2001232751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_56
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a6d50ce8232c5d4787bd8e686da6696
+      internalID: 1552827106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_57
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baba4bc62d077fc438cca889dc7e5f54
+      internalID: 337770975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_58
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 251f748f4b0506c47bbd9afd3b570717
+      internalID: -32194098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_59
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 514
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97117bfa261ab8d408d720b4e985f27d
+      internalID: -1838848703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_60
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c26e7f18bf0f6c242a650003741393ce
+      internalID: 1741922594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_61
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdb971e21bc45284bb104b39424fa580
+      internalID: -626400535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_62
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f80fa17c1c71db447b9ee355573a95ca
+      internalID: 1214331708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_63
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f10dda007406ef418b9fdd89382e7be
+      internalID: 465055608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_64
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9acf7e70b20445b488ae8fbbda7aad2a
+      internalID: -108000645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_65
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98fd6628578e49c46957b32ff7c760fe
+      internalID: 19995361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_66
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95af7fe488c1aab4782b86c7d735e987
+      internalID: 619396139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_67
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4b605bee1fe4f4996c22310701df16
+      internalID: -129018057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_68
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bcd932b5638fbd488af0482bbd7598b
+      internalID: 508634721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_69
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 417c286885b54024fb6fa4b6c77871ae
+      internalID: 742146315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_70
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4f6f60b55b25bb45b2b47090d8f1902
+      internalID: 1674335760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_71
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 450
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf8c7008f4afc244842965d2413c1bd
+      internalID: -1745104281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_72
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e1282ba54f9740469edf7b0c41202f1
+      internalID: 68244240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_73
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36441a1005113f642967b3f552aa85d1
+      internalID: 1591291648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_74
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a4b6c6349c96aa4e960a3a18a55c595
+      internalID: -1796736542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_75
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f36b0edcd26e250458a5e6e869f5beaa
+      internalID: -282602319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_76
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24f60c4079469d641b21542252ee039a
+      internalID: -445799843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_77
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab546aa808ea3564190a5542c32896fc
+      internalID: -2095798365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_78
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 693979a310d768a41a4d6fe3969bfc27
+      internalID: -1972152093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_79
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a60fdbb143044342b019fec21d1fb13
+      internalID: 1309899067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_80
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f2d05026e1f162428c9cd18d7306d8a
+      internalID: -1494244092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_81
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b883cbd7e0990114fb7e24be7e18380e
+      internalID: -1460731667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_82
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84ea533f0bb3f5144b4fd1dc871bdf5b
+      internalID: -376013468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_83
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 386
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84d163bc5c55d4b41aacb251c2aafa97
+      internalID: -1255258460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_84
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60b2b92d014e9fb49837bdcd0f7a3987
+      internalID: -13183117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_85
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba95988f37e429f498b5cd5beec402ea
+      internalID: 509871759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_86
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45018f051c7a1ec40b8feab53925c58b
+      internalID: -948583890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_87
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 733e4b36939ac70488c07d54ef6ea386
+      internalID: -1756804700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_88
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 030ef0513df195d4f9056047d0fa91e5
+      internalID: 1888177781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_89
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eb7e0b3fae78bc459b69c69a9860470
+      internalID: 266783086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_90
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d05c9ca88af7eaf46a127f3be3b1b496
+      internalID: -1775795439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_91
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c4f2b4a40c5dd14483b59386de9aab4
+      internalID: 1625714603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_92
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f047835b48b0db45972d32a194464d1
+      internalID: -2085911894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_93
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a19cd06ba23cee4a9204421bc169274
+      internalID: 1807847770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_94
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46722d0eed1f0d5448d978ab1a3e4d07
+      internalID: -1622185041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_95
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 322
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ea77fd90d4cf67429b2019a18fdcd6d
+      internalID: 940769166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_96
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b890542ce110424084c9b6ff1e694ad
+      internalID: 1161785163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_97
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9888dc3fab68fbd469984cdcdbb8c732
+      internalID: 122933932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_98
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed97523ed39ca44408fdfa41e5d8de28
+      internalID: 334624749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_99
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9565e67b5c952f84eb0035f85f7109b1
+      internalID: 1947281043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_100
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abde9a95f0bcb094f8b449c9547a467a
+      internalID: -43904485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_101
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26bcc8e92027164408f9d0a80e939adc
+      internalID: -574079528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_102
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d11efd17a34cd9469fa3c4477bb5ad0
+      internalID: -1661319868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_103
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d958bbbfe921d3b4b8b999d29ad8131f
+      internalID: -462053799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_104
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9609cef83196e514d806fbfc348338e0
+      internalID: -1029558940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_105
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dded8cf74256bb34792627ffa5aaf038
+      internalID: -1919547060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_106
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19ff8f2fac139214a971b832a42ed337
+      internalID: 200028087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_107
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 258
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d4f59d5b35085341b94d7b818760f1f
+      internalID: -861626371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_108
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9ef3b9dacfc2a04aa455b6a3c9a2a56
+      internalID: -1699587159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_109
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3d9728a64ea30d448c9e4758cdcf8ed
+      internalID: 950553891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_110
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 546fac495c8632545ba5e58165dd55af
+      internalID: -128430181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_111
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a14d0d3ead4a1054ca2893c7e4e284ed
+      internalID: 1049964346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_112
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59d00934ca705694db1b5d06b63a9b81
+      internalID: 636340287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_113
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9af2acdaa43e887408c73bd1f07a24fb
+      internalID: 26917688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_114
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4f47e1d68ce784438a667b24c7cc1ce
+      internalID: 2050709626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_115
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f2ba4a838d90de47a4b4f6609757bf6
+      internalID: 423887513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_116
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d05ae8a6711702742b794de1f772a3a7
+      internalID: 737422331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_117
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00b9eec51fb737c4d976d71200a16f75
+      internalID: 1682218400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_118
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e13b8103396ac854ea6e5ec11efc748f
+      internalID: -1823743662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_119
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 194
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6ae063a500f22e4983986fb62c2afc6
+      internalID: 777007020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_120
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb36f37860d425740a9d13b0ed3be6dc
+      internalID: -1746902946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_121
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27a50b7bb4767b74ba6c9ada16553429
+      internalID: -690949873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_122
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a4d4135f567f424ebb200b545988c10
+      internalID: 942236342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_123
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4db4531189bd724418e63b2046d8dc10
+      internalID: 2059138221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_124
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef46fa94720a16843a3d323b1086edda
+      internalID: -1955761129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_125
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a7c6d5e5bd046e4d9f0d53f7fe462a3
+      internalID: -618478478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_126
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cb07ae105c62a24baef14bdc59ca2f9
+      internalID: -1351193784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_127
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03e27ccb75021ae43885d414fa1e1555
+      internalID: 2056451383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_128
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1241a53b35cb10640962ecc23a7a33d5
+      internalID: -1573861667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_129
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59fb95df7f5a91b4a818ca7ad5d06d43
+      internalID: -506701687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_130
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5053760363ef76840b2aa1770ed6ecbc
+      internalID: -257398497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_131
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 130
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca4ecbdf8cf3dbb458b1b9af488b8a75
+      internalID: -1790317079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_132
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e2434b747c536146a5945f20eaa13a5
+      internalID: 2103269607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_133
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9388f02a90ec0774c843f516c412ec76
+      internalID: 1173743740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_134
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b68c2ad4db4a9b4e908c246441d591c
+      internalID: 190339531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_135
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8faf7b495513b04086a432d91e2a5e3
+      internalID: 1178168030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_136
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de025b83a56e9964aa2beaf4767231a9
+      internalID: -4035042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_137
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54f14e3a61353ef4ca01967b741a824e
+      internalID: -1548519524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_138
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6e2d27b44dedd04d91b71fa7d48df20
+      internalID: 64196275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_139
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 422cd81d2b87e48498858f1f7e84fe84
+      internalID: -1897531108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_140
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a26099ba73ec43545b814ed736b2e0f7
+      internalID: -1706556489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_141
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8069e659c9c0bc14694a18ff414ec7a8
+      internalID: 2105390942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_142
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c82156905c6aee64893832a7d0bba112
+      internalID: 1981894132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_143
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 66
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9b0f74f29c1e48449a648646565e87a
+      internalID: 1506623887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_144
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1f8f2ba7753e2049b11811000d17a9e
+      internalID: 605845833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_145
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 2
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d9e81524552c4b4d88b5aae03f49b4a
+      internalID: 285562505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_146
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 2
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f17c4787c80f84f8c21f6244205e38
+      internalID: -1983835241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_147
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 2
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e4fb605585de3248acbde60279ceccf
+      internalID: -1207216110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_148
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 2
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f80735884e7a574294a77cfa75441fc
+      internalID: -1637702792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_149
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 2
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f17c2983cdf3054997703acb1991783
+      internalID: 509708443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pokeIconSpr_150
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 2
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60fbd32dcf9bd6847bbee48c35da0bac
+      internalID: -937925046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      pokeIconSpr_0: -1529348882
+      pokeIconSpr_1: -1524004868
+      pokeIconSpr_10: 304170854
+      pokeIconSpr_100: -43904485
+      pokeIconSpr_101: -574079528
+      pokeIconSpr_102: -1661319868
+      pokeIconSpr_103: -462053799
+      pokeIconSpr_104: -1029558940
+      pokeIconSpr_105: -1919547060
+      pokeIconSpr_106: 200028087
+      pokeIconSpr_107: -861626371
+      pokeIconSpr_108: -1699587159
+      pokeIconSpr_109: 950553891
+      pokeIconSpr_11: -623807424
+      pokeIconSpr_110: -128430181
+      pokeIconSpr_111: 1049964346
+      pokeIconSpr_112: 636340287
+      pokeIconSpr_113: 26917688
+      pokeIconSpr_114: 2050709626
+      pokeIconSpr_115: 423887513
+      pokeIconSpr_116: 737422331
+      pokeIconSpr_117: 1682218400
+      pokeIconSpr_118: -1823743662
+      pokeIconSpr_119: 777007020
+      pokeIconSpr_12: 409797756
+      pokeIconSpr_120: -1746902946
+      pokeIconSpr_121: -690949873
+      pokeIconSpr_122: 942236342
+      pokeIconSpr_123: 2059138221
+      pokeIconSpr_124: -1955761129
+      pokeIconSpr_125: -618478478
+      pokeIconSpr_126: -1351193784
+      pokeIconSpr_127: 2056451383
+      pokeIconSpr_128: -1573861667
+      pokeIconSpr_129: -506701687
+      pokeIconSpr_13: 80946075
+      pokeIconSpr_130: -257398497
+      pokeIconSpr_131: -1790317079
+      pokeIconSpr_132: 2103269607
+      pokeIconSpr_133: 1173743740
+      pokeIconSpr_134: 190339531
+      pokeIconSpr_135: 1178168030
+      pokeIconSpr_136: -4035042
+      pokeIconSpr_137: -1548519524
+      pokeIconSpr_138: 64196275
+      pokeIconSpr_139: -1897531108
+      pokeIconSpr_14: -356189010
+      pokeIconSpr_140: -1706556489
+      pokeIconSpr_141: 2105390942
+      pokeIconSpr_142: 1981894132
+      pokeIconSpr_143: 1506623887
+      pokeIconSpr_144: 605845833
+      pokeIconSpr_145: 285562505
+      pokeIconSpr_146: -1983835241
+      pokeIconSpr_147: -1207216110
+      pokeIconSpr_148: -1637702792
+      pokeIconSpr_149: 509708443
+      pokeIconSpr_15: 265494253
+      pokeIconSpr_150: -937925046
+      pokeIconSpr_16: -1655307895
+      pokeIconSpr_17: 1478342849
+      pokeIconSpr_18: 34933256
+      pokeIconSpr_19: 582461295
+      pokeIconSpr_2: -370394059
+      pokeIconSpr_20: 852767002
+      pokeIconSpr_21: 1614096715
+      pokeIconSpr_22: -455179009
+      pokeIconSpr_23: -1779948007
+      pokeIconSpr_24: 1005800687
+      pokeIconSpr_25: 2134256263
+      pokeIconSpr_26: -890711085
+      pokeIconSpr_27: 1697933637
+      pokeIconSpr_28: -1712819780
+      pokeIconSpr_29: -251654279
+      pokeIconSpr_3: -1969134395
+      pokeIconSpr_30: -1697470029
+      pokeIconSpr_31: -1143778614
+      pokeIconSpr_32: -433022433
+      pokeIconSpr_33: -1493087576
+      pokeIconSpr_34: 2063349376
+      pokeIconSpr_35: -408795801
+      pokeIconSpr_36: 751911888
+      pokeIconSpr_37: -1630079282
+      pokeIconSpr_38: -2067120739
+      pokeIconSpr_39: -2115236233
+      pokeIconSpr_4: 1457351044
+      pokeIconSpr_40: -1100327405
+      pokeIconSpr_41: 369284871
+      pokeIconSpr_42: 361703647
+      pokeIconSpr_43: 994354201
+      pokeIconSpr_44: -537279549
+      pokeIconSpr_45: 644500803
+      pokeIconSpr_46: 882270457
+      pokeIconSpr_47: 2080023226
+      pokeIconSpr_48: 1091205555
+      pokeIconSpr_49: 689014659
+      pokeIconSpr_5: -1308694673
+      pokeIconSpr_50: 1666871535
+      pokeIconSpr_51: 629433351
+      pokeIconSpr_52: 1070933901
+      pokeIconSpr_53: -834257379
+      pokeIconSpr_54: 258299910
+      pokeIconSpr_55: 2001232751
+      pokeIconSpr_56: 1552827106
+      pokeIconSpr_57: 337770975
+      pokeIconSpr_58: -32194098
+      pokeIconSpr_59: -1838848703
+      pokeIconSpr_6: 1523316873
+      pokeIconSpr_60: 1741922594
+      pokeIconSpr_61: -626400535
+      pokeIconSpr_62: 1214331708
+      pokeIconSpr_63: 465055608
+      pokeIconSpr_64: -108000645
+      pokeIconSpr_65: 19995361
+      pokeIconSpr_66: 619396139
+      pokeIconSpr_67: -129018057
+      pokeIconSpr_68: 508634721
+      pokeIconSpr_69: 742146315
+      pokeIconSpr_7: -1605586080
+      pokeIconSpr_70: 1674335760
+      pokeIconSpr_71: -1745104281
+      pokeIconSpr_72: 68244240
+      pokeIconSpr_73: 1591291648
+      pokeIconSpr_74: -1796736542
+      pokeIconSpr_75: -282602319
+      pokeIconSpr_76: -445799843
+      pokeIconSpr_77: -2095798365
+      pokeIconSpr_78: -1972152093
+      pokeIconSpr_79: 1309899067
+      pokeIconSpr_8: 1599534381
+      pokeIconSpr_80: -1494244092
+      pokeIconSpr_81: -1460731667
+      pokeIconSpr_82: -376013468
+      pokeIconSpr_83: -1255258460
+      pokeIconSpr_84: -13183117
+      pokeIconSpr_85: 509871759
+      pokeIconSpr_86: -948583890
+      pokeIconSpr_87: -1756804700
+      pokeIconSpr_88: 1888177781
+      pokeIconSpr_89: 266783086
+      pokeIconSpr_9: -1049423622
+      pokeIconSpr_90: -1775795439
+      pokeIconSpr_91: 1625714603
+      pokeIconSpr_92: -2085911894
+      pokeIconSpr_93: 1807847770
+      pokeIconSpr_94: -1622185041
+      pokeIconSpr_95: 940769166
+      pokeIconSpr_96: 1161785163
+      pokeIconSpr_97: 122933932
+      pokeIconSpr_98: 334624749
+      pokeIconSpr_99: 1947281043
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

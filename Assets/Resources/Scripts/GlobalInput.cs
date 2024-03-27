@@ -15,7 +15,11 @@ public class GlobalInput : MonoBehaviour
 
     public bool bButtonDown { get; private set; }
 
+    public bool bButton { get; private set; }
+
     public bool startButtonDown { get; private set; }
+
+    private float stunTime = 0f;
 
     void Awake()
     {
@@ -40,8 +44,15 @@ public class GlobalInput : MonoBehaviour
         aButtonDown = Input.GetButtonDown("AButton");
 
         bButtonDown = Input.GetButtonDown("BButton");
+        bButton = Input.GetButton("BButton");
 
         startButtonDown = Input.GetButtonDown("Submit");
+
+        if (stunTime > 0)
+        {
+            stunTime -= Time.deltaTime;
+            InputStun();
+        }
 
     }
 
@@ -58,5 +69,12 @@ public class GlobalInput : MonoBehaviour
         bButtonDown = false;
 
         startButtonDown = false;
+    }
+
+
+    public void InputStun(float stunTime)
+    {
+        InputStun();
+        this.stunTime = stunTime;
     }
 }

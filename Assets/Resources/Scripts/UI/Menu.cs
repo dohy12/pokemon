@@ -81,6 +81,10 @@ public class Menu : SlideUI, CursorUI
                 PokeDexManager.instance.ActivePokedex();
                 break;
 
+            case 1:
+                PokemonList.instance.Active();
+                break;
+
             case 2://°¡¹æ
                 Bag.instance.Active();
                 break;
