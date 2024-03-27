@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         EditorReady();
         instance = this;
         SetDirecVector();
+        SetResolution();
     }
 
     // Start is called before the first frame update
@@ -45,5 +46,13 @@ public class GameManager : MonoBehaviour
         direcToVector.Add(1, new Vector2(-1f, 0f));
         direcToVector.Add(2, new Vector2(0f, 1f));
         direcToVector.Add(3, new Vector2(1f, 0f));
+    }
+
+    private void SetResolution()
+    {
+        int setWidth = 832; // 화면 너비
+        int setHeight = 576; // 화면 높이
+
+        Screen.SetResolution(setWidth, setHeight, false);
     }
 }
