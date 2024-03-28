@@ -95,4 +95,39 @@ public class PokemonInfo : MonoBehaviour
         STEEL,
         FAIRY
     }
+
+    public static Color GetColorFromType(Type type)
+    {
+        if (type == Type.NORMAL)
+            return Color.white;
+
+        if (type == Type.GRASS)
+            return new Color(0, 0.86f, 0.309f);
+
+        if (type == Type.FIRE)
+            return new Color(1f, 0.5f, 0.5f);
+
+        if (type == Type.WATER)
+            return new Color(0.41f, 0.7f, 1f);
+
+        if (type == Type.WATER)
+            return new Color(0.41f, 0.7f, 1f);
+
+        if (type == Type.BUG)
+            return new Color(0.83f, 0.82f, 0f);
+
+        if (type == Type.ELEC)
+            return new Color(1f, 1f, 0.39f);
+
+        if (type == Type.GROUND)
+            return new Color(0.85f, 0.61f, 0.36f);
+
+        if (type == Type.PSY)
+            return new Color(1f, 0.168f, 0.882f);
+
+        if (type == Type.POISION)
+            return new Color(0.784f, 0.392f, 0.784f);
+
+        return Color.white;
+    }
 }

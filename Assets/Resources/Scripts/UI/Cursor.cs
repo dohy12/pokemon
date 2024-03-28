@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,35 +54,10 @@ public class Cursor : MonoBehaviour
             {
                 ComboUpdate();
                 inputStun = 0.2f / comboOn;
-                cursorNum -= (int)input.verticalRaw;
 
-                if (cursorNum < 0)
-                {
-                    if (!isCursorJump)
-                    {
-                        cursorNum = 0;
-                        parent.CursorChange(-1);
-                    }
-                    else
-                    {
-                        cursorNum = cursorMaxNum;
-                    }                    
-                }
-                
-                if (cursorNum > cursorMaxNum)
-                {
-                    if (!isCursorJump)
-                    {                        
-                        cursorNum = cursorMaxNum;
-                        parent.CursorChange(1);
-                    }
-                    else
-                    {
-                        cursorNum = 0;
-                    }
-                }
+                CursorMove(-(int)input.verticalRaw);
 
-                if(cursorNum >= 0 && cursorNum <= cursorMaxNum)
+                if (cursorNum >= 0 && cursorNum <= cursorMaxNum)
                 {
                     parent.CursorChange(0);
                 }
@@ -92,6 +67,36 @@ public class Cursor : MonoBehaviour
             {
                 input.InputStun();
                 parent.CursorChoose(cursorNum);                
+            }
+        }
+    }
+
+    public void CursorMove(int move)
+    {
+        cursorNum += move;
+        if (cursorNum < 0)
+        {
+            if (!isCursorJump)
+            {
+                cursorNum = 0;
+                parent.CursorChange(-1);
+            }
+            else
+            {
+                cursorNum = cursorMaxNum;
+            }
+        }
+
+        if (cursorNum > cursorMaxNum)
+        {
+            if (!isCursorJump)
+            {
+                cursorNum = cursorMaxNum;
+                parent.CursorChange(1);
+            }
+            else
+            {
+                cursorNum = 0;
             }
         }
     }

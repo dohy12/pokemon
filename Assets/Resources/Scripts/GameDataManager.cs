@@ -28,11 +28,11 @@ public class GameDataManager : MonoBehaviour
     void Init()
     {
         pokeList = new List<Poke>();
-        pokeList.Add(new Poke(0, new int[] { 50, 2, 3 }, 5, new int[] { 1 }));
-        pokeList.Add(new Poke(3, new int[] { 40, 2, 3 }, 25, new int[] { 1 }));
-        pokeList.Add(new Poke(6, new int[] { 20, 2, 3 }, 10, new int[] { 1 }));
-        pokeList.Add(new Poke(9, new int[] { 123, 2, 3 }, 99, new int[] { 1 }));
-        pokeList.Add(new Poke(12, new int[] { 123, 2, 3 }, 100, new int[] { 1 }));
-        pokeList.Add(new Poke(15, new int[] { 123, 2, 3 }, 50, new int[] { 1 }));
+        //pokeList.Add(new Poke(0, 5, new int[] { 1, 8, 4, 0 }));
+    }
+
+    public void AddPokemon(int pokeID, int pokeLevel)
+    {
+        pokeList.Add(new Poke(pokeID, pokeLevel, new int[] { 1, 8, 4, 0 }));
     }
 }

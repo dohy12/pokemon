@@ -9,7 +9,7 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
     public static PokemonList instance; 
     private GlobalInput input;
     private GameObject uiID;
-    private Cursor cursor;
+    public Cursor cursor;
     private RectTransform[] lists;
     private float[] listsXpos;
 
@@ -246,12 +246,10 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
 
     public void OnSelectRedirec(int num, params int[] args)
     {
-        Debug.Log(num +" , " + args[0]);
-
         switch (num)
         {
             case 0:
-
+                PokeDetail.instance.Active();
                 break;
 
             case 1://순서바꾸기
@@ -259,5 +257,10 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
                 break;
 
         }
+    }
+
+    public int GetCursorNum()
+    {
+        return cursor.cursorNum;
     }
 }
