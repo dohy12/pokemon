@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class PokemonSkillInfo : MonoBehaviour
 {
     public static PokemonSkillInfo Instance;
     public Dictionary<int, PokemonSkill> skills;
-
+    public Dictionary<int, Tuple<int, int>[]> pokeLevelMove;
 
     private void Awake()
     {
@@ -62,6 +63,57 @@ public class PokemonSkillInfo : MonoBehaviour
         skills.Add(30, new PokemonSkill(30, "Æ¢¾î¿À¸£±â", SkillType.STATUS, 0, 40, PokemonInfo.Type.NORMAL));
         skills.Add(31, new PokemonSkill(31, "³­µ¿ºÎ¸®±â", SkillType.PHYSICAL, 120, 10, PokemonInfo.Type.NORMAL));
         skills.Add(32, new PokemonSkill(32, "ÆÄ±«±¤¼±", SkillType.SPECIAL, 150, 5, PokemonInfo.Type.NORMAL));
+
+        pokeLevelMove = new Dictionary<int, Tuple<int, int>[]>();
+        //ÀÌ»óÇØ¾¾ ¶óÀÎ
+        pokeLevelMove.Add(0, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 8), GetT(7, 4), GetT(10, 13), GetT(15, 15) });
+        pokeLevelMove.Add(1, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 8), GetT(7, 4), GetT(10, 13), GetT(15, 15) });
+        pokeLevelMove.Add(2, new Tuple<int, int>[] { GetT(0, 4), GetT(0, 13), GetT(0, 15) });
+
+        //ÆÄÀÌ¸® ¶óÀÎ
+        pokeLevelMove.Add(3, new Tuple<int, int>[] { GetT(0, 2), GetT(0, 7), GetT(7, 5), GetT(10, 9), GetT(15, 16) });
+        pokeLevelMove.Add(4, new Tuple<int, int>[] { GetT(0, 2), GetT(0, 7), GetT(7, 5), GetT(10, 9), GetT(15, 16) });
+        pokeLevelMove.Add(5, new Tuple<int, int>[] { GetT(0, 5), GetT(0, 9), GetT(0, 16) });
+
+        //²¿ºÎ±â ¶óÀÎ
+        pokeLevelMove.Add(6, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 7), GetT(7, 6), GetT(10, 19), GetT(15, 18) });
+        pokeLevelMove.Add(7, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 7), GetT(7, 6), GetT(10, 19), GetT(15, 18) });
+        pokeLevelMove.Add(8, new Tuple<int, int>[] { GetT(0, 6), GetT(0, 19), GetT(0, 18) });
+
+        //Ä³ÅÍÇÇ ¶óÀÎ
+        pokeLevelMove.Add(9, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 20) });
+        pokeLevelMove.Add(10, new Tuple<int, int>[] { GetT(0, 21) });
+        pokeLevelMove.Add(11, new Tuple<int, int>[] { GetT(0, 8) });
+
+        //µ¶Ä§ºØ ¶óÀÎ
+        pokeLevelMove.Add(12, new Tuple<int, int>[] { GetT(0, 23), GetT(0, 20) });
+        pokeLevelMove.Add(13, new Tuple<int, int>[] { GetT(0, 21) });
+        pokeLevelMove.Add(14, new Tuple<int, int>[] { GetT(0, 24) });
+
+        //±¸±¸
+        pokeLevelMove.Add(15, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 10), GetT(5, 11), GetT(10, 12) });
+        pokeLevelMove.Add(16, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 10), GetT(5, 11), GetT(10, 12) });
+        pokeLevelMove.Add(17, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 10), GetT(5, 11), GetT(10, 12) });
+
+        //²¿·¿
+        pokeLevelMove.Add(18, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 7), GetT(5, 25), GetT(10, 10) });
+        pokeLevelMove.Add(19, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 7), GetT(5, 25), GetT(10, 10) });
+
+        //±úºñÂü
+        pokeLevelMove.Add(20, new Tuple<int, int>[] { GetT(0, 3), GetT(0, 8), GetT(5, 25), GetT(10, 27) });
+        pokeLevelMove.Add(21, new Tuple<int, int>[] { GetT(0, 3), GetT(0, 8), GetT(5, 25), GetT(10, 27) });
+
+        //ÇÇÄ«Ãò
+        pokeLevelMove.Add(22, new Tuple<int, int>[] { GetT(0, 28), GetT(0, 7), GetT(5, 25), GetT(10, 29) });
+
+        //À×¾îÅ·
+        pokeLevelMove.Add(23, new Tuple<int, int>[] { GetT(0, 30), GetT(5, 1) });
+        pokeLevelMove.Add(24, new Tuple<int, int>[] { GetT(0, 1), GetT(0, 10), GetT(15, 15) });
+    }
+
+    private Tuple<int, int> GetT(int level, int skill)
+    {
+        return new Tuple<int, int>( level, skill );
     }
 
     public class PokemonSkill
@@ -89,5 +141,37 @@ public class PokemonSkillInfo : MonoBehaviour
         PHYSICAL,
         SPECIAL,
         STATUS
+    }
+
+    public int[] GetPokemonSkillByLevel(int pokeID, int level)
+    {
+        int[] moves = new int[4] {0,0,0,0};
+        Tuple<int, int>[] pokeMoves = pokeLevelMove[pokeID];
+
+        Queue<int> moveQueue = new Queue<int>();
+
+
+        for (int i = 0; i< pokeMoves.Length; i++)
+        {
+            var levelMove = pokeMoves[i];
+          
+            if (levelMove.Item1 <= level)
+            {
+                moveQueue.Enqueue(levelMove.Item2);
+                if (moveQueue.Count > 4)
+                {
+                    moveQueue.Dequeue();
+                }
+            }
+        }
+
+        var cnt = 0;
+        while (moveQueue.Count > 0)
+        {
+            moves[cnt++] = moveQueue.Dequeue();
+        }
+
+
+        return moves;
     }
 }

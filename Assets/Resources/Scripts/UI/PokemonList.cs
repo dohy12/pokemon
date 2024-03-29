@@ -104,11 +104,19 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
 
     public void Active()
     {
-        SlideUiActive();
-        UIManager.instance.ActiveUI(uiID);
-        cursor.Active();
+        if (GameDataManager.instance.HasPokemon())
+        {
+            SlideUiActive();
+            UIManager.instance.ActiveUI(uiID);
+            cursor.Active();
 
-        ShowList();
+            ShowList();
+        }
+        else
+        {
+            DialogManager.instance.Active(99038, null, DialogManager.Type.NORMAL);
+        }
+       
     }
 
     public void UnActive()

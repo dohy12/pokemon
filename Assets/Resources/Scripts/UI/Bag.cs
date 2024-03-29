@@ -15,12 +15,13 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
     private ItemInfo info;
     private Money money;
 
-    public Dictionary<int, int> items;
     private int[] showItmList;
     private TMP_Text[] stringObj_Txt;
     private TMP_Text[] stringObj_Num;
 
     private bool isShop = false;
+
+    private GameDataManager data;
 
     private void Awake()
     {
@@ -48,7 +49,6 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         uiID = gameObject;
         input = GlobalInput.globalInput;
         info = ItemInfo.instance;
-        items = new Dictionary<int, int>();
 
         showItmList = new int[5] {-1,-1,-1,-1,-1};
         stringObj_Txt = new TMP_Text[5];
@@ -57,17 +57,15 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         {
             stringObj_Txt[i] = transform.GetChild(i).GetChild(0).GetComponent<TMP_Text>();
             stringObj_Num[i] = transform.GetChild(i).GetChild(1).GetComponent<TMP_Text>();
-        }
-
-        items[0] = 1;
-        items[1] = 1;
+        }        
 
         money = transform.parent.Find("Money").GetComponent<Money>();
+        data = GameDataManager.instance;
     }
 
     private void ShowAllKeys()
     {
-        var itmList = items.Keys.ToList();
+        var itmList = data.items.Keys.ToList();
         var str = "모든 키("+itmList.Count+") : ";
 
         foreach(var itm in itmList)
@@ -81,7 +79,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
     private void SetString(params bool[] args)
     {
         var num = page;
-        var itmsList = items.Keys.ToList();
+        var itmsList = data.items.Keys.ToList();
         var isChecked = false;
 
         cursor.cursorMaxNum = 4;
@@ -93,7 +91,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
                 stringObj_Txt[i].text = itm.name;
                 if (itm.type != ItemInfo.Type.IMPOTANT)
                 {
-                    stringObj_Num[i].text = "X "+(items[itm.id]).ToString("D2");
+                    stringObj_Num[i].text = "X "+(data.items[itm.id]).ToString("D2");
                 }
                 else
                 {
@@ -184,9 +182,9 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
                 page = 0;
             }
 
-            if (page > items.Keys.Count - 2)
+            if (page > data.items.Keys.Count - 2)
             {
-                page = items.Keys.Count - 2;
+                page = data.items.Keys.Count - 2;
             }
 
             SetString((pageTmp == 1));
@@ -195,7 +193,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
     public void CursorChoose(int num)
     {
-        if (items.Keys.Count <= num + page)
+        if (data.items.Keys.Count <= num + page)
         {
             UnActive();
         }
@@ -207,7 +205,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
             }
             else
             {
-                int itmID = items.Keys.ToList()[num + page];
+                int itmID = data.items.Keys.ToList()[num + page];
                 if (info.info[itmID].type != ItemInfo.Type.IMPOTANT)
                 {
                     ShopUIActive(itmID);
@@ -233,7 +231,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
     {
         if (args[0] == 0)
         {
-            var itmsList = items.Keys.ToList();
+            var itmsList = data.items.Keys.ToList();
             var itmID = args[1];
             var itm = info.info[itmID];
 
@@ -252,7 +250,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
                 }
                 else
                 {
-                    DialogManager.instance.Active(99029, this, DialogManager.Type.COUNT, items[itmID], 0, itmID, 1);
+                    DialogManager.instance.Active(99029, this, DialogManager.Type.COUNT, data.items[itmID], 0, itmID, 1);
                 }
             }
         }
@@ -283,10 +281,10 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
             {
                 var itmID = args[2];
                 var itmNum = args[3];
-                items[itmID] -= itmNum;
-                if (items[itmID] == 0)
+                data.items[itmID] -= itmNum;
+                if (data.items[itmID] == 0)
                 {
-                    items.Remove(itmID);
+                    data.items.Remove(itmID);
                 }
                 ShowAllKeys();
                 SetString();
@@ -317,7 +315,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         var cursorMaxNum = 2;
         Vector2 pos = new Vector2(-14f, 54.5f + (cursorMaxNum) * 17.5f);
 
-        int itmID = items.Keys.ToList()[num];
+        int itmID = data.items.Keys.ToList()[num];
         select.Active(cursorMaxNum, "사용한다\n버린다\n그만둔다",this, 240f, pos, 0, itmID);
     }
 
@@ -332,7 +330,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
     private void ShopUIActive(int itemID)
     {
         Debug.Log("아이템 판매 : " + info.info[itemID].name);
-        DialogManager.instance.Active(99030, this, DialogManager.Type.COUNT, items[itemID], 1, itemID, 1);
+        DialogManager.instance.Active(99030, this, DialogManager.Type.COUNT, data.items[itemID], 1, itemID, 1);
     }
 
 }

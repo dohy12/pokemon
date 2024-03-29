@@ -24,6 +24,8 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
 
     public GameObject eventObj = null;
 
+    private GameDataManager data;
+
     private void Awake()
     {
         instance = this;
@@ -87,6 +89,8 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
 
         SetEventProgress();
         SetExMark();
+
+        data = GameDataManager.instance;
     }
 
     private void SetEventProgress()
@@ -244,7 +248,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
             GetItem();
             eventProgress["mainEvent"] = 3;
             eventProgress["FirstPokemon"] = eventID - 101;
-            AddEventPokedex(eventProgress["FirstPokemon"] * 3);
+            AddEventAddPoke(eventProgress["FirstPokemon"] * 3, 5);
 
             AddEventMove(3, Unit.Direc.DOWN, 2);
             var __left = eventProgress["FirstPokemon"] + 1;
@@ -272,7 +276,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         else if (eventID == 201)//간호순 힐
         {
             healMachineID = args[0];
-            healerID = args[1];
+            healerID = args[0];
             AddEventQuest(23001, 205, 202);
             ActiveNextEvent();
         }
@@ -362,7 +366,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
                     case Npc.Type.NURSE:
                         if (eventProgress["mainEvent"] > 3)
                         {
-                            StartEvent(201, 2, npcID);
+                            StartEvent(201, npcID);
                         }
                         else
                         {
@@ -453,7 +457,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         else if(tmpEvent.eventKind == EventKind.HEAL)
         {
             var machine = NpcManager.npcManager.healMachines[tmpEvent.unitID];
-            machine.Active(6);
+            machine.Active(data.pokeList.Count);
         }
         else if(tmpEvent.eventKind == EventKind.EVENT)
         {
@@ -463,10 +467,9 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         {
             PokemonPicture.instance.Active(tmpEvent.arg1);
         }
-        else if (tmpEvent.eventKind == EventKind.POKEDEX)
+        else if (tmpEvent.eventKind == EventKind.ADDPOKE)
         {
-            PokeDexManager.instance.CatchPoke(tmpEvent.arg1);
-            PokeDexManager.instance.ActiveDetail(tmpEvent.arg1);            
+            GameDataManager.instance.AddPokemon(tmpEvent.arg1, tmpEvent.arg2);     
         }
 
     }
@@ -562,17 +565,18 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         events.Enqueue(ev);
     }
 
-    private void AddEventPokedex(int pokeID)
+    private void AddEventAddPoke(int pokeID, int level)
     {
         Event ev = new Event();
-        ev.eventKind = EventKind.POKEDEX;
+        ev.eventKind = EventKind.ADDPOKE;
         ev.arg1 = pokeID;
+        ev.arg2 = level;
         events.Enqueue(ev);
     }
 
     class Event
     {
-        public EventKind eventKind;//[0]케릭터 움직임, [1]대화창, [2]트레이너 배틀, [3]야생 포켓몬 배틀, [4]포켓몬 사진 출력, [5]케릭터 방향전환. [6]케릭터 느낌표
+        public EventKind eventKind;
         public int unitID;
         public int direc;
         public int dialogID;
@@ -580,6 +584,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         public bool deleteKind;
         public int arg1;
         public int arg2;
+        public int arg3;
 
         public Event()
         {
@@ -602,7 +607,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         HEAL,
         EVENT,
         PICTURE,
-        POKEDEX
+        ADDPOKE
     }
 
 

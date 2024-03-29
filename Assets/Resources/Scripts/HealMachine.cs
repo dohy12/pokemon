@@ -93,7 +93,9 @@ public class HealMachine : MonoBehaviour
     }
 
     public void Active(int pokeballNum)
-    {        
+    {
+        Debug.Log(pokeballNum);
+        Debug.Log(machineID);
         this.pokeballNum = pokeballNum;
 
         isActive = true;

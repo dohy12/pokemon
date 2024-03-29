@@ -15,24 +15,24 @@ public class Poke
     public int[] skillsPP = new int[4];
     public int hp;
 
-    public Poke(int id, int level, int[] skills)
+    public Poke(int id, int level)
     {
         pokeID = idGenerator++;
         this.id = id;
         this.level = level;
         this.exp = 0;
         this.maxExp = GetMaxExp(level);
-        this.skills = skills;
+        this.skills = PokemonSkillInfo.Instance.GetPokemonSkillByLevel(id, level);
         this.stat = new int[6];
 
         var poke = PokemonInfo.Instance.pokemons[id];
         SetStats(poke);
-        SetSkills();
+        SetSkillsPP();
 
-        this.hp = stat[0] * Random.Range(1, 10) / 10;
+        this.hp = stat[0];
     }
 
-    private void SetSkills()
+    private void SetSkillsPP()
     {
         var skillInfo = PokemonSkillInfo.Instance.skills;
         for (var i = 0; i < 4; i++)

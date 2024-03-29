@@ -21,6 +21,8 @@ public class ShopDetail : SlideUI, CursorUI, SelectUIRedirec
     private TMP_Text[] stringObj_Txt;
     private TMP_Text[] stringObj_Num;
 
+    private GameDataManager data;
+
     private void Awake()
     {
         instance = this;
@@ -56,7 +58,7 @@ public class ShopDetail : SlideUI, CursorUI, SelectUIRedirec
         {
             var itmID = itmList[selectNum + page];
             var money = Money.instance.GetMoney();
-            var itmNum = Bag.instance.items.GetValueOrDefault(itmID, 0);
+            var itmNum = data.items.GetValueOrDefault(itmID, 0);
             var maxNum = Mathf.Min(money / info.info[itmID].price, 99 - itmNum);
             
             if (money < info.info[itmID].price)
@@ -103,7 +105,7 @@ public class ShopDetail : SlideUI, CursorUI, SelectUIRedirec
                 var itmNum = args[3];
                 var itmPrice = info.info[itmID].price;
 
-                bag.items[itmID] = bag.items.GetValueOrDefault(itmID, 0) + itmNum;
+                data.items[itmID] = data.items.GetValueOrDefault(itmID, 0) + itmNum;
                 money.SetMoney(money.GetMoney() - itmNum * itmPrice);
 
                 DialogManager.instance.Active(99037, null, DialogManager.Type.NORMAL); 
@@ -144,6 +146,8 @@ public class ShopDetail : SlideUI, CursorUI, SelectUIRedirec
         info = ItemInfo.instance;
         bag = Bag.instance;
         money = Money.instance;
+
+        data = GameDataManager.instance;
     }
 
     public void Active()

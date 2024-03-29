@@ -237,7 +237,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(0, new string[] { "안녕하세요2", "메세지창 테스트", "이곳은 포켓몬 세계\n많은 포켓몬들이 살고 있다." });
 
         //NPC1_엄마
-        msgDictionary.Add(1001, new string[] { "아 도희!\n옆집의 오박사님이 찾아왔었단다.", "뭔지 너에게\n부탁할 것이 있다고 하셔서", "연구소는 집 왼쪽에 있으니 어서 찾아가 보렴"});
+        msgDictionary.Add(1001, new string[] { "아 도희!\n옆집의 오박사님이 찾아왔었단다.", "뭔지 너에게\n부탁할 것이 있다고 하셔서", "연구소는 집 왼쪽에 있으니\n어서 찾아가 보렴"});
         msgDictionary.Add(1002, new string[] { "연구소는 집 왼쪽에 있단다." });
         msgDictionary.Add(1003, new string[] { "어머 귀여운 포켓몬이네\n여행 중 몸 조심 하렴" });
 
@@ -396,6 +396,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99035, new string[] { "정말 구매하시겠습니까?" });
         msgDictionary.Add(99036, new string[] { "죄송합니다. 돈이 부족합니다" });
         msgDictionary.Add(99037, new string[] { "감사합니다!" });
+        msgDictionary.Add(99038, new string[] { "현재 가지고 있는 포켓몬이 없습니다." });
 
         msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
     }

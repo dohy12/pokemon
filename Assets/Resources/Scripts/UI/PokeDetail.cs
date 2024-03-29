@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PokeDetail : SlideUI
+public class PokeDetail : MonoBehaviour
 {
     public static PokeDetail instance;
     private GlobalInput input;
@@ -27,6 +27,8 @@ public class PokeDetail : SlideUI
     private float inputStun = 0;
     private GameObject canvasObj;
 
+    private RectTransform rectT;
+
 
     private void Awake()
     {
@@ -36,27 +38,30 @@ public class PokeDetail : SlideUI
     void Start()
     {
         Init();
-        SlideUiInit();
     }
 
     void Update()
     {
-        SlideUiUpdate();
         InputCheck();
     }
 
     public void Active()
     {
-        SlideUiActive();
         UIManager.instance.ActiveUI(uiID);
-        ShowDetail();
+
+        canvasObj.SetActive(false);
+        Invoke("ShowDetail", 0.2f);
+        input.InputStun(0.2f);
+
+        rectT.anchoredPosition = Vector2.zero;
     }
 
     public void UnActive()
     {
         input.InputStun();
-        SlideUiUnActive();
         UIManager.instance.UnActiveUI(uiID);
+
+        rectT.anchoredPosition = new Vector2(-551f, 569f);
     }
 
     private void Init()
@@ -92,6 +97,8 @@ public class PokeDetail : SlideUI
         {
             pokeSkills[i] = pokeSkillsObj.GetChild(i);
         }
+
+        rectT = (RectTransform)transform;
     }
 
     private void InputCheck()

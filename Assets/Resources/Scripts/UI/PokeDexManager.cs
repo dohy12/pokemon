@@ -408,6 +408,8 @@ public class PokeDexManager : SlideUI, CursorUI
         if (pokeDex[pokeID] < 2)
         {
             pokeDex[pokeID] = 2;
+
+            ActiveDetail(pokeID);
         }            
     }
 }

@@ -6,17 +6,20 @@ public class GameDataManager : MonoBehaviour
 {
     public static GameDataManager instance;
     public List<Poke> pokeList;
+    public int money;
+    public Dictionary<int, int> items;
 
 
     private void Awake()
     {
         instance = this;
+        Init();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        
     }
 
     // Update is called once per frame
@@ -28,11 +31,24 @@ public class GameDataManager : MonoBehaviour
     void Init()
     {
         pokeList = new List<Poke>();
-        //pokeList.Add(new Poke(0, 5, new int[] { 1, 8, 4, 0 }));
+        
+        money = 10000;
+
+        items = new Dictionary<int, int>();
+        items[0] = 1;//Áöµµ
+        items[1] = 1;//³¬½Ë´ë
     }
 
     public void AddPokemon(int pokeID, int pokeLevel)
     {
-        pokeList.Add(new Poke(pokeID, pokeLevel, new int[] { 1, 8, 4, 0 }));
+        pokeList.Add(new Poke(pokeID, pokeLevel));
+
+        PokeDexManager.instance.CatchPoke(pokeID);        
     }
+
+    public bool HasPokemon()
+    {
+        return (pokeList.Count > 0);
+    }
+
 }
