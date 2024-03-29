@@ -56,7 +56,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         SlideUiUpdate();
         DialogUpdate();
 
-        if (isActive && input.aButtonDown && GetActive())
+        if (isActive && (input.aButtonDown || input.bButtonDown) && GetActive())
         {
             PushAButton();
         }
