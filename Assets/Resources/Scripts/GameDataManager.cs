@@ -19,7 +19,7 @@ public class GameDataManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("TestStart", 0.1f);
     }
 
     // Update is called once per frame
@@ -49,6 +49,11 @@ public class GameDataManager : MonoBehaviour
     public bool HasPokemon()
     {
         return (pokeList.Count > 0);
+    }
+
+    public void TestStart()
+    {
+        AddPokemon(Random.Range(0, 24), 12);
     }
 
 }

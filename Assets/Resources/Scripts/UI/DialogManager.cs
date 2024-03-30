@@ -28,6 +28,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
     private bool isQuest = false;
     private bool isCount = false;
+    private bool isEvent = true;
     private int[] dialogArgs;
 
     private GlobalInput input;
@@ -168,7 +169,27 @@ public class DialogManager : SlideUI, SelectUIRedirec
             isQuest = false;
             isCount = false;
         }
+        isEvent = true;
     }
+
+
+    public void Active(int msgId, params bool[] args)
+    {
+        SlideUiActive();
+        SetMsgById(msgId);
+
+        uiManager.ActiveUI(uiID);
+
+        isQuest = false;
+        isCount = false;
+        isEvent = true;
+        if (args.Length > 0)
+        {
+            isEvent = false;
+        }
+    }
+
+
 
     public void UnActive()
     {
@@ -178,7 +199,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
         input.InputStun();
 
-        if(!(isQuest || isCount))
+        if(!(isQuest || isCount) && isEvent)
             EventManager.instance.ActiveNextEvent(0.3f);
     }
 
@@ -351,6 +372,10 @@ public class DialogManager : SlideUI, SelectUIRedirec
         //npc33
         msgDictionary.Add(33001, new string[] { "피카피카!" });
 
+        //npc33
+        msgDictionary.Add(35001, new string[] { "npc 전투 테스트1" });
+        msgDictionary.Add(35002, new string[] { "npc 전투 테스트 종료" });
+
         //오브젝트들
         msgDictionary.Add(99001, new string[] { "피카츄인형이다!" });
         msgDictionary.Add(99002, new string[] { "푸린인형이다!" });
@@ -397,6 +422,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99036, new string[] { "죄송합니다. 돈이 부족합니다" });
         msgDictionary.Add(99037, new string[] { "감사합니다!" });
         msgDictionary.Add(99038, new string[] { "현재 가지고 있는 포켓몬이 없습니다." });
+        msgDictionary.Add(99039, new string[] { "트레이너와 배틀 중에는 도망칠 수 없어!" });
 
         msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
     }

@@ -100,6 +100,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         eventProgress.Add("Npc13Battle", 0);
         eventProgress.Add("Npc9Battle", 0);
         eventProgress.Add("Npc10Battle", 0);
+        eventProgress.Add("Npc35Battle", 0);
     }
 
     public void StartEvent(int eventID, params int[] args)
@@ -167,7 +168,7 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
                 }
 
                 AddEventDialog(3003);
-                AddEventFight(0);
+                AddEventFight(1);
                 AddEventDialog(3004);
                 AddEventMove(3, Unit.Direc.DOWN, 6);
                 AddEventDelete(true, 3);

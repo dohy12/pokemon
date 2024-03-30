@@ -6,7 +6,7 @@ public class Poke
 {
     private static int idGenerator = 0; 
     public int pokeID;//포켓몬 고유 아이디
-    public int id;
+    public int id;//포켓몬 종류 아이디
     public int[] stat; //체,공,방,특공,특방,스피드
     public int level;
     public int exp;
@@ -62,9 +62,13 @@ public class Poke
 
     public string ToString()
     {
-        return "(고유 아이디 : " + pokeID + ", 포켓몬 종류 : " + id + " , " + "[" + stat.ToString() + "]" + " , lv:" + level + " ,  hp:" + hp + ")";
+        return "(고유 아이디 : " + pokeID + ", 포켓몬 종류 : " + GetInfo().name + " , " + "[" + stat.ToString() + "]" + " , lv:" + level + " ,  hp:" + hp + ")";
     }
 
+    public PokemonInfo.Pokemon GetInfo()
+    {
+        return PokemonInfo.Instance.pokemons[id];
+    }
 
     
 }
