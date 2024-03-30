@@ -24,6 +24,16 @@ public class FightManager : MonoBehaviour
         
     }
 
+    void Active()
+    {
+
+    }
+
+    void UnActive()
+    {
+
+    }
+
 
     public void Fight(int fightID)
     {
