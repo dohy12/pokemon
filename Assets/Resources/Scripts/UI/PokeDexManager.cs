@@ -65,7 +65,7 @@ public class PokeDexManager : SlideUI, CursorUI
     {
         pokeDex = new Dictionary<int, int>();
         
-        for (var i = 0; i < 23; i++)
+        for (var i = 0; i < 25; i++)
         {
             pokeDex.Add(i, 0);
         }        
@@ -188,6 +188,8 @@ public class PokeDexManager : SlideUI, CursorUI
         pokeDexPage = pokeMonID;
 
         SetDetail();
+
+        DialogManager.instance.Active(99100, pokeMonID);
     }
 
     private void SetDetail()
@@ -410,6 +412,8 @@ public class PokeDexManager : SlideUI, CursorUI
             pokeDex[pokeID] = 2;
 
             ActiveDetail(pokeID);
+
+            
         }            
     }
 }

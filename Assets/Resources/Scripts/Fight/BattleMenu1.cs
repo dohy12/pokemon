@@ -52,7 +52,7 @@ public class BattleMenu1 : SlideUI, CursorUI
             case 3://µµ¡÷
                 if (fightManager.isTrainerBattle)
                 {
-                    DialogManager.instance.Active(99039, false);
+                    DialogManager.instance.Active(99039);
                 }
                 break;
         }

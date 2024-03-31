@@ -38,9 +38,8 @@ public class FightManager : MonoBehaviour
 
         imgStartPos = new Vector2[2];
         imgStartPos[0] = new Vector2(5.6f, 25.58f);
-        imgStartPos[1] = new Vector2(-3.906f, -4.625f);
+        imgStartPos[1] = new Vector2(-3.906f, 9.5f);
     }
-
 
     // Start is called before the first frame update
     void Start()

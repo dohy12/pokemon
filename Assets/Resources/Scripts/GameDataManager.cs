@@ -53,7 +53,7 @@ public class GameDataManager : MonoBehaviour
 
     public void TestStart()
     {
-        AddPokemon(Random.Range(0, 24), 12);
+        AddPokemon(3, 12);
     }
 
 }

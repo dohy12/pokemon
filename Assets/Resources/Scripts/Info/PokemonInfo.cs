@@ -201,4 +201,100 @@ public class PokemonInfo : MonoBehaviour
 
         return "";
     }
+
+    public static float GetTypeBattle(Type atkType, Type defType)
+    {
+        if (atkType == Type.NORMAL)
+        {
+            if (defType == Type.ROCK || defType == Type.STEEL)
+                return 0.5f;
+            if (defType == Type.GHOST)
+                return 0f;
+        }
+
+
+        if (atkType == Type.GRASS)
+        {
+            if (defType == Type.POISION || defType == Type.BUG || defType == Type.FLY || defType == Type.STEEL || defType == Type.FIRE || defType == Type.GRASS || defType == Type.DRAGON)
+                return 0.5f;
+            if (defType == Type.GROUND || defType == Type.ROCK || defType == Type.WATER)
+                return 2f;
+        }
+            
+
+        if (atkType == Type.FIRE)
+        {
+            if (defType == Type.ROCK || defType == Type.FIRE || defType == Type.WATER || defType == Type.DRAGON)
+                return 0.5f;
+            if (defType == Type.BUG || defType == Type.STEEL || defType == Type.GRASS || defType == Type.ICE)
+                return 2f;
+        }
+
+
+        if (atkType == Type.WATER)
+        {
+            if (defType == Type.WATER || defType == Type.GRASS || defType == Type.DRAGON)
+                return 0.5f;
+            if (defType == Type.GROUND || defType == Type.ROCK || defType == Type.FIRE)
+                return 2f;
+        }
+
+        if (atkType == Type.BUG)
+        {
+            if (defType == Type.FIGHT || defType == Type.POISION || defType == Type.FLY || defType == Type.GHOST || defType == Type.STEEL || defType == Type.FIRE || defType == Type.FAIRY)
+                return 0.5f;
+            if (defType == Type.GRASS || defType == Type.PSY || defType == Type.DARK)
+                return 2f;
+        }
+
+        if (atkType == Type.ELEC)
+        {
+            if (defType == Type.ELEC || defType == Type.GRASS || defType == Type.DRAGON)
+                return 0.5f;
+            if (defType == Type.FLY || defType == Type.WATER)
+                return 2f;
+            if (defType == Type.GROUND)
+                return 0f;
+        }
+
+        if (atkType == Type.GROUND)
+        {
+            if (defType == Type.BUG || defType == Type.GRASS)
+                return 0.5f;
+            if (defType == Type.POISION || defType == Type.ROCK || defType == Type.STEEL || defType == Type.FIRE || defType == Type.ELEC)
+                return 2f;
+            if (defType == Type.FLY)
+                return 0f;
+        }
+
+        if (atkType == Type.PSY)
+        {
+            if (defType == Type.STEEL || defType == Type.PSY)
+                return 0.5f;
+            if (defType == Type.POISION || defType == Type.FIGHT)
+                return 2f;
+            if (defType == Type.DARK)
+                return 0f;
+        }
+
+        if(atkType == Type.POISION)
+        {
+            if (defType == Type.POISION || defType == Type.GROUND || defType == Type.ROCK || defType == Type.GHOST)
+                return 0.5f;
+            if (defType == Type.GRASS || defType == Type.FAIRY)
+                return 2f;
+            if (defType == Type.STEEL)
+                return 0f;
+        }
+
+        if (atkType == Type.FLY)
+        {
+            if (defType == Type.ROCK || defType == Type.STEEL || defType == Type.ELEC)
+                return 0.5f;
+            if (defType == Type.GRASS || defType == Type.FIGHT || defType == Type.BUG)
+                return 2f;
+        }
+
+        return 1.0f;
+    }
 }

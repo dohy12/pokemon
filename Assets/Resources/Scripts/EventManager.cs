@@ -615,9 +615,8 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
 
     private void GetItem()
     {
-        Debug.Log("test");
         DialogObject dialogObject = eventObj.GetComponent<DialogObject>();
-        if (dialogObject.objKind == 1) //포켓몬
+        /*if (dialogObject.objKind == 1) //포켓몬
         {
             AddEventDialog(99023);
         }
@@ -625,6 +624,8 @@ public class EventManager : MonoBehaviour, SelectUIRedirec
         {
             AddEventDialog(99024);
         }
+        */
+
 
         Destroy(eventObj);
     }

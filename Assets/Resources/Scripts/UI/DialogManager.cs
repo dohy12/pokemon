@@ -37,6 +37,8 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
     private SelectUIRedirec redirec;
 
+    private int replaceIndex = 0;
+
     private void Awake()
     {
         instance = this;
@@ -170,11 +172,15 @@ public class DialogManager : SlideUI, SelectUIRedirec
             isCount = false;
         }
         isEvent = true;
+        replaceIndex = 0;
     }
 
 
-    public void Active(int msgId, params bool[] args)
+    public void Active(int msgId, params int[] args)
     {
+        this.dialogArgs = args;
+        replaceIndex = 0;
+
         SlideUiActive();
         SetMsgById(msgId);
 
@@ -182,11 +188,9 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
         isQuest = false;
         isCount = false;
-        isEvent = true;
-        if (args.Length > 0)
-        {
-            isEvent = false;
-        }
+        isEvent = false;     
+        
+        
     }
 
 
@@ -214,7 +218,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
     private void SetMsg()
     {
         ShowMsg("");
-        dialogMsg = msgDictionary[dialogMsgId][dialogMsgPage];
+        dialogMsg = ReplaceMsg(msgDictionary[dialogMsgId][dialogMsgPage]);
         dialogMsgCheck = 0f;
         dialogPreMsgCheck = 0;
         dialogMsgDone = false;
@@ -222,8 +226,41 @@ public class DialogManager : SlideUI, SelectUIRedirec
         dialogStun = 0.1f;
     }
 
-    private void ShowMsg(string msg)
+    private string ReplaceMsg(string msg)
     {
+        while (true)
+        {
+        
+            var tmpIndex = msg.IndexOf("{");
+            if (tmpIndex == -1) break;
+
+            var replaceArg = dialogArgs[replaceIndex++];
+
+            string replaceStr = null;
+            switch (msg.Substring(tmpIndex + 1, 4))
+            {
+                case "poke":
+                    replaceStr = PokemonInfo.Instance.pokemons[replaceArg].name;
+                    
+                    msg = msg.Replace("{poke}", replaceStr);
+                    break;
+
+                case "item":
+                    break;
+
+                case "move":
+                    replaceStr = PokemonSkillInfo.Instance.skills[replaceArg].name;
+
+                    msg = msg.Replace("{move}", replaceStr);
+                    break;
+            }            
+        }
+        return msg;
+    }
+
+
+    private void ShowMsg(string msg)
+    {      
         textMesh.text = msg;
     }
 
@@ -424,6 +461,15 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99038, new string[] { "현재 가지고 있는 포켓몬이 없습니다." });
         msgDictionary.Add(99039, new string[] { "트레이너와 배틀 중에는 도망칠 수 없어!" });
 
+        msgDictionary.Add(99100, new string[] { "{poke}의 정보가 도감에 등록 되었습니다." });
+
+        msgDictionary.Add(99101, new string[] { "{poke}의 {move}!!" });
+
+        msgDictionary.Add(99102, new string[] { "효과가 굉장했다!!" });
+        msgDictionary.Add(99103, new string[] { "효과가 별로인듯 하다...." }); 
+        msgDictionary.Add(99104, new string[] { "그러나 효과가 없었다...." });
+
+
         msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
     }
 
@@ -465,6 +511,13 @@ public class DialogManager : SlideUI, SelectUIRedirec
         NORMAL,
         QUEST,
         COUNT
+    }
+
+    public enum Replace
+    {
+        POKE,
+        MOVE,
+        ITEM
     }
 
     public bool GetActive() { return UIManager.instance.CheckUITYPE(uiID); }

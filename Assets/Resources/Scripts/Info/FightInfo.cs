@@ -28,7 +28,7 @@ public class FightInfo : MonoBehaviour
     void Init()
     {
         infos = new Dictionary<int, Info>();
-        infos.Add(1, new Info(1, 15,10)); //[15]구구 10레벨
+        infos.Add(1, new Info(1, 2,10)); //[2]이상해꽃 10레벨
     }
 
 

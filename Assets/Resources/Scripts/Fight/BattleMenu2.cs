@@ -19,6 +19,7 @@ public class BattleMenu2 : SlideUI, CursorUI
     private Image[] elements;
 
     private FightManager fightManager;
+    private FightQueueManager fightQManager;
 
     public void CursorChange(int pageTmp)
     {
@@ -39,7 +40,13 @@ public class BattleMenu2 : SlideUI, CursorUI
 
     public void CursorChoose(int selectNum)
     {
-        
+        var eventType = FightQueueManager.BTEventType.USESKILL;
+        var poke = fightManager.pokes[0];
+        var move = poke.skills[selectNum];
+
+        Debug.Log(poke.GetInfo().name + "ÀÇ " + PokemonSkillInfo.Instance.skills[move].name);
+        fightQManager.Active(eventType, move);
+        UnActive();
     }
 
     public void CursorInit(Cursor cursor)
@@ -89,6 +96,7 @@ public class BattleMenu2 : SlideUI, CursorUI
         }
 
         fightManager = FightManager.instance;
+        fightQManager = FightQueueManager.instance;
     }
 
     public void Active()
@@ -105,7 +113,6 @@ public class BattleMenu2 : SlideUI, CursorUI
     {
         input.InputStun(0.2f);
         SlideUiUnActive();
-        Invoke("ActiveMenu1", 0.2f);
     }
 
     public void ActiveMenu1()
@@ -129,7 +136,8 @@ public class BattleMenu2 : SlideUI, CursorUI
     {
         if (input.bButtonDown)
         {
-            UnActive ();
+            UnActive();
+            Invoke("ActiveMenu1", 0.2f);
         }
     }
 
