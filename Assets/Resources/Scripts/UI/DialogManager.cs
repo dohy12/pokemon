@@ -28,7 +28,7 @@ public class DialogManager : SlideUI, SelectUIRedirec
 
     private bool isQuest = false;
     private bool isCount = false;
-    private bool isEvent = true;
+    public bool isEvent = true;
     private int[] dialogArgs;
 
     private GlobalInput input;

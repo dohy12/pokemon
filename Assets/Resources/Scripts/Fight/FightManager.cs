@@ -18,7 +18,20 @@ public class FightManager : MonoBehaviour
 
     private Vector2[] imgStartPos;
 
+    
     public bool isTrainerBattle;
+
+    private int hpTarget = -1;
+    private float prevHp;
+    private float hpDelta;
+    private RectTransform targetHpBar;
+    private TMP_Text targetHpText;
+    private float hpbarMaxWidth = 0;
+    private float hpbarHeight = 0;
+
+    private bool isActive;
+    public bool isWaitTime = true;
+    private float waitTimeCh = 0f;
 
     private void Awake()
     {
@@ -50,7 +63,12 @@ public class FightManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(isActive)
+        {
+            HpUpdate();
+            WaitTimeUpdate();
+        }
+        
     }
 
     public void Active(Poke myPoke, PokeANDLevel[] enemyPokes, bool isTrainerBattle)
@@ -70,11 +88,13 @@ public class FightManager : MonoBehaviour
         SetScreen();
 
         BattleMenu1.instance.Active();
+
+        isActive = true;
     }
 
     void UnActive()
     {
-        
+        isActive = false;
     }
 
     void SetScreen()
@@ -105,6 +125,77 @@ public class FightManager : MonoBehaviour
             enemyPokes = new PokeANDLevel[1] {new PokeANDLevel(args[0], args[1]) };
         }
         Active(myPoke, enemyPokes, (fightID != -1));
+
+    }
+
+    private void HpUpdate()
+    {
+        if (hpTarget != -1)
+        {
+            if (prevHp > pokes[hpTarget].hp)
+            {
+                prevHp -= Time.deltaTime * hpDelta;                 
+            }
+            else
+            {
+                prevHp = pokes[hpTarget].hp;
+            }
+
+            var hpbarWidth = hpbarMaxWidth * prevHp/ pokes[hpTarget].stat[0];
+
+            targetHpBar.sizeDelta = new Vector2 (hpbarWidth, hpbarHeight);
+            targetHpText.text = (int)prevHp + " / " + pokes[hpTarget].stat[0];
+
+            if (prevHp == pokes[hpTarget].hp)
+            {
+                hpTarget = -1;
+            }
+        }
+    }
+
+    private void WaitTimeUpdate()
+    {
+        if (isWaitTime)
+        {
+            waitTimeCh += Time.deltaTime * 10f;
+
+            var yy = Mathf.Sin(waitTimeCh) * 3f;
+
+            if (waitTimeCh > 2* Mathf.PI)
+            {
+                waitTimeCh = 0;
+            }
+
+            var tmpRect = (RectTransform)pokeSpritess[0].transform;
+            tmpRect.anchoredPosition = new Vector2(imgStartPos[0].x, imgStartPos[0].y + yy - 3f);
+
+        }
+    }
+
+    public void HpEvent(int target, int damage)
+    {
+        var tmp = pokes[target].hp;
+        pokes[target].hp -= damage;
+        if (pokes[target].hp < 0) { pokes[target].hp = 0; }
+
+        prevHp = tmp;
+        hpDelta = prevHp - pokes[target].hp;
+        hpTarget = target;
+
+        if (hpTarget == 0)
+        {
+            hpbarMaxWidth = 185.54f;
+            hpbarHeight = 11.597f;
+            targetHpBar = (RectTransform)transform.Find("Status").Find("Hpbar");
+            targetHpText = transform.Find("Status").Find("HpText").GetComponent<TMP_Text>();
+        }
+        if (hpTarget == 1)
+        {
+            hpbarMaxWidth = 188.088f;
+            hpbarHeight = 11.8f;
+            targetHpBar = (RectTransform)transform.Find("Status2").Find("Hpbar");
+            targetHpText = transform.Find("Status2").Find("HpText").GetComponent<TMP_Text>();
+        }
 
     }
 

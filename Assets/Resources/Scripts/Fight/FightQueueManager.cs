@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static PokemonInfo;
+using static UnityEngine.GraphicsBuffer;
 
 public class FightQueueManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class FightQueueManager : MonoBehaviour
 
     private bool isEvent = false;
     private int nextDialogID;
+    
 
     private void Awake()
     {
@@ -43,17 +45,22 @@ public class FightQueueManager : MonoBehaviour
         
         if (eventCh <= 0)
         {
+            
             if (battleEvents.Count == 0)
             {
                 if (isEvent)
                 {
                     dialog.UnActive();
                     isEvent = false;
+                    fight.isWaitTime = true;
                     BattleMenu1.instance.Active();
                 }
-
                 return;
             }
+
+            fight.isWaitTime = false;
+            dialog.isEvent = false;
+            dialog.UnActive();
             var ev = battleEvents[0];
             eventCh = 1f;
             battleEvents.RemoveAt(0);
@@ -72,6 +79,7 @@ public class FightQueueManager : MonoBehaviour
             else if (ev.evType == BTEventType.HITSKILL)
             {
                 Debug.Log("hit");
+                var target = ev.target;
                 var moveID = ev.args[0];
                 var move = PokemonSkillInfo.Instance.skills[moveID];
                 int other = Mathf.Abs(ev.target - 1);
@@ -93,10 +101,7 @@ public class FightQueueManager : MonoBehaviour
                 {
                     damage = (int)(((((((poke.level * 2 / 5) + 2) * move.damge * poke.stat[3] / 50) / otherPoke.stat[4])) + 2) * Random.Range(90, 100) / 100 * sameType * weekType1 * weekType2);
                 }
-                Debug.Log("dmg : " + damage);
-                Debug.Log(weekType1 * weekType2);
-                Debug.Log(PokemonInfo.TypeToString(move.type) + "," + PokemonInfo.TypeToString(otherPoke.GetInfo().type1));
-                Debug.Log(PokemonInfo.TypeToString(move.type) + "," + PokemonInfo.TypeToString(otherPoke.GetInfo().type2));
+
                 if (weekType1 * weekType2 != 1f)
                 {
                     if (weekType1 * weekType2 > 1f)
@@ -121,11 +126,23 @@ public class FightQueueManager : MonoBehaviour
                         battleEvents.Insert(0, nextEv);
                     }
                 }
+                
+                if (damage > 0)
+                {
+                    battleEvents.Insert(0, new BattleEvent(BTEventType.HP, target, damage));
+                }
+                
             }
             else if (ev.evType == BTEventType.DIALOG)
             {
                 var dialogID = ev.args[0];
                 dialog.Active(dialogID);
+            }
+            else if (ev.evType == BTEventType.HP)
+            {
+                var target = ev.target;
+                var damage = ev.args[0];
+                fight.HpEvent(target, damage);
             }
         }
     }
@@ -200,6 +217,7 @@ public class FightQueueManager : MonoBehaviour
         SUMMON,
         USESKILL,
         HITSKILL,
+        HP,
         BUFF,
         CHANGE,
         USEITEM,
