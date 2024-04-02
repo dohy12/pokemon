@@ -33,6 +33,10 @@ public class FightManager : MonoBehaviour
     public bool isWaitTime = true;
     private float waitTimeCh = 0f;
 
+    private int statusHitTarget = 0;
+    private bool isStatushit = false;
+    private float statusHitCh = 0f;
+
     private void Awake()
     {
         instance = this;
@@ -67,6 +71,7 @@ public class FightManager : MonoBehaviour
         {
             HpUpdate();
             WaitTimeUpdate();
+            StatusHitUpdate();
         }
         
     }
@@ -172,6 +177,8 @@ public class FightManager : MonoBehaviour
         }
     }
 
+    
+
     public void HpEvent(int target, int damage)
     {
         var tmp = pokes[target].hp;
@@ -199,6 +206,47 @@ public class FightManager : MonoBehaviour
 
     }
 
+    private void StatusHitUpdate()
+    {
+        if (isStatushit)
+        {
+            statusHitCh += Time.deltaTime * 4* Mathf.PI * 3;
+            var yy = Mathf.Sin(statusHitCh) * 10;
+
+            if (statusHitCh >= 4 * Mathf.PI)
+            {
+                statusHitCh = 0;
+                isStatushit = false;
+                yy = 0f;
+            }           
+
+            RectTransform rectT;
+            if (statusHitTarget == 0)
+            {
+                rectT = (RectTransform)statuses[0].obj;
+                rectT.anchoredPosition = new Vector2(-240f, -213f + yy);
+            }
+            else
+            {
+                rectT = (RectTransform)statuses[1].obj;
+                rectT.anchoredPosition = new Vector2(-161f, 174f + yy);
+            }
+
+            var alphaCh = Mathf.Cos(statusHitCh * 2);
+            float alpha;
+            if (alphaCh > 0) { alpha = 1.0f; }
+            else { alpha = 0f; }
+
+            pokeSpritess[statusHitTarget].color = new Color(1, 1, 1, alpha);
+        }
+    }
+
+    public void StatusHitActive(int target)
+    {
+        isStatushit = true;
+        statusHitTarget = target;
+    }
+
     public class PokeANDLevel
     {
         public int level;
@@ -218,7 +266,7 @@ public class FightManager : MonoBehaviour
 
     public class Status
     {
-        private Transform obj;
+        public Transform obj;
         private TMP_Text name;
         private TMP_Text level;
         private TMP_Text hpText;

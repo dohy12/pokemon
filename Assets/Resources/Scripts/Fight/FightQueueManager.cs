@@ -143,6 +143,7 @@ public class FightQueueManager : MonoBehaviour
                 var target = ev.target;
                 var damage = ev.args[0];
                 fight.HpEvent(target, damage);
+                fight.StatusHitActive(target);
             }
         }
     }
