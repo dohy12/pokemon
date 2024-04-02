@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
@@ -13,10 +14,10 @@ public class FightManager : MonoBehaviour
     private Queue<Poke> enemyPokeQueue;
     public Poke[] pokes;
 
-    private Image[] pokeSpritess;
+    public Image[] pokeSprites;
     private Status[] statuses;
 
-    private Vector2[] imgStartPos;
+    public Vector2[] imgStartPos;
 
     
     public bool isTrainerBattle;
@@ -37,6 +38,9 @@ public class FightManager : MonoBehaviour
     private bool isStatushit = false;
     private float statusHitCh = 0f;
 
+    private bool isPokeHit = false;
+    private float pokeHitCh = 0f;
+
     private void Awake()
     {
         instance = this;
@@ -47,9 +51,9 @@ public class FightManager : MonoBehaviour
         statuses[0] = new Status(transform.Find("Status"));
         statuses[1] = new Status(transform.Find("Status2"));
 
-        pokeSpritess = new Image[2];
-        pokeSpritess[0] = transform.Find("Image").GetChild(0).GetComponent<Image>();
-        pokeSpritess[1] = transform.Find("Image2").GetChild(0).GetComponent<Image>();
+        pokeSprites = new Image[2];
+        pokeSprites[0] = transform.Find("Image").GetChild(0).GetComponent<Image>();
+        pokeSprites[1] = transform.Find("Image2").GetChild(0).GetComponent<Image>();
 
         rectT = (RectTransform)transform;
 
@@ -72,6 +76,7 @@ public class FightManager : MonoBehaviour
             HpUpdate();
             WaitTimeUpdate();
             StatusHitUpdate();
+            PokeHitUpdate();
         }
         
     }
@@ -109,8 +114,8 @@ public class FightManager : MonoBehaviour
             statuses[i].SetStatus(pokes[i]);
         }
 
-        SetImage(pokeSpritess[0], PokeSpr.instance.backSprites[pokes[0].id], imgStartPos[0]);
-        SetImage(pokeSpritess[1], PokeSpr.instance.sprites[pokes[1].id + 1], imgStartPos[1]);
+        SetImage(pokeSprites[0], PokeSpr.instance.backSprites[pokes[0].id], imgStartPos[0]);
+        SetImage(pokeSprites[1], PokeSpr.instance.sprites[pokes[1].id + 1], imgStartPos[1]);
     }
 
 
@@ -171,7 +176,7 @@ public class FightManager : MonoBehaviour
                 waitTimeCh = 0;
             }
 
-            var tmpRect = (RectTransform)pokeSpritess[0].transform;
+            var tmpRect = (RectTransform)pokeSprites[0].transform;
             tmpRect.anchoredPosition = new Vector2(imgStartPos[0].x, imgStartPos[0].y + yy - 3f);
 
         }
@@ -237,14 +242,55 @@ public class FightManager : MonoBehaviour
             if (alphaCh > 0) { alpha = 1.0f; }
             else { alpha = 0f; }
 
-            pokeSpritess[statusHitTarget].color = new Color(1, 1, 1, alpha);
+            pokeSprites[statusHitTarget].color = new Color(1, 1, 1, alpha);
+
+            
         }
+    }
+
+
+    private void PokeHitUpdate()
+    {
+        if (isPokeHit)
+        {
+            if (pokeHitCh < 0.3f)
+            {
+                pokeHitCh += Time.deltaTime * 2;
+
+                var rectT = (RectTransform)pokeSprites[statusHitTarget].transform;
+
+                var xx = 0f;
+
+                if (pokeHitCh < 0.1f)
+                {
+                    xx = (-4000 * pokeHitCh * pokeHitCh + 800 * pokeHitCh);
+                }
+                else
+                {
+                    xx = (-200 * pokeHitCh + 60);
+                }
+
+                if (pokeHitCh >= 0.3f) xx = 0f;
+
+                if (statusHitTarget == 0) xx *= -1;
+                rectT.anchoredPosition = new Vector2(imgStartPos[statusHitTarget].x + xx, imgStartPos[statusHitTarget].y);
+            }
+            else
+            {
+                isPokeHit = false;
+                pokeHitCh = 0f;
+            }               
+
+        }
+            
     }
 
     public void StatusHitActive(int target)
     {
         isStatushit = true;
         statusHitTarget = target;
+
+        isPokeHit = true;
     }
 
     public class PokeANDLevel

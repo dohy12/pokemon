@@ -468,9 +468,12 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99102, new string[] { "효과가 굉장했다!!" });
         msgDictionary.Add(99103, new string[] { "효과가 별로인듯 하다...." }); 
         msgDictionary.Add(99104, new string[] { "그러나 효과가 없었다...." });
-
+        msgDictionary.Add(99105, new string[] { "{poke}가 쓰러졌다." });
+        msgDictionary.Add(99106, new string[] { "{poke}는 {INT.}의 경험치를 획득했다." });
 
         msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
+
+
     }
 
     public void OnSelectRedirec(int num, params int[] args)
@@ -517,7 +520,8 @@ public class DialogManager : SlideUI, SelectUIRedirec
     {
         POKE,
         MOVE,
-        ITEM
+        ITEM,
+        INT
     }
 
     public bool GetActive() { return UIManager.instance.CheckUITYPE(uiID); }

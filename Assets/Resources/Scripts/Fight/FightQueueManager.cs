@@ -9,8 +9,9 @@ public class FightQueueManager : MonoBehaviour
     public static FightQueueManager instance;
     public List<BattleEvent> battleEvents;
     private FightManager fight;
+    private BattleSpriteManager effManager;
 
-    private float eventCh = 0;
+    public float eventCh = 0;
     private GlobalInput input;
     private DialogManager dialog;
 
@@ -30,6 +31,8 @@ public class FightQueueManager : MonoBehaviour
         fight = FightManager.instance;
         input = GlobalInput.globalInput;
         dialog = DialogManager.instance;
+
+        effManager = BattleSpriteManager.instance;
     }
 
     // Update is called once per frame
@@ -68,8 +71,14 @@ public class FightQueueManager : MonoBehaviour
 
             if (ev.evType == BTEventType.USESKILL)
             {
+                var poke = fight.pokes[ev.target];
+                if (poke.hp == 0)
+                {
+                    return;
+                }
+
                 var moveID = ev.args[0];
-                var pokemonID = fight.pokes[ev.target].id;                
+                var pokemonID = poke.id;                
                 dialog.Active(99101, pokemonID, moveID);
                 int other = Mathf.Abs(ev.target - 1);
                 var nextEv = new BattleEvent(BTEventType.HITSKILL, other, moveID);
@@ -129,9 +138,10 @@ public class FightQueueManager : MonoBehaviour
                 
                 if (damage > 0)
                 {
-                    battleEvents.Insert(0, new BattleEvent(BTEventType.HP, target, damage));
+                    battleEvents.Insert(0, new BattleEvent(BTEventType.HP, target, damage)); //hp±ïÀÌ´Â ¸ð¼Ç
                 }
-                
+
+                effManager.Active(target, moveID);
             }
             else if (ev.evType == BTEventType.DIALOG)
             {
@@ -144,6 +154,22 @@ public class FightQueueManager : MonoBehaviour
                 var damage = ev.args[0];
                 fight.HpEvent(target, damage);
                 fight.StatusHitActive(target);
+
+                var poke = fight.pokes[target];
+                if (poke.hp == 0)
+                {
+                    battleEvents.Insert(0, new BattleEvent(BTEventType.DIE, target));
+                }
+            }
+            else if (ev.evType == BTEventType.DIE)
+            {
+                var poke = fight.pokes[ev.target];
+                dialog.Active(99105, poke.id);
+                battleEvents.Insert(0, new BattleEvent(BTEventType.CHECKNEXTPOKEMON, ev.target));
+            }
+            else if(ev.evType == BTEventType.CHECKNEXTPOKEMON)
+            {
+
             }
         }
     }
@@ -223,7 +249,9 @@ public class FightQueueManager : MonoBehaviour
         CHANGE,
         USEITEM,
         RUN,
-        DIALOG
+        DIALOG,
+        DIE,
+        CHECKNEXTPOKEMON
     }
 
 

@@ -53,7 +53,7 @@ public class GameDataManager : MonoBehaviour
 
     public void TestStart()
     {
-        AddPokemon(3, 12);
+        AddPokemon(0, 5);
     }
 
 }
