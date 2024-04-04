@@ -61,8 +61,6 @@ public class BattleSpriteManager : MonoBehaviour
 
             FightQueueManager.instance.eventCh = 0.1f;
             GlobalInput.globalInput.InputStun(0.2f);
-
-
         }
     }
 

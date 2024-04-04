@@ -113,6 +113,7 @@ public class BattleMenu2 : SlideUI, CursorUI
     {
         input.InputStun(0.2f);
         SlideUiUnActive();
+        UIManager.instance.UnActiveUI(uiID);
     }
 
     public void ActiveMenu1()

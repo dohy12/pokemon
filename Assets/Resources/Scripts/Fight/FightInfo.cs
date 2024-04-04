@@ -28,19 +28,19 @@ public class FightInfo : MonoBehaviour
     void Init()
     {
         infos = new Dictionary<int, Info>();
-        infos.Add(1, new Info(1, 3, 5)); //[0]이상해씨 5레벨
+        infos.Add(1, new Info(1, 15, 2, 9, 3)); //[0]이상해씨 5레벨
     }
 
 
     public class Info
     {
-        public int npcSpr;
+        public int fightID;
         public FightManager.PokeANDLevel[] npcPokes;
 
 
-        public Info(int npcSpr, params int[] args)
+        public Info(int fightID, params int[] args)
         {
-            this.npcSpr = npcSpr;
+            this.fightID = fightID;
 
             npcPokes = new FightManager.PokeANDLevel[args.Length/2];
             for (int i = 0; i < args.Length; i+=2) 

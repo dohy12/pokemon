@@ -471,6 +471,9 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99105, new string[] { "{poke}가 쓰러졌다." });
         msgDictionary.Add(99106, new string[] { "{poke}는 {INT.}의 경험치를 획득했다." });
 
+        msgDictionary.Add(99107, new string[] { "전투에서 승리하였습니다." });
+        msgDictionary.Add(99108, new string[] { "전투에서 패배하였습니다." });
+
         msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
 
 

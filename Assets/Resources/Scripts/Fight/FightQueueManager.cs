@@ -38,7 +38,11 @@ public class FightQueueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EventUpdate();
+        if (fight.isActive)
+        {
+            EventUpdate();
+        }
+        
     }
 
     private void EventUpdate()
@@ -74,6 +78,7 @@ public class FightQueueManager : MonoBehaviour
                 var poke = fight.pokes[ev.target];
                 if (poke.hp == 0)
                 {
+                    eventCh = 0.01f;
                     return;
                 }
 
@@ -166,10 +171,58 @@ public class FightQueueManager : MonoBehaviour
                 var poke = fight.pokes[ev.target];
                 dialog.Active(99105, poke.id);
                 battleEvents.Insert(0, new BattleEvent(BTEventType.CHECKNEXTPOKEMON, ev.target));
+                fight.Die(ev.target);
+
+                //행동 취소
+                for (var i = 0;i<battleEvents.Count; i++)
+                {
+                    if (battleEvents[i].evType == BTEventType.USESKILL)
+                    {
+                        battleEvents.RemoveAt(i);
+                    }
+                }
             }
             else if(ev.evType == BTEventType.CHECKNEXTPOKEMON)
             {
+                if (fight.hasNextPokemon(ev.target))
+                {
+                    if (ev.target == 0)
+                    {
 
+                    }
+                    else
+                    {
+                        battleEvents.Insert(0, new BattleEvent(BTEventType.ENEMYNEXTPOKEMON, ev.target));
+                    }
+                }
+                else
+                {
+                    if (ev.target == 0)
+                    {
+                        battleEvents.Insert(0, new BattleEvent(BTEventType.LOSE, ev.target));
+                        dialog.Active(99108);
+                    }
+                    else
+                    {
+                        battleEvents.Insert(0, new BattleEvent(BTEventType.WIN, ev.target));
+                        dialog.Active(99107);
+                    }
+                }
+            }
+            else if(ev.evType == BTEventType.LOSE)
+            {
+                fight.UnActive();
+                isEvent = false;
+            }
+            else if (ev.evType == BTEventType.WIN)
+            {
+                fight.UnActive();
+                isEvent = false;
+            }
+            else if (ev.evType == BTEventType.ENEMYNEXTPOKEMON)
+            {
+                var idx = ++fight.enePokeIndex;
+                fight.ChangePoke(ev.target, fight.enemyPokeList[idx]);
             }
         }
     }
@@ -251,7 +304,10 @@ public class FightQueueManager : MonoBehaviour
         RUN,
         DIALOG,
         DIE,
-        CHECKNEXTPOKEMON
+        CHECKNEXTPOKEMON,
+        ENEMYNEXTPOKEMON,
+        WIN,
+        LOSE
     }
 
 
