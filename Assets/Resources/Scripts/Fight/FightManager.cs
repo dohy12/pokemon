@@ -6,6 +6,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class FightManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class FightManager : MonoBehaviour
     public Poke[] pokes;
 
     public Image[] pokeSprites;
+    public Image[] pokeEffs;
+    public Image[] trainerSprites;
+    public Image[] pokeballSprites;
     private Status[] statuses;
 
     public Vector2[] imgStartPos;
@@ -54,6 +58,13 @@ public class FightManager : MonoBehaviour
     Transform[] screenSwitchTransform;
     int[] screenSwitchIdx;
 
+    private bool isSummon = false;
+    private float summonCh = 0f;
+    private int summonTarget = 0;
+
+    private bool isTrainerOut = false;
+    private float trainerOutCh = 0f;
+
     private void Awake()
     {
         instance = this;
@@ -68,6 +79,10 @@ public class FightManager : MonoBehaviour
         pokeSprites[0] = transform.Find("Image").Find("Pokemon").GetComponent<Image>();
         pokeSprites[1] = transform.Find("Image2").Find("Pokemon").GetComponent<Image>();
 
+        pokeEffs = new Image[2];
+        pokeEffs[0] = pokeSprites[0].transform.GetChild(0).GetComponent<Image>();
+        pokeEffs[1] = pokeSprites[1].transform.GetChild(0).GetComponent<Image>();
+
         rectT = (RectTransform)transform;
 
         imgStartPos = new Vector2[2];
@@ -76,8 +91,16 @@ public class FightManager : MonoBehaviour
 
         battleScreenSwitch = transform.parent.Find("BattleScreenSwitch").gameObject;
         screenSwitchTransform = new Transform[6];
-        
-        for(var i = 0; i < 6; i++)
+
+        trainerSprites = new Image[2];
+        trainerSprites[0] = transform.Find("Trainer").GetComponent<Image>();
+        trainerSprites[1] = transform.Find("Trainer2").GetComponent<Image>();
+
+        pokeballSprites = new Image[2];
+        pokeballSprites[0] = transform.Find("Pokeball1").GetComponent<Image>();
+        pokeballSprites[1] = transform.Find("Pokeball2").GetComponent<Image>();
+
+        for (var i = 0; i < 6; i++)
         {
             screenSwitchTransform[i] = battleScreenSwitch.transform.GetChild(i);
         }
@@ -101,8 +124,99 @@ public class FightManager : MonoBehaviour
             StatusHitUpdate();
             PokeHitUpdate();
             DieUpdate();
+            SummonUpdate();
+            TrainerOutUpdate();
         }
         ScreenSwitchUpdate();
+    }
+
+    private void FightInit()
+    {
+        //포켓몬, 트레이너 모두 비활성화
+        for (var i=0; i < 2; i++)
+        {
+            pokeSprites[i].enabled = false;
+            trainerSprites[i].enabled = false;
+            pokeballSprites[i].enabled = false;
+
+            pokeEffs[i].enabled = false;
+
+            statuses[i].obj.gameObject.SetActive(false);
+        }
+
+        //내 트레이너 활성화
+        trainerSprites[0].enabled = true;
+        trainerSprites[0].sprite = PokeSpr.instance.trainers[0];
+
+        //isTrainer일경우 트레이너, 아닐경우 포켓몬 활성화
+        if (isTrainerBattle)
+        {
+            trainerSprites[1].enabled = true;
+        }
+        else
+        {
+            pokeSprites[1].enabled = true;
+        }
+
+        FightQueueManager q = FightQueueManager.instance;
+        q.battleEvents.Clear();
+
+        q.BattleInit();
+        
+    }
+
+    public void Summon(int target)
+    {
+        isSummon = true;
+        summonCh = 0f;
+
+        summonTarget = target;
+
+        pokeballSprites[target].sprite = FightInfo.instance.pokeballs[0];
+        pokeballSprites[target].enabled = true;
+    }
+
+    private void SummonUpdate()
+    {
+        if (isSummon)
+        {
+            summonCh += Time.deltaTime;
+
+            if (summonCh < 0.3f)
+            {
+                var timeTmp = summonCh;
+                RectTransform rt = (RectTransform)pokeballSprites[summonTarget].transform;
+                rt.localScale = new Vector3(1+ timeTmp, 1 - timeTmp, 1);
+            }
+            else if (summonCh < 0.5f)
+            {
+                var timeTmp = summonCh - 0.3f;
+                pokeballSprites[summonTarget].sprite = FightInfo.instance.pokeballs[1];
+
+                RectTransform rt = (RectTransform)pokeballSprites[summonTarget].transform;
+                rt.localScale = new Vector3(1, 1.2f - timeTmp, 1f);
+            }
+            else if (summonCh <0.7f)
+            {
+                var timeTmp = (summonCh - 0.5f)*5;
+
+                pokeballSprites[summonTarget].enabled = false;
+                pokeSprites[summonTarget].enabled = true;
+                pokeEffs[summonTarget].enabled = true;
+
+                RectTransform rt = (RectTransform)pokeSprites[summonTarget].transform;
+                rt.localScale = new Vector3(timeTmp + 0.1f, timeTmp + 0.1f, 1f);
+                statuses[summonTarget].obj.gameObject.SetActive(true);
+            }
+            else
+            {
+                isSummon = false;
+                pokeEffs[summonTarget].enabled = false;
+
+                RectTransform rt = (RectTransform)pokeSprites[summonTarget].transform;
+                rt.localScale = new Vector3(1f, 1f , 1f);
+            }
+        }
     }
 
     public void Active()
@@ -113,10 +227,12 @@ public class FightManager : MonoBehaviour
 
         SetScreen();
 
-        BattleMenu1.instance.Active();
+        //BattleMenu1.instance.Active();
 
         isActive = true;
         enePokeIndex = 0;
+
+        FightInit();
     }
 
     public void UnActive()
@@ -284,6 +400,7 @@ public class FightManager : MonoBehaviour
     }
 
 
+
     private void PokeHitUpdate()
     {
         if (isPokeHit)
@@ -343,6 +460,9 @@ public class FightManager : MonoBehaviour
         isPokeDie = true;
         pokeDieCh = 0f;
         dieTarget = target;
+
+        pokeSprites[target].enabled = false;
+        statuses[target].obj.gameObject.SetActive(false);
     }
 
     public void StatusHitActive(int target)
@@ -531,4 +651,31 @@ public class FightManager : MonoBehaviour
         }
     }
 
+
+    public void TrainerOut()
+    {
+        isTrainerOut = true;
+        trainerOutCh = 0f;
+    }
+
+    private void TrainerOutUpdate()
+    {
+        if (isTrainerOut)
+        {
+            trainerOutCh += Time.deltaTime *2;
+            var xx = trainerOutCh * -600;
+            int idx = (int)(trainerOutCh * 4 + 1);
+
+            RectTransform rt = (RectTransform)trainerSprites[0].transform;
+            rt.anchoredPosition = new Vector2(xx, 0);
+            trainerSprites[0].sprite = PokeSpr.instance.trainers[idx];
+
+
+            if (trainerOutCh >= 1.0f)
+            {
+                isTrainerOut = false;
+            }
+
+        }
+    }
 }

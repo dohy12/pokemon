@@ -470,9 +470,16 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99104, new string[] { "그러나 효과가 없었다...." });
         msgDictionary.Add(99105, new string[] { "{poke}가 쓰러졌다." });
         msgDictionary.Add(99106, new string[] { "{poke}는 {INT.}의 경험치를 획득했다." });
-
+        
         msgDictionary.Add(99107, new string[] { "전투에서 승리하였습니다." });
         msgDictionary.Add(99108, new string[] { "전투에서 패배하였습니다." });
+
+        msgDictionary.Add(99109, new string[] { "야생의 {poke}(이)가 나타났다!" });
+        msgDictionary.Add(99110, new string[] { "~~(이)가 승부를 걸어왔다" });
+        msgDictionary.Add(99111, new string[] { "~~(은)는 {poke}(을)를 내보냈다!" });
+        msgDictionary.Add(99112, new string[] { "가랏 {poke}!!!" });
+        msgDictionary.Add(99113, new string[] { "{poke} 너로 정했다!!!" });
+        msgDictionary.Add(99114, new string[] { "{poke} 힘내!!!!" });
 
         msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
 

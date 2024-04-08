@@ -10,6 +10,8 @@ public class PokeSpr : MonoBehaviour
     public Sprite[] backSprites;
     public Sprite[] icons;
 
+    public Sprite[] trainers;
+
     private void Awake()
     {
         instance = this;

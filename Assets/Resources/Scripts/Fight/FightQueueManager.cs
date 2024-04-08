@@ -42,8 +42,17 @@ public class FightQueueManager : MonoBehaviour
         {
             EventUpdate();
         }
-        
+
     }
+
+    public void BattleInit()
+    {
+        isEvent = true;
+        eventCh = 0.5f;
+        battleEvents.Insert(0, new BattleEvent(BTEventType.INIT, 0)); //Ω√¿€
+    }
+
+
 
     private void EventUpdate()
     {
@@ -73,7 +82,22 @@ public class FightQueueManager : MonoBehaviour
             battleEvents.RemoveAt(0);
             input.InputStun(1.1f);
 
-            if (ev.evType == BTEventType.USESKILL)
+            if (ev.evType == BTEventType.INIT)
+            {
+                eventCh = 1.2f;
+                battleEvents.Insert(0, new BattleEvent(BTEventType.TRAINEROUT, 0));
+                if (fight.isTrainerBattle)
+                {
+                    int trainerID = 0;
+                    dialog.Active(99110);
+                    battleEvents.Insert(0, new BattleEvent(BTEventType.SUMMON, 1)); 
+                }
+                else
+                {
+                    dialog.Active(99109, fight.pokes[1].id);
+                }
+            }
+            else if (ev.evType == BTEventType.USESKILL)
             {
                 var poke = fight.pokes[ev.target];
                 if (poke.hp == 0)
@@ -221,8 +245,29 @@ public class FightQueueManager : MonoBehaviour
             }
             else if (ev.evType == BTEventType.ENEMYNEXTPOKEMON)
             {
+                eventCh = 0.01f;
                 var idx = ++fight.enePokeIndex;
                 fight.ChangePoke(ev.target, fight.enemyPokeList[idx]);
+                battleEvents.Insert(0, new BattleEvent(BTEventType.SUMMON, 1));
+            }
+            else if(ev.evType == BTEventType.SUMMON)
+            {
+                fight.Summon(ev.target);
+
+                if (ev.target == 0)
+                {
+                    dialog.Active(99112, fight.pokes[0].id);
+                }
+                else
+                {
+                    dialog.Active(99111, fight.pokes[1].id);
+                }
+            }
+            else if(ev.evType == BTEventType.TRAINEROUT)
+            {
+                eventCh = 0.5f;
+                fight.TrainerOut();
+                battleEvents.Insert(0, new BattleEvent(BTEventType.SUMMON, 0));
             }
         }
     }
@@ -307,7 +352,9 @@ public class FightQueueManager : MonoBehaviour
         CHECKNEXTPOKEMON,
         ENEMYNEXTPOKEMON,
         WIN,
-        LOSE
+        LOSE,
+        INIT,
+        TRAINEROUT
     }
 
 

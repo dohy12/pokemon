@@ -128,6 +128,81 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7754254097681630704, guid: e4f48857e247ca542a8bbc2db1d14cd2, type: 3}
   m_PrefabInstance: {fileID: 754787056}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &579251718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 579251719}
+  - component: {fileID: 579251721}
+  - component: {fileID: 579251720}
+  m_Layer: 5
+  m_Name: Pokeball2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &579251719
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579251718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 882035703}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 187, y: 287}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.3125}
+--- !u!114 &579251720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579251718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1870780043, guid: f14f80bb2d712804f85aae09a17c0da5, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &579251721
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579251718}
+  m_CullTransparentMesh: 1
 --- !u!1001 &754787056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1980,6 +2055,11 @@ PrefabInstance:
       addedObject: {fileID: 1997959088}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f48857e247ca542a8bbc2db1d14cd2, type: 3}
+--- !u!224 &882035703 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5876411103443564450, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+  m_PrefabInstance: {fileID: 6317163205584015304}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1042368720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2105,6 +2185,81 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33c97c9bd616a6949af1108baf750ec7, type: 3}
+--- !u!1 &1270308654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1270308655}
+  - component: {fileID: 1270308657}
+  - component: {fileID: 1270308656}
+  m_Layer: 5
+  m_Name: Pokeball1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1270308655
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270308654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 882035703}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -266, y: 116}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.3125}
+--- !u!114 &1270308656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270308654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1870780043, guid: f14f80bb2d712804f85aae09a17c0da5, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1270308657
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270308654}
+  m_CullTransparentMesh: 1
 --- !u!4 &1709597935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6606048557413338704, guid: e4f48857e247ca542a8bbc2db1d14cd2, type: 3}
@@ -2180,10 +2335,82 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1175664102, guid: 386829b5b112c3e4e9e1ea0294fb44c5, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[1]
+      value: 
+      objectReference: {fileID: -1011970961, guid: 386829b5b112c3e4e9e1ea0294fb44c5, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[2]
+      value: 
+      objectReference: {fileID: -741394711, guid: 386829b5b112c3e4e9e1ea0294fb44c5, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[3]
+      value: 
+      objectReference: {fileID: 2142474270, guid: 386829b5b112c3e4e9e1ea0294fb44c5, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[4]
+      value: 
+      objectReference: {fileID: 148807833, guid: 386829b5b112c3e4e9e1ea0294fb44c5, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[5]
+      value: 
+      objectReference: {fileID: -724120880, guid: 2d76a4e2a549e91499909f839a9976f4, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[6]
+      value: 
+      objectReference: {fileID: 432187135, guid: 2d76a4e2a549e91499909f839a9976f4, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[7]
+      value: 
+      objectReference: {fileID: 1378158505, guid: 2d76a4e2a549e91499909f839a9976f4, type: 3}
+    - target: {fileID: 1216588958960870555, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: trainers.Array.data[8]
+      value: 
+      objectReference: {fileID: 592909812, guid: 2d76a4e2a549e91499909f839a9976f4, type: 3}
+    - target: {fileID: 1272182679194294508, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: m_Name
+      value: Trainer2
+      objectReference: {fileID: 0}
     - target: {fileID: 2394517651412872610, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 397776049}
+    - target: {fileID: 5793514589218541973, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6650651947373934109, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6940522067195742071, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7847770601849736098, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: pokeballs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7847770601849736098, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: pokeballs.Array.data[0]
+      value: 
+      objectReference: {fileID: -1870780043, guid: f14f80bb2d712804f85aae09a17c0da5, type: 3}
+    - target: {fileID: 7847770601849736098, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: pokeballs.Array.data[1]
+      value: 
+      objectReference: {fileID: -329045445, guid: f14f80bb2d712804f85aae09a17c0da5, type: 3}
+    - target: {fileID: 8059898568304052973, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8832470344865084200, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
       propertyPath: m_Name
       value: UI
@@ -2270,7 +2497,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5876411103443564450, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 579251719}
+    - targetCorrespondingSourceObject: {fileID: 5876411103443564450, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1270308655}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7288db967d97fe34d9b198adfbbe4e6e, type: 3}
 --- !u!1660057539 &9223372036854775807

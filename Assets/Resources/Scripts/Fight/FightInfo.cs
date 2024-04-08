@@ -7,6 +7,8 @@ public class FightInfo : MonoBehaviour
     public static FightInfo instance;
     public Dictionary<int, Info> infos;
 
+    public Sprite[] pokeballs;
+
     private void Awake()
     {
         instance = this;
