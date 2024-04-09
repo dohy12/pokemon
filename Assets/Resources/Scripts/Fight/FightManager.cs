@@ -65,6 +65,15 @@ public class FightManager : MonoBehaviour
     private bool isTrainerOut = false;
     private float trainerOutCh = 0f;
 
+    private bool isExpUp = false;
+    private float expUpCh = 0f;
+    private int nextExp;
+    private int prevExp;
+    private RectTransform expBarTransform;
+
+    private bool isLevelUp = false;
+    private float levelUpCh = 0f;
+
     private void Awake()
     {
         instance = this;
@@ -106,6 +115,8 @@ public class FightManager : MonoBehaviour
         }
 
         screenSwitchIdx = new int[6] {0, 2, 4, 1, 3, 5 };
+
+        expBarTransform = (RectTransform)statuses[0].obj.Find("Expbar");
     }
 
     // Start is called before the first frame update
@@ -126,6 +137,8 @@ public class FightManager : MonoBehaviour
             DieUpdate();
             SummonUpdate();
             TrainerOutUpdate();
+            ExpUpUpdate();
+            LevelUpUpdate();
         }
         ScreenSwitchUpdate();
     }
@@ -147,6 +160,7 @@ public class FightManager : MonoBehaviour
         //내 트레이너 활성화
         trainerSprites[0].enabled = true;
         trainerSprites[0].sprite = PokeSpr.instance.trainers[0];
+        ((RectTransform)trainerSprites[0].transform).anchoredPosition = Vector3.zero;
 
         //isTrainer일경우 트레이너, 아닐경우 포켓몬 활성화
         if (isTrainerBattle)
@@ -444,11 +458,12 @@ public class FightManager : MonoBehaviour
             pokeDieCh += Time.deltaTime;
 
             var yy = -pokeDieCh * 1000f;
-            var rectT = (RectTransform)pokeSprites[statusHitTarget].transform;
-            rectT.anchoredPosition = new Vector2(imgStartPos[statusHitTarget].x, imgStartPos[statusHitTarget].y + yy);
+            var rectT = (RectTransform)pokeSprites[dieTarget].transform;
+            rectT.anchoredPosition = new Vector2(imgStartPos[dieTarget].x, imgStartPos[dieTarget].y + yy);
 
             if (pokeDieCh > 1.0f)
             {
+                pokeSprites[dieTarget].enabled = false;
                 pokeDieCh = 0f;
                 isPokeDie = false;
             }
@@ -461,7 +476,7 @@ public class FightManager : MonoBehaviour
         pokeDieCh = 0f;
         dieTarget = target;
 
-        pokeSprites[target].enabled = false;
+        
         statuses[target].obj.gameObject.SetActive(false);
     }
 
@@ -525,6 +540,9 @@ public class FightManager : MonoBehaviour
 
             hpBar.sizeDelta = new Vector2(hpBarSize.x * poke.hp/ poke.stat[0], hpBarSize.y);
             expBar.sizeDelta = new Vector2(expBarSize.x * poke.exp/ poke.maxExp, expBarSize.y);
+
+            Debug.Log("exp : " + poke.exp + ", maxpExp : " + poke.maxExp + "expBarSize : " + expBarSize.x);
+
 
             hpText.text = poke.hp + " / " + poke.stat[0]; 
         }
@@ -676,6 +694,71 @@ public class FightManager : MonoBehaviour
                 isTrainerOut = false;
             }
 
+        }
+    }
+
+    public void ExpUp(int nextExp)
+    {
+        this.prevExp = pokes[0].exp;
+        this.nextExp = nextExp;
+       
+        isExpUp = true;
+        expUpCh = 0f;
+
+        pokes[0].exp = this.nextExp;
+    }
+
+    private void ExpUpUpdate()
+    {
+        if (isExpUp)
+        {
+            expUpCh += Time.deltaTime;
+
+            var expBarPercent = (prevExp + (nextExp - prevExp) * expUpCh / 0.5f) / pokes[0].maxExp;
+            var expBarWidth = 247.3649f * expBarPercent;
+
+            expBarTransform.sizeDelta = new Vector2(expBarWidth, 7.7426f);
+
+            if (expUpCh > 0.5f)
+            {               
+                expUpCh = 0;
+                isExpUp = false;
+            }
+        }
+    }
+
+    public void LevelUp()
+    {
+        LevelUpStat showStat = LevelUpStat.instance;
+        showStat.SetPrevStat();
+
+        pokes[0].exp = 0;
+        expBarTransform.sizeDelta = new Vector2(0f, 7.7426f);
+
+        pokes[0].LevelUP();
+        
+        statuses[0].SetStatus(pokes[0]);
+
+        levelUpCh = 0;
+        isLevelUp = true;
+
+        showStat.Active();
+    }
+
+    private void LevelUpUpdate()
+    {
+        if (isLevelUp)
+        {
+            levelUpCh += Time.deltaTime;
+
+            if (levelUpCh > 0.8)
+            {
+                levelUpCh = 0;
+                isLevelUp = false;
+
+                LevelUpStat showStat = LevelUpStat.instance;
+                showStat.UnActive();
+            }
         }
     }
 }

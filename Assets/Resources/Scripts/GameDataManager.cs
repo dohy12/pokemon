@@ -43,7 +43,10 @@ public class GameDataManager : MonoBehaviour
     {
         pokeList.Add(new Poke(pokeID, pokeLevel));
 
-        PokeDexManager.instance.CatchPoke(pokeID);        
+        PokeDexManager.instance.CatchPoke(pokeID);
+
+        var poke = pokeList[0];
+        poke.exp = poke.maxExp / 2;
     }
 
     public bool HasPokemon()

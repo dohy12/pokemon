@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Poke
@@ -70,5 +71,17 @@ public class Poke
         return PokemonInfo.Instance.pokemons[id];
     }
 
+    public void LevelUP()
+    {
+        var prevMaxHp = stat[0];
+
+        level += 1;
+        var pokeInfo = PokemonInfo.Instance.pokemons[id];
+        SetStats(pokeInfo);
+
+        var nextMaxHp = stat[0];
+        var plusHp = nextMaxHp - prevMaxHp;
+        hp += plusHp;
+    }
     
 }

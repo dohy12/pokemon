@@ -194,7 +194,7 @@ public class FightQueueManager : MonoBehaviour
             {
                 var poke = fight.pokes[ev.target];
                 dialog.Active(99105, poke.id);
-                battleEvents.Insert(0, new BattleEvent(BTEventType.CHECKNEXTPOKEMON, ev.target));
+                
                 fight.Die(ev.target);
 
                 //행동 취소
@@ -205,6 +205,14 @@ public class FightQueueManager : MonoBehaviour
                         battleEvents.RemoveAt(i);
                     }
                 }
+
+                battleEvents.Insert(0, new BattleEvent(BTEventType.CHECKNEXTPOKEMON, ev.target));
+                if (ev.target == 1)
+                {
+                    var nextExp = fight.pokes[1].level * 10;
+                    battleEvents.Insert(0, new BattleEvent(BTEventType.EXPUP, 0, nextExp));
+                }
+                    
             }
             else if(ev.evType == BTEventType.CHECKNEXTPOKEMON)
             {
@@ -268,6 +276,27 @@ public class FightQueueManager : MonoBehaviour
                 eventCh = 0.5f;
                 fight.TrainerOut();
                 battleEvents.Insert(0, new BattleEvent(BTEventType.SUMMON, 0));
+            }
+            else if (ev.evType == BTEventType.EXPUP)
+            {
+                var poke = fight.pokes[0];
+                var plusExp = ev.args[0];
+                var nextExp = poke.exp + plusExp;
+                if (nextExp >= poke.maxExp)
+                {
+                    var remainExp = nextExp - poke.maxExp;
+                    nextExp = poke.maxExp;
+                    battleEvents.Insert(0, new BattleEvent(BTEventType.LEVELUP, 0, remainExp));
+                }
+                eventCh = 0.5f;
+                fight.ExpUp(nextExp);
+            }
+            else if (ev.evType == BTEventType.LEVELUP)
+            {
+                var remainExp = ev.args[0];
+                battleEvents.Insert(0, new BattleEvent(BTEventType.EXPUP, 0, remainExp));
+                eventCh = 0.8f;
+                fight.LevelUp();
             }
         }
     }
@@ -354,7 +383,9 @@ public class FightQueueManager : MonoBehaviour
         WIN,
         LOSE,
         INIT,
-        TRAINEROUT
+        TRAINEROUT,
+        EXPUP,
+        LEVELUP
     }
 
 
