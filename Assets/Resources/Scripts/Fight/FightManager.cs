@@ -209,6 +209,8 @@ public class FightManager : MonoBehaviour
 
                 RectTransform rt = (RectTransform)pokeballSprites[summonTarget].transform;
                 rt.localScale = new Vector3(1, 1.2f - timeTmp, 1f);
+
+                BattleSpriteManager.instance.Active(summonTarget, 99);
             }
             else if (summonCh <0.7f)
             {

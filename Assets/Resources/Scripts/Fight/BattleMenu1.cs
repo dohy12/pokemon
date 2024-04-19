@@ -42,7 +42,7 @@ public class BattleMenu1 : SlideUI, CursorUI
                 break;
 
             case 1://포켓몬
-                PokemonList.instance.Active();
+                PokemonList.instance.Active(1);
                 break;
 
             case 2://가방

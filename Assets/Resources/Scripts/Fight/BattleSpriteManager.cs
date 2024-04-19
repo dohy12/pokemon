@@ -21,6 +21,13 @@ public class BattleSpriteManager : MonoBehaviour
     private Image[] pokeImgs;
     private Image[] objSkillEffs;
 
+    private Vector2[] particlesPos;
+    private Vector2[] particlesSpeedDirec;
+    private float[] particlesAngle;
+    private float[] particlesAngleAdd;
+    private float[] particlesSize;
+    private Color[] particlesColor;
+
     private void Awake()
     {
         instance = this;
@@ -39,6 +46,12 @@ public class BattleSpriteManager : MonoBehaviour
             objSkillEffs[i] = transform.GetChild(i).GetComponent<Image>();
         }
 
+        particlesPos = new Vector2[10];
+        particlesSpeedDirec = new Vector2[10];
+        particlesAngle = new float[10];
+        particlesAngleAdd = new float[10];
+        particlesColor = new Color[10];
+        particlesSize = new float[10];
     }
 
     // Update is called once per frame
@@ -88,8 +101,25 @@ public class BattleSpriteManager : MonoBehaviour
         EffActive();
     }
 
+    private void EffInit()
+    {
+        for(var i=0;i < 10; i++)
+        {
+            var rectT = (RectTransform)objSkillEffs[i].transform;
+            rectT.anchoredPosition = Vector2.zero;
+            rectT.rotation = Quaternion.Euler(0, 0, 0);
+            rectT.localScale = new Vector3(1f, 1f, 1f);
+
+            objSkillEffs[i].color = Color.white;
+            objSkillEffs[i].enabled = false;
+        }
+        
+    }
+
     private void EffActive()
     {
+        EffInit();
+
         if (effKind == 1)//몸통박치기
         {
             endTime = 0.4f;
@@ -121,6 +151,27 @@ public class BattleSpriteManager : MonoBehaviour
                 tmp.localScale = new Vector3(-1f, 1f, 1f);
             }
             objSkillEffs[0].enabled = false;
+        }
+
+        if(effKind == 99)//몬스터볼 이펙트
+        {
+            endTime = 0.6f;
+            for (var i = 0; i < 10; i++)
+            {
+                objSkillEffs[i].sprite = effSprs[9];
+                particlesPos[i] = Vector2.zero;      
+                particlesAngle[i] = Random.Range(0, 2 * Mathf.PI);
+                particlesAngleAdd[i] = Random.Range(-2 * Mathf.PI, 2 * Mathf.PI);
+                particlesSize[i] = Random.Range(0.4f, 0.6f);
+                particlesColor[i] = new Color(1f, Random.Range(0, 1f), 0f);
+
+                var tmpAngle = Random.Range(0, 2 * Mathf.PI);
+                var tmpSpeed = Random.Range(200f, 400f);
+                particlesSpeedDirec[i] = new Vector2(Mathf.Cos(tmpAngle), Mathf.Sin(tmpAngle)) * tmpSpeed;
+
+                objSkillEffs[i].enabled = false;
+            }
+            
         }
     }
 
@@ -165,6 +216,26 @@ public class BattleSpriteManager : MonoBehaviour
                     objSkillEffs[0].sprite = effSprs[imgIndex];
                 }
                 
+            }
+
+            if(effKind == 99)
+            {
+                for(int i = 0; i < 10; i++)
+                {
+                    particlesPos[i] += particlesSpeedDirec[i] * Time.deltaTime;
+                    particlesAngle[i] += particlesAngleAdd[i] * Time.deltaTime;
+
+                    Vector2 originPos;
+                    if (target == 0) originPos = new Vector2(-234, -97);
+                    else originPos = new Vector2(180, 50);
+                    var rectT = (RectTransform)objSkillEffs[i].transform;
+                    rectT.anchoredPosition = originPos + particlesPos[i];
+                    rectT.rotation = Quaternion.Euler(0, 0, particlesAngle[i]);
+                    rectT.localScale = new Vector3(particlesSize[i], particlesSize[i], 1f);
+                    objSkillEffs[i].color = particlesColor[i];
+
+                    objSkillEffs[i].enabled = true;
+                }
             }
         }
     }

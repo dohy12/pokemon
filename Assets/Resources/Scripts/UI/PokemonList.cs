@@ -19,6 +19,8 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
         
     public Sprite[] hpBarSpr;
 
+    private int uiType = 0;//[0]보통 상태, [1]배틀 중 교체
+
     
     private void Awake()
     {
@@ -102,7 +104,7 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
             hpBar.GetComponent<Image>().sprite = hpBarSpr[2];
     }
 
-    public void Active()
+    public void Active(int uiType)
     {
         if (GameDataManager.instance.HasPokemon())
         {
@@ -111,6 +113,8 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
             cursor.Active();
 
             ShowList();
+
+            this.uiType = uiType;
         }
         else
         {
@@ -183,7 +187,6 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
         }
     }
 
-
     public void CursorChange(int pageTmp){ }
 
     public void CursorChoose(int selectNum)
@@ -235,7 +238,10 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
         var cursorMaxNum = 2;
         Vector2 pos = new Vector2(-14f, 54.5f + (cursorMaxNum) * 17.5f);
 
-        select.Active(cursorMaxNum, "상세보기\n순서바꾸기\n그만둔다", this, 280f, pos, selectNum);
+        if (uiType == 0)
+            select.Active(cursorMaxNum, "상세보기\n순서바꾸기\n그만둔다", this, 280f, pos, selectNum);
+        else if (uiType == 1)
+            select.Active(cursorMaxNum, "상세보기\n교체한다\n그만둔다", this, 280f, pos, selectNum);
     }
 
 
@@ -260,8 +266,17 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
                 PokeDetail.instance.Active();
                 break;
 
-            case 1://순서바꾸기
-                StartChanging(args[0]);
+            case 1:
+                if (uiType == 0)//순서바꾸기
+                    StartChanging(args[0]);
+                else
+                {
+                    //포켓몬 교체하기
+                    var selectedNum = args[0];
+
+
+                } 
+
                 break;
 
         }

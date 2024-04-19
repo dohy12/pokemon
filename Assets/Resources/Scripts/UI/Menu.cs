@@ -82,7 +82,7 @@ public class Menu : SlideUI, CursorUI
                 break;
 
             case 1:
-                PokemonList.instance.Active();
+                PokemonList.instance.Active(0);
                 break;
 
             case 2://°¡¹æ
