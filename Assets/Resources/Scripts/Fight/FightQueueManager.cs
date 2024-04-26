@@ -220,7 +220,7 @@ public class FightQueueManager : MonoBehaviour
                 {
                     if (ev.target == 0)
                     {
-
+                        PokemonList.instance.Active(1);
                     }
                     else
                     {

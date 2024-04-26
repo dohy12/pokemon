@@ -484,8 +484,9 @@ public class DialogManager : SlideUI, SelectUIRedirec
         msgDictionary.Add(99115, new string[] { "{poke}(은)는 전투할 기력이 없는듯 하다...." });
         msgDictionary.Add(99116, new string[] { "{poke}(은)는 이미 나와 있다!" });
 
-        msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
+        msgDictionary.Add(99117, new string[] { "다음 포켓몬을 내보내야 한다!" });
 
+        msgDictionary.Add(99999, new string[] { "테스트용 메세지 입니다." });
 
     }
 

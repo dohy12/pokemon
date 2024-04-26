@@ -122,7 +122,7 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
 
                 if (FightManager.instance.pokes[0].hp == 0)
                 {
-                    nowPokeDie = false;
+                    nowPokeDie = true;
                 }
             }
         }
@@ -150,7 +150,11 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
                 {
                     if (input.bButtonDown)
                     {
-                        UnActive();
+                        if (!nowPokeDie)
+                            UnActive();
+                        else
+                            DialogManager.instance.Active(99117);
+
                         return;
                     }
                 }
@@ -290,12 +294,20 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
 
                     if (fight.pokes[0] == poke)
                     {
-                        UnActive();
+                        DialogManager.instance.Active(99116, poke.id);
                     }
                     else
                     {
-                        fight.PokeChange(selectedNum);
-                        UnActive();
+                        if (poke.hp == 0)
+                        {
+                            DialogManager.instance.Active(99115, poke.id);
+                        }
+                        else
+                        {
+                            fight.PokeChange(selectedNum);
+                            UnActive();
+                        }
+                        
                     }
                     
                 } 
