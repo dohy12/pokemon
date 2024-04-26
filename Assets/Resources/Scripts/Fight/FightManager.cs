@@ -181,6 +181,8 @@ public class FightManager : MonoBehaviour
 
     public void Summon(int target)
     {
+        pokeSprites[target].enabled = false;
+
         isSummon = true;
         summonCh = 0f;
 
@@ -188,6 +190,18 @@ public class FightManager : MonoBehaviour
 
         pokeballSprites[target].sprite = FightInfo.instance.pokeballs[0];
         pokeballSprites[target].enabled = true;
+
+        Sprite spr;
+
+        if (target == 0)
+            spr = PokeSpr.instance.backSprites[pokes[target].id];
+        else
+            spr = PokeSpr.instance.sprites[pokes[target].id + 1];
+
+
+        SetImage(pokeSprites[target], spr, imgStartPos[target]);
+
+        statuses[target].SetStatus(pokes[target]);
     }
 
     private void SummonUpdate()
@@ -211,6 +225,8 @@ public class FightManager : MonoBehaviour
                 rt.localScale = new Vector3(1, 1.2f - timeTmp, 1f);
 
                 BattleSpriteManager.instance.Active(summonTarget, 99);
+
+                
             }
             else if (summonCh <0.7f)
             {
@@ -223,6 +239,7 @@ public class FightManager : MonoBehaviour
                 RectTransform rt = (RectTransform)pokeSprites[summonTarget].transform;
                 rt.localScale = new Vector3(timeTmp + 0.1f, timeTmp + 0.1f, 1f);
                 statuses[summonTarget].obj.gameObject.SetActive(true);
+
             }
             else
             {
@@ -271,11 +288,11 @@ public class FightManager : MonoBehaviour
     {
         for (var i = 0; i < 2; i++)
         {
-            statuses[i].SetStatus(pokes[i]);
+            //statuses[i].SetStatus(pokes[i]);
         }
 
-        SetImage(pokeSprites[0], PokeSpr.instance.backSprites[pokes[0].id], imgStartPos[0]);
-        SetImage(pokeSprites[1], PokeSpr.instance.sprites[pokes[1].id + 1], imgStartPos[1]);
+        //SetImage(pokeSprites[0], PokeSpr.instance.backSprites[pokes[0].id], imgStartPos[0]);
+        //SetImage(pokeSprites[1], PokeSpr.instance.sprites[pokes[1].id + 1], imgStartPos[1]);
     }
 
 
@@ -561,6 +578,15 @@ public class FightManager : MonoBehaviour
 
     public bool hasNextPokemon(int target)
     {
+        if (target == 0)
+        {
+            for (int i=0; i< GameDataManager.instance.pokeList.Count; i++)
+            {
+                if (GameDataManager.instance.pokeList[i].hp > 0) return true;
+            }
+        }
+
+
         if (target == 1)//Àû
         {
             for (int i = 0; i < enemyPokeList.Count; i++)
@@ -769,6 +795,8 @@ public class FightManager : MonoBehaviour
         Poke poke = GameDataManager.instance.pokeList[idx];
         pokes[0] = poke;
 
-        Summon(0);
+        FightQueueManager.instance.Active(FightQueueManager.BTEventType.CHANGE);
+
+        BattleMenu1.instance.UnActive();
     }
 }

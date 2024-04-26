@@ -30,7 +30,7 @@ public class FightInfo : MonoBehaviour
     void Init()
     {
         infos = new Dictionary<int, Info>();
-        infos.Add(1, new Info(1, 15, 2, 9, 3)); //[0]이상해씨 5레벨
+        infos.Add(1, new Info(1, 15, 20, 9, 3)); //[0]이상해씨 5레벨
     }
 
 

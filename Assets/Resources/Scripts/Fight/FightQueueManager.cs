@@ -298,6 +298,13 @@ public class FightQueueManager : MonoBehaviour
                 eventCh = 0.8f;
                 fight.LevelUp();
             }
+            else if (ev.evType == BTEventType.CHANGE)
+            {
+                fight.Summon(0);
+                eventCh = 1.1f;
+
+                dialog.Active(99112, fight.pokes[0].id);
+            }
         }
     }
 

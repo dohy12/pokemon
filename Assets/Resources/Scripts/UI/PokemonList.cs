@@ -20,7 +20,7 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
     public Sprite[] hpBarSpr;
 
     private int uiType = 0;//[0]보통 상태, [1]배틀 중 교체
-
+    private bool nowPokeDie = false;
     
     private void Awake()
     {
@@ -115,6 +115,16 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
             ShowList();
 
             this.uiType = uiType;
+
+            if (this.uiType == 1)
+            {
+                nowPokeDie = false;
+
+                if (FightManager.instance.pokes[0].hp == 0)
+                {
+                    nowPokeDie = false;
+                }
+            }
         }
         else
         {
@@ -274,7 +284,20 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
                     //포켓몬 교체하기
                     var selectedNum = args[0];
 
+                    FightManager fight = FightManager.instance;
 
+                    Poke poke = GameDataManager.instance.pokeList[selectedNum];
+
+                    if (fight.pokes[0] == poke)
+                    {
+                        UnActive();
+                    }
+                    else
+                    {
+                        fight.PokeChange(selectedNum);
+                        UnActive();
+                    }
+                    
                 } 
 
                 break;

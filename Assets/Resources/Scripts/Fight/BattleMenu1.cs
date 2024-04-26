@@ -111,6 +111,12 @@ public class BattleMenu1 : SlideUI, CursorUI
         SlideUiActive();
         UIManager.instance.ActiveUI(uiID);
         cursor.Active();
+
+        for (int i = 0; i < elements.Length; i++)
+        {
+            elements[i].color = Color.white;
+            elements[i].transform.GetChild(1).GetComponent<TMP_Text>().color = Color.black;
+        }
     }
 
     public void UnActive()
