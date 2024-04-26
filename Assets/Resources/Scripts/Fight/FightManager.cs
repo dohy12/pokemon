@@ -763,4 +763,12 @@ public class FightManager : MonoBehaviour
             }
         }
     }
+
+    public void PokeChange(int idx)
+    {
+        Poke poke = GameDataManager.instance.pokeList[idx];
+        pokes[0] = poke;
+
+        Summon(0);
+    }
 }
