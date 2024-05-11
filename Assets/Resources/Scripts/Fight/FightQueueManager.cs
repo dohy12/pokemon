@@ -17,6 +17,9 @@ public class FightQueueManager : MonoBehaviour
 
     private bool isEvent = false;
     private int nextDialogID;
+
+    public bool eventStop = false;
+
     
 
     private void Awake()
@@ -57,9 +60,12 @@ public class FightQueueManager : MonoBehaviour
     private void EventUpdate()
     {
         if (eventCh > 0)
+        {
             eventCh -= Time.deltaTime;
+        }
+            
         
-        if (eventCh <= 0)
+        if (eventCh <= 0 && !eventStop)
         {
             
             if (battleEvents.Count == 0)
@@ -187,7 +193,7 @@ public class FightQueueManager : MonoBehaviour
                 var poke = fight.pokes[target];
                 if (poke.hp == 0)
                 {
-                    battleEvents.Insert(0, new BattleEvent(BTEventType.DIE, target));
+                    battleEvents.Add(new BattleEvent(BTEventType.DIE, target));
                 }
             }
             else if (ev.evType == BTEventType.DIE)
@@ -220,7 +226,8 @@ public class FightQueueManager : MonoBehaviour
                 {
                     if (ev.target == 0)
                     {
-                        PokemonList.instance.Active(1);
+                        PokemonList.instance.Active(2);
+                        eventStop = true;
                     }
                     else
                     {

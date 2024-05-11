@@ -19,7 +19,7 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
         
     public Sprite[] hpBarSpr;
 
-    private int uiType = 0;//[0]보통 상태, [1]배틀 중 교체
+    private int uiType = 0;//[0]보통 상태, [1]배틀 중 교체, [2]배틀 사망 교체
     private bool nowPokeDie = false;
     
     private void Awake()
@@ -254,7 +254,7 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
 
         if (uiType == 0)
             select.Active(cursorMaxNum, "상세보기\n순서바꾸기\n그만둔다", this, 280f, pos, selectNum);
-        else if (uiType == 1)
+        else if (uiType == 1 || uiType == 2)
             select.Active(cursorMaxNum, "상세보기\n교체한다\n그만둔다", this, 280f, pos, selectNum);
     }
 
@@ -283,7 +283,7 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
             case 1:
                 if (uiType == 0)//순서바꾸기
                     StartChanging(args[0]);
-                else
+                else if (uiType == 1 || uiType == 2)
                 {
                     //포켓몬 교체하기
                     var selectedNum = args[0];
@@ -292,23 +292,27 @@ public class PokemonList : SlideUI, CursorUI, SelectUIRedirec
 
                     Poke poke = GameDataManager.instance.pokeList[selectedNum];
 
-                    if (fight.pokes[0] == poke)
+                    if (poke.hp == 0)
                     {
-                        DialogManager.instance.Active(99116, poke.id);
+                        DialogManager.instance.Active(99115, poke.id);
                     }
                     else
                     {
-                        if (poke.hp == 0)
+                        if (fight.pokes[0] == poke)
                         {
-                            DialogManager.instance.Active(99115, poke.id);
+                            DialogManager.instance.Active(99116, poke.id);
                         }
                         else
                         {
-                            fight.PokeChange(selectedNum);
+                            if (uiType == 1)
+                                fight.PokeChange(selectedNum, 1);
+                            else
+                                fight.PokeChange(selectedNum, 2);
+
                             UnActive();
                         }
-                        
                     }
+                    
                     
                 } 
 

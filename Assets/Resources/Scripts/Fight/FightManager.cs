@@ -248,6 +248,8 @@ public class FightManager : MonoBehaviour
 
                 RectTransform rt = (RectTransform)pokeSprites[summonTarget].transform;
                 rt.localScale = new Vector3(1f, 1f , 1f);
+
+                FightQueueManager.instance.eventStop = false;
             }
         }
     }
@@ -790,13 +792,19 @@ public class FightManager : MonoBehaviour
         }
     }
 
-    public void PokeChange(int idx)
+    public void PokeChange(int idx, int ch)
     {
         Poke poke = GameDataManager.instance.pokeList[idx];
         pokes[0] = poke;
+        if (ch == 1)
+        {
+            FightQueueManager.instance.Active(FightQueueManager.BTEventType.CHANGE);
 
-        FightQueueManager.instance.Active(FightQueueManager.BTEventType.CHANGE);
-
-        BattleMenu1.instance.UnActive();
+            BattleMenu1.instance.UnActive();
+        }
+        else
+        {
+            Summon(0);
+        }        
     }
 }
