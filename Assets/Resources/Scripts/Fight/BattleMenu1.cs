@@ -46,7 +46,7 @@ public class BattleMenu1 : SlideUI, CursorUI
                 break;
 
             case 2://가방
-                Bag.instance.Active();
+                Bag.instance.Active(2);
                 break;
 
             case 3://도주

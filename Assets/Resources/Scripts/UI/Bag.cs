@@ -23,6 +23,8 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
 
     private GameDataManager data;
 
+    private int uiType = 0; //[0] 필드에서, [1] 샵, [2] 전투 중
+
     private void Awake()
     {
         instance = this;
@@ -118,7 +120,7 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
     }
 
 
-    public void Active(params bool[] args)
+    public void Active(int uiType)
     {
         SlideUiActive();
         UIManager.instance.ActiveUI(uiID);
@@ -130,7 +132,10 @@ public class Bag : SlideUI , CursorUI, SelectUIRedirec
         ActiveMoney();
         isShop = false;
 
-        if (args.Length>0)
+
+        this.uiType = uiType;
+
+        if (uiType == 1)
         {
             isShop = true;
         }

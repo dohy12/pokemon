@@ -25,7 +25,7 @@ public class Shop : SlideUI, CursorUI
                 break;
 
             case 1:
-                Bag.instance.Active(true);
+                Bag.instance.Active(1);
                 break;
 
             case 2:

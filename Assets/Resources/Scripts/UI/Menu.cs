@@ -86,7 +86,7 @@ public class Menu : SlideUI, CursorUI
                 break;
 
             case 2://°¡¹æ
-                Bag.instance.Active();
+                Bag.instance.Active(0);
                 break;
 
 
